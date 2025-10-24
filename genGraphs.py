@@ -289,7 +289,7 @@ def main(jobs, machines, seed=1, ReleaseDateDueDate=0, pbar=None):
         save_path = "graphs"
         os.makedirs(save_path, exist_ok=True)
 
-        gen = Generator()
+        gen = Generator(dzn=True, savepath="./instances/")
 
         for s in range(seed):
             inst = gen.generate_new_instance(
