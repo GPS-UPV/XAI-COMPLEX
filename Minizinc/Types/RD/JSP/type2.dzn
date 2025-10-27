@@ -1,0 +1,10 @@
+%SETS
+JOBS     = 1..{jobs};
+MACHINES = 1..{machines};
+SPEED    = {Speed};
+
+time               = array3d(JOBS,MACHINES,1..SPEED,{time});
+energy             = array3d(JOBS,MACHINES,1..SPEED,{energy});
+precedence         = array2d(JOBS,MACHINES,{precedence});
+releaseDate        = array2d(JOBS,MACHINES,{releaseDate});
+dueDate            = array2d(JOBS,MACHINES,{dueDate});

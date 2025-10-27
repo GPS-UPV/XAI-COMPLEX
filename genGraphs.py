@@ -289,7 +289,7 @@ def main(jobs, machines, seed=1, ReleaseDateDueDate=0, pbar=None):
         save_path = "graphs"
         os.makedirs(save_path, exist_ok=True)
 
-        gen = Generator(dzn=True, savepath="./instances/")
+        gen = Generator(dzn=True, savepath="./instances/",single_folder_output=True)
 
         for s in range(seed):
             inst = gen.generate_new_instance(
@@ -323,4 +323,4 @@ if __name__ == "__main__":
     for j, m in pbar:
         pbar.set_description(f"Generating instance for j: {j}, m: {m}")
         # Activa R/D si quieres que el generador incluya ventanas de tiempo
-        main(j, m, ReleaseDateDueDate=1, pbar=pbar)
+        main(j, m, ReleaseDateDueDate=0, pbar=pbar)

@@ -15,7 +15,7 @@ from IGJSP.generador import Generator
 from minizinc import Instance, Model, Result, Solver, Status
 from numpyencoder import NumpyEncoder
 
-def compute_time_limit(nb_jobs: int, nb_machines: int, nb_speeds: int, time_min_ms: int = 400, time_max_ms: int = 30000) -> float:
+def compute_time_limit(nb_jobs: int, nb_machines: int, nb_speeds: int, time_min_ms: int = 400, time_max_ms: int = 300000) -> float:
     nb_jobs = int(nb_jobs)
     nb_machines = int(nb_machines)
     nb_speeds = max(1, int(nb_speeds))
@@ -29,15 +29,6 @@ def compute_time_limit(nb_jobs: int, nb_machines: int, nb_speeds: int, time_min_
     val = time_min_ms + (time_max_ms - time_min_ms) * (idx / (total - 1))
     return int(max(1.0, int(val) / 1000.0))
 
-        if dim_str.isdigit():
-            return int(dim_str)
-        elif dim_str in definitions:
-            return len(definitions[dim_str]) if isinstance(definitions[dim_str], range) else definitions[dim_str]
-        else:
-            try:
-                return int(dim_str)
-            except ValueError:
-                raise ValueError(f"Dimensión '{dim_str}' no encontrada en las definiciones.")
 
 
 class SOLVER:
@@ -64,8 +55,9 @@ class SOLVER:
 
     def solve(self, timeout=60, verbose=True, model_path="", path=""):
         
-        self.model = Model(f"Minizinc/Models/RD/JSP{self.rddd}.mzn")
+        self.model = Model(f"Minizinc/JSP{self.rddd}.mzn")
         self.model.add_file(path,parse_data=True)
+        quit()
         # self.model.add_string(f"JOBS = 1..{self.numJobs};\n")
         # self.model.add_string(f"MACHINES = 1..{self.numMchs};\n")
         # self.model.add_string(f"SPEED = {self.speed};\n")

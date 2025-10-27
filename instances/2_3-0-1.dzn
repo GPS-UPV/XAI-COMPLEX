@@ -1,0 +1,8 @@
+%SETS
+JOBS     = 1..2;
+MACHINES = 1..3;
+SPEED    = 1;
+
+time               = array3d(JOBS,MACHINES,1..SPEED,[59, 48, 68, 49, 90, 96]);
+energy             = array3d(JOBS,MACHINES,1..SPEED,[55, 61, 50, 61, 40, 38]);
+precedence         = array2d(JOBS,MACHINES,[0,1,2,0,1,2]);
