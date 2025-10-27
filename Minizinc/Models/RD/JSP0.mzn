@@ -8,16 +8,6 @@ array[JOBS,MACHINES,1..SPEED] of int: time;
 array[JOBS,MACHINES,1..SPEED] of int: energy;
 array[JOBS,MACHINES] of int: precedence;
 
-% %%% Normalizaciones
-% % Max makespan
-% int: maxMakespan = sum([max([time[j,m,s] | s in 1..SPEED]) | j in JOBS, m in MACHINES]);
-% % Min makespan
-% int: minMakespan = max([sum([min([time[j,m,s] | s in 1..SPEED]) | m in MACHINES]) | j in JOBS]);
-% % Max energy
-% int: maxEnergy = sum([max([energy[j,m,s] | s in 1..SPEED]) | j in JOBS, m in MACHINES]);
-% % Min energy
-% int: minEnergy = sum([min([energy[j,m,s] | s in 1..SPEED]) | j in JOBS, m in MACHINES]);
-
 % Variables
 array[JOBS,MACHINES] of var 0..sum(time): start_time;
 array[JOBS,MACHINES] of var 1..SPEED: SpeedScaling;
@@ -37,17 +27,14 @@ constraint forall(j1 in JOBS, j2 in JOBS, m in MACHINES where j1 < j2)(
 );
 
 % Variable para el makespan (tiempo total de finalización)
-var float: makespan                     = max([start_time[j,m] + time[j,m,SpeedScaling[j,m]] | m in MACHINES, j in JOBS]);
-var float: consumedEnergy               = sum(m in MACHINES, j in JOBS) (energy[j,m,SpeedScaling[j,m]]);
-% var float: normalized_makespan          = (makespan - minMakespan) / (maxMakespan - minMakespan);
-% var 0.0..1.0: normalized_consumedEnergy = if maxEnergy > minEnergy then ((consumedEnergy - minEnergy)/(maxEnergy - minEnergy)) else 0.0 endif;
+var int: makespan                     = max([start_time[j,m] + time[j,m,SpeedScaling[j,m]] | m in MACHINES, j in JOBS]);
+var int: consumedEnergy               = sum(m in MACHINES, j in JOBS) (energy[j,m,SpeedScaling[j,m]]);
 
-var float: ob = makespan + consumedEnergy;
+var int: ob = makespan + consumedEnergy;
 % Función objetivo
 solve minimize ob;
 
 % Salida
 output ["Objective function: \(makespan) + \(consumedEnergy) = \(ob) \n"];
-% output ["Objective function : M-\(makespan) + E-\(consumedEnergy) = \(ob) \n"];
 output ["Start Times: \(start_time)\n"];
 output ["Speed Scaling; \(SpeedScaling)\n"];
