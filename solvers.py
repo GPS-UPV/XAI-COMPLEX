@@ -12,22 +12,37 @@ from pprint import pprint
 import numpy as np
 from deap import base, creator
 from IGJSP.generador import Generator
-from minizinc import Instance, Model, Result, Solver, Status
 from numpyencoder import NumpyEncoder
 
-def compute_time_limit(nb_jobs: int, nb_machines: int, nb_speeds: int, time_min_ms: int = 400, time_max_ms: int = 300000) -> float:
-    nb_jobs = int(nb_jobs)
-    nb_machines = int(nb_machines)
-    nb_speeds = max(1, int(nb_speeds))
-    total = nb_jobs * nb_machines * nb_speeds
-    if total <= 1:
-        return int(max(1.0, time_min_ms / 1000.0))
-    i = max(nb_jobs - 200, 0)
-    j = max(nb_machines - 200, 0)
-    k = max(nb_speeds - 1, 0)
-    idx = i * (nb_machines * nb_speeds) + j * nb_speeds + k
-    val = time_min_ms + (time_max_ms - time_min_ms) * (idx / (total - 1))
-    return int(max(1.0, int(val) / 1000.0))
+from minizinc import Instance, Model, Result, Solver, Status
+
+
+def compute_time_limit(
+    nb_jobs: int,
+    nb_machines: int,
+    nb_speeds: int,
+    max_job: int = 200,
+    max_machine: int = 200,
+    time_min_ms: int = 400,
+    time_max_ms: int = 300000
+) -> int:
+
+    nb_jobs = max(1, nb_jobs)
+    nb_machines = max(1, nb_machines)
+    nb_speeds = max(1, nb_speeds)
+    max_job = max(1, max_job)
+    max_machine = max(1, max_machine)
+    
+    norm_jobs = min(nb_jobs / max_job, 1.0)
+    norm_mchs = min(nb_machines / max_machine, 1.0)
+    
+    size_factor = (norm_jobs + norm_mchs) / 2.0
+    
+    val = time_min_ms + (time_max_ms - time_min_ms) * size_factor
+
+    val *= nb_speeds ** 0.5
+
+    return int(val)
 
 
 

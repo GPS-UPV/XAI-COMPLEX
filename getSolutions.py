@@ -1,12 +1,15 @@
+import json
 import os
 import re
-import json
+from datetime import timedelta
+from pathlib import Path
+
 import numpy as np
 from tqdm import tqdm
-from pathlib import Path
-from datetime import timedelta
-from solvers import compute_time_limit 
+
 from minizinc import Instance, Model, Solver
+from solvers import compute_time_limit
+
 # ----------------------------------------------------------
 # Configuración general
 # ----------------------------------------------------------
@@ -39,6 +42,7 @@ def main():
         return
 
     pbar.set_description(f"[INFO] Se encontraron {len(dzn_files)} instancias en {DZN_DIR}")
+    max_job,max_machine = np.array([list(map(int,x.stem.split("-")[0].split("_"))) for x in dzn_files]).max(axis=0)
     
     ok, fail = 0, 0
     for dzn_path in pbar:
@@ -48,7 +52,7 @@ def main():
                 pbar.set_description(f"⚠️  Saltando {dzn_path.name}, ya existe solución en {out_file.name}")
                 continue
             jobs, mchs, typ, spd = parse_dzn_name(dzn_path.name)
-            timeout_ms = int(compute_time_limit(jobs, mchs, spd) * 1000)
+            timeout_ms = compute_time_limit(jobs, mchs, spd,max_job,max_machine)
 
             model_path = MODEL_DIR / f"JSP{typ}.mzn"
             if not model_path.exists():
