@@ -1,0 +1,111 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 2598,
+    "start_time": [
+      [
+        89,
+        17,
+        234,
+        670,
+        0,
+        78,
+        586,
+        506,
+        146,
+        327,
+        425
+      ],
+      [
+        178,
+        78,
+        158,
+        416,
+        483,
+        584,
+        327,
+        229,
+        383,
+        505,
+        276
+      ],
+      [
+        229,
+        185,
+        385,
+        483,
+        612,
+        290,
+        72,
+        143,
+        563,
+        0,
+        548
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 686 + 1912 = 2598 \nStart Times: [89, 17, 234, 670, 0, 78, 586, 506, 146, 327, 425, 178, 78, 158, 416, 483, 584, 327, 229, 383, 505, 276, 229, 185, 385, 483, 612, 290, 72, 143, 563, 0, 548]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 66,
+    "flatIntVars": 68,
+    "flatBoolConstraints": 33,
+    "flatIntConstraints": 266,
+    "evaluatedHalfReifiedConstraints": 66,
+    "method": "minimize",
+    "flatTime": 51.131,
+    "objective": 2598,
+    "objectiveBound": 2598,
+    "boolVariables": 33,
+    "failures": 2,
+    "propagations": 2071,
+    "solveTime": 16.118000000000002,
+    "time": 83.0,
+    "nSolutions": 2,
+    "maxTime": 42344,
+    "makespan": 686.0,
+    "energy": 1912.0
+  }
+}

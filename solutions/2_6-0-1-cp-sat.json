@@ -1,0 +1,65 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 1122,
+    "start_time": [
+      [
+        376,
+        81,
+        280,
+        228,
+        0,
+        171
+      ],
+      [
+        0,
+        171,
+        264,
+        375,
+        280,
+        291
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 425 + 697 = 1122 \nStart Times: [376, 81, 280, 228, 0, 171, 0, 171, 264, 375, 280, 291]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 12,
+    "flatIntVars": 26,
+    "flatBoolConstraints": 6,
+    "flatIntConstraints": 56,
+    "evaluatedHalfReifiedConstraints": 12,
+    "method": "minimize",
+    "flatTime": 44.31,
+    "objective": 1122,
+    "objectiveBound": 1122,
+    "boolVariables": 6,
+    "failures": 0,
+    "propagations": 162,
+    "solveTime": 5.9670000000000005,
+    "time": 69.0,
+    "nSolutions": 4,
+    "maxTime": 24368,
+    "makespan": 425.0,
+    "energy": 697.0
+  }
+}

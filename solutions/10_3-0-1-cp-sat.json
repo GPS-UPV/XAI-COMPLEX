@@ -1,0 +1,133 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 2342,
+    "start_time": [
+      [
+        416,
+        368,
+        562
+      ],
+      [
+        584,
+        51,
+        466
+      ],
+      [
+        338,
+        504,
+        409
+      ],
+      [
+        234,
+        141,
+        295
+      ],
+      [
+        321,
+        301,
+        0
+      ],
+      [
+        504,
+        416,
+        311
+      ],
+      [
+        128,
+        0,
+        209
+      ],
+      [
+        301,
+        234,
+        84
+      ],
+      [
+        33,
+        312,
+        157
+      ],
+      [
+        0,
+        585,
+        106
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 664 + 1678 = 2342 \nStart Times: [416, 368, 562, 584, 51, 466, 338, 504, 409, 234, 141, 295, 321, 301, 0, 504, 416, 311, 128, 0, 209, 301, 234, 84, 33, 312, 157, 0, 585, 106]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 270,
+    "flatIntVars": 62,
+    "flatBoolConstraints": 135,
+    "flatIntConstraints": 332,
+    "evaluatedHalfReifiedConstraints": 270,
+    "method": "minimize",
+    "flatTime": 53.175,
+    "objective": 2342,
+    "objectiveBound": 2342,
+    "boolVariables": 135,
+    "failures": 0,
+    "propagations": 1108,
+    "solveTime": 3285.65,
+    "time": 106.0,
+    "nSolutions": 34,
+    "maxTime": 39348,
+    "makespan": 664.0,
+    "energy": 1678.0
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 984,
+    "start_time": [
+      [
+        170,
+        93,
+        0,
+        218
+      ],
+      [
+        0,
+        234,
+        153,
+        96
+      ],
+      [
+        109,
+        0,
+        93,
+        170
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 308 + 676 = 984 \nStart Times: [170, 93, 0, 218, 0, 234, 153, 96, 109, 0, 93, 170]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 24,
+    "flatIntVars": 26,
+    "flatBoolConstraints": 12,
+    "flatIntConstraints": 56,
+    "evaluatedHalfReifiedConstraints": 24,
+    "method": "minimize",
+    "flatTime": 42.577,
+    "objective": 984,
+    "objectiveBound": 984,
+    "boolVariables": 23,
+    "failures": 1,
+    "propagations": 441,
+    "solveTime": 13.544,
+    "time": 67.0,
+    "nSolutions": 3,
+    "maxTime": 21372,
+    "makespan": 308.0,
+    "energy": 676.0
+  }
+}

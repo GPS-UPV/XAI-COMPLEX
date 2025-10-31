@@ -1,0 +1,85 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 1992,
+    "start_time": [
+      [
+        536,
+        97,
+        593,
+        0,
+        421,
+        410,
+        326,
+        158,
+        238,
+        438,
+        16
+      ],
+      [
+        0,
+        513,
+        148,
+        168,
+        705,
+        235,
+        410,
+        466,
+        593,
+        626,
+        97
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 727 + 1265 = 1992 \nStart Times: [536, 97, 593, 0, 421, 410, 326, 158, 238, 438, 16, 0, 513, 148, 168, 705, 235, 410, 466, 593, 626, 97]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 22,
+    "flatIntVars": 46,
+    "flatBoolConstraints": 11,
+    "flatIntConstraints": 156,
+    "evaluatedHalfReifiedConstraints": 22,
+    "method": "minimize",
+    "flatTime": 47.315999999999995,
+    "objective": 1992,
+    "objectiveBound": 1992,
+    "boolVariables": 11,
+    "failures": 0,
+    "propagations": 0,
+    "solveTime": 10.177999999999999,
+    "time": 79.0,
+    "nSolutions": 7,
+    "maxTime": 39348,
+    "makespan": 727.0,
+    "energy": 1265.0
+  }
+}

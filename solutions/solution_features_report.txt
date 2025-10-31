@@ -1,0 +1,14 @@
+=== Solution Features Report ===
+Solutions dir: ./solutions
+Processed OK: 2402 | Errors: 0 | Total rows: 2402
+
+Status counts:
+  - SATISFIED: 1694
+  - OPTIMAL_SOLUTION: 707
+  - NA: 1
+
+Quality tag counts:
+  - feasible: 1353
+  - optimal: 707
+  - timeout: 341
+  - unknown: 1

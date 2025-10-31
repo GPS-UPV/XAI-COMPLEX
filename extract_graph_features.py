@@ -1,18 +1,15 @@
-import os
 import glob
 import json
+import os
 import traceback
 from collections import defaultdict
-from tqdm import tqdm
+
+import networkx as nx
 import numpy as np
 import pandas as pd
 import torch
-import networkx as nx
-
-try:
-    from torch_geometric.data import HeteroData
-except Exception:
-    HeteroData = None
+from torch_geometric.data import HeteroData
+from tqdm import tqdm
 
 # ---------------- utilidades ----------------
 

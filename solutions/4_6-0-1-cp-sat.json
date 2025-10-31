@@ -1,0 +1,97 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 1822,
+    "start_time": [
+      [
+        177,
+        0,
+        226,
+        402,
+        90,
+        345
+      ],
+      [
+        345,
+        157,
+        98,
+        0,
+        250,
+        261
+      ],
+      [
+        406,
+        259,
+        0,
+        98,
+        347,
+        179
+      ],
+      [
+        157,
+        90,
+        449,
+        179,
+        0,
+        402
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 486 + 1336 = 1822 \nStart Times: [177, 0, 226, 402, 90, 345, 345, 157, 98, 0, 250, 261, 406, 259, 0, 98, 347, 179, 157, 90, 449, 179, 0, 402]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 72,
+    "flatIntVars": 50,
+    "flatBoolConstraints": 36,
+    "flatIntConstraints": 158,
+    "evaluatedHalfReifiedConstraints": 72,
+    "method": "minimize",
+    "flatTime": 48.537,
+    "objective": 1822,
+    "objectiveBound": 1822,
+    "boolVariables": 36,
+    "failures": 0,
+    "propagations": 0,
+    "solveTime": 24.151,
+    "time": 83.0,
+    "nSolutions": 16,
+    "maxTime": 30360,
+    "makespan": 486.0,
+    "energy": 1336.0
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 2643,
+    "start_time": [
+      [
+        0,
+        481,
+        130,
+        49,
+        306,
+        424
+      ],
+      [
+        279,
+        146,
+        440,
+        592,
+        239,
+        340
+      ],
+      [
+        166,
+        346,
+        248,
+        511,
+        434,
+        47
+      ],
+      [
+        146,
+        79,
+        226,
+        340,
+        250,
+        0
+      ],
+      [
+        246,
+        0,
+        79,
+        279,
+        553,
+        176
+      ],
+      [
+        553,
+        239,
+        346,
+        440,
+        511,
+        127
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 618 + 2025 = 2643 \nStart Times: [0, 481, 130, 49, 306, 424, 279, 146, 440, 592, 239, 340, 166, 346, 248, 511, 434, 47, 146, 79, 226, 340, 250, 0, 246, 0, 79, 279, 553, 176, 553, 239, 346, 440, 511, 127]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 180,
+    "flatIntVars": 74,
+    "flatBoolConstraints": 90,
+    "flatIntConstraints": 308,
+    "evaluatedHalfReifiedConstraints": 180,
+    "method": "minimize",
+    "flatTime": 52.252,
+    "objective": 2643,
+    "objectiveBound": 2643,
+    "boolVariables": 90,
+    "failures": 0,
+    "propagations": 1183,
+    "solveTime": 30.897000000000002,
+    "time": 117.0,
+    "nSolutions": 33,
+    "maxTime": 36352,
+    "makespan": 618.0,
+    "energy": 2025.0
+  }
+}

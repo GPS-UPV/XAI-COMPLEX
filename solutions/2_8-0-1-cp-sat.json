@@ -1,0 +1,73 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 1439,
+    "start_time": [
+      [
+        444,
+        400,
+        1,
+        82,
+        243,
+        307,
+        540,
+        226
+      ],
+      [
+        135,
+        0,
+        493,
+        307,
+        395,
+        226,
+        84,
+        146
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 573 + 866 = 1439 \nStart Times: [444, 400, 1, 82, 243, 307, 540, 226, 135, 0, 493, 307, 395, 226, 84, 146]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 16,
+    "flatIntVars": 34,
+    "flatBoolConstraints": 8,
+    "flatIntConstraints": 90,
+    "evaluatedHalfReifiedConstraints": 16,
+    "method": "minimize",
+    "flatTime": 42.876,
+    "objective": 1439,
+    "objectiveBound": 1439,
+    "boolVariables": 8,
+    "failures": 0,
+    "propagations": 412,
+    "solveTime": 7.351,
+    "time": 67.0,
+    "nSolutions": 4,
+    "maxTime": 30360,
+    "makespan": 573.0,
+    "energy": 866.0
+  }
+}

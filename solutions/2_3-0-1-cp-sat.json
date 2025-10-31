@@ -1,0 +1,53 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 599,
+    "start_time": [
+      [
+        0,
+        59,
+        107
+      ],
+      [
+        59,
+        108,
+        198
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 294 + 305 = 599 \nStart Times: [0, 59, 107, 59, 108, 198]\nSpeed Scaling; [1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 6,
+    "flatIntVars": 14,
+    "flatBoolConstraints": 3,
+    "flatIntConstraints": 20,
+    "evaluatedHalfReifiedConstraints": 6,
+    "method": "minimize",
+    "flatTime": 42.355,
+    "objective": 599,
+    "objectiveBound": 599,
+    "boolVariables": 3,
+    "failures": 0,
+    "propagations": 30,
+    "solveTime": 8.297,
+    "time": 64.0,
+    "nSolutions": 2,
+    "maxTime": 15380,
+    "makespan": 294.0,
+    "energy": 305.0
+  }
+}

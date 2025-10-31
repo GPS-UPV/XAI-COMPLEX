@@ -1,0 +1,145 @@
+{
+  "status": "SATISFIED",
+  "solution": {
+    "objective": 2524,
+    "start_time": [
+      [
+        0,
+        64
+      ],
+      [
+        682,
+        602
+      ],
+      [
+        212,
+        424
+      ],
+      [
+        441,
+        380
+      ],
+      [
+        131,
+        670
+      ],
+      [
+        380,
+        287
+      ],
+      [
+        115,
+        0
+      ],
+      [
+        287,
+        203
+      ],
+      [
+        602,
+        514
+      ],
+      [
+        808,
+        727
+      ],
+      [
+        64,
+        123
+      ],
+      [
+        298,
+        903
+      ],
+      [
+        906,
+        808
+      ],
+      [
+        730,
+        17
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 970 + 1554 = 2524 \nStart Times: [0, 64, 682, 602, 212, 424, 441, 380, 131, 670, 380, 287, 115, 0, 287, 203, 602, 514, 808, 727, 64, 123, 298, 903, 906, 808, 730, 17]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 364,
+    "flatIntVars": 58,
+    "flatBoolConstraints": 182,
+    "flatIntConstraints": 408,
+    "evaluatedHalfReifiedConstraints": 364,
+    "method": "minimize",
+    "flatTime": 54.412,
+    "objective": 2524,
+    "objectiveBound": 1813,
+    "boolVariables": 284,
+    "failures": 10,
+    "propagations": 7994,
+    "solveTime": 18.088,
+    "time": 106.0,
+    "nSolutions": 17,
+    "maxTime": 48336,
+    "makespan": 970.0,
+    "energy": 1554.0
+  }
+}

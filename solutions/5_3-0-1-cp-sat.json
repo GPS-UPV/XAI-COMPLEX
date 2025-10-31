@@ -1,0 +1,83 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 1201,
+    "start_time": [
+      [
+        78,
+        182,
+        270
+      ],
+      [
+        186,
+        0,
+        90
+      ],
+      [
+        235,
+        101,
+        0
+      ],
+      [
+        0,
+        230,
+        61
+      ],
+      [
+        61,
+        90,
+        186
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 338 + 863 = 1201 \nStart Times: [78, 182, 270, 186, 0, 90, 235, 101, 0, 0, 230, 61, 61, 90, 186]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 60,
+    "flatIntVars": 32,
+    "flatBoolConstraints": 30,
+    "flatIntConstraints": 92,
+    "evaluatedHalfReifiedConstraints": 60,
+    "method": "minimize",
+    "flatTime": 44.713,
+    "objective": 1201,
+    "objectiveBound": 1201,
+    "boolVariables": 41,
+    "failures": 0,
+    "propagations": 399,
+    "solveTime": 13.008000000000001,
+    "time": 77.0,
+    "nSolutions": 14,
+    "maxTime": 24368,
+    "makespan": 338.0,
+    "energy": 863.0
+  }
+}

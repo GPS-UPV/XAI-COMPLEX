@@ -1,0 +1,49 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 345,
+    "start_time": [
+      [
+        59,
+        0
+      ],
+      [
+        0,
+        59
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 127 + 218 = 345 \nStart Times: [59, 0, 0, 59]\nSpeed Scaling; [1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 4,
+    "flatIntVars": 10,
+    "flatBoolConstraints": 2,
+    "flatIntConstraints": 12,
+    "evaluatedHalfReifiedConstraints": 4,
+    "method": "minimize",
+    "flatTime": 42.582,
+    "objective": 345,
+    "objectiveBound": 345,
+    "boolVariables": 2,
+    "failures": 0,
+    "propagations": 14,
+    "solveTime": 7.497,
+    "time": 64.0,
+    "nSolutions": 2,
+    "maxTime": 12384,
+    "makespan": 127.0,
+    "energy": 218.0
+  }
+}

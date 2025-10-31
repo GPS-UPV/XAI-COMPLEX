@@ -1,0 +1,117 @@
+{
+  "status": "OPTIMAL_SOLUTION",
+  "solution": {
+    "objective": 2870,
+    "start_time": [
+      [
+        109,
+        0,
+        93,
+        743,
+        567,
+        659,
+        309,
+        170,
+        389,
+        578,
+        258,
+        487
+      ],
+      [
+        218,
+        151,
+        469,
+        491,
+        702,
+        422,
+        389,
+        61,
+        651,
+        0,
+        140,
+        586
+      ],
+      [
+        575,
+        433,
+        339,
+        640,
+        297,
+        526,
+        225,
+        140,
+        155,
+        61,
+        498,
+        0
+      ]
+    ],
+    "SpeedScaling": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "_output_item": "Objective function: 760 + 2110 = 2870 \nStart Times: [109, 0, 93, 743, 567, 659, 309, 170, 389, 578, 258, 487, 218, 151, 469, 491, 702, 422, 389, 61, 651, 0, 140, 586, 575, 433, 339, 640, 297, 526, 225, 140, 155, 61, 498, 0]\nSpeed Scaling; [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+    "_checker": ""
+  },
+  "statistics": {
+    "paths": 0,
+    "flatBoolVars": 72,
+    "flatIntVars": 74,
+    "flatBoolConstraints": 36,
+    "flatIntConstraints": 308,
+    "evaluatedHalfReifiedConstraints": 72,
+    "method": "minimize",
+    "flatTime": 52.561,
+    "objective": 2870,
+    "objectiveBound": 2870,
+    "boolVariables": 36,
+    "failures": 0,
+    "propagations": 0,
+    "solveTime": 21.662,
+    "time": 103.0,
+    "nSolutions": 12,
+    "maxTime": 45340,
+    "makespan": 760.0,
+    "energy": 2110.0
+  }
+}
