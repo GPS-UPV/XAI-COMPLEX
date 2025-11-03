@@ -17,11 +17,12 @@ Salidas:
 
 import os
 import re
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
-from scipy.stats import kruskal, f_oneway, spearmanr
+from scipy.stats import f_oneway, kruskal, spearmanr
 
 # =========================================================
 # Funciones auxiliares
@@ -78,7 +79,7 @@ df["cat_num"] = df["category"].map(cat_map)
 # =========================================================
 # Variables clave para evaluar
 # =========================================================
-key_time_cols = [c for c in df.columns if any(x in c.lower() for x in ["solve", "time", "flattime", "totaltime"])]
+key_time_cols = [c for c in df.columns if c in ["maxTime", "totalTime", "solveTime", "is_optimal" , "timelimit_hit"]] #"makespan", "energy",
 
 # Filtramos las más relevantes y presentes
 key_time_cols = [c for c in key_time_cols if c in df.columns and np.issubdtype(df[c].dtype, np.number)]
@@ -90,16 +91,16 @@ if not key_time_cols:
 # =========================================================
 summary = []
 for col in key_time_cols:
-    stats = df.groupby("category")[col].agg(["mean", "median", "std", "min", "max", "count"])
+    stats = df.groupby("category")[col].agg(["mean"]) #, "median", "std", "min", "max", "count"
     easy, med, hard = [df.loc[df["category"]==g, col].dropna() for g in ["easy","medium","hard"]]
     fval, pval = safe_stat_test([easy, med, hard])
     rho, p_rho = spearmanr(df["cat_num"], df[col], nan_policy="omit")
-    diff_order = (stats.loc["easy","median"] < stats.loc["medium","median"] < stats.loc["hard","median"])
+    diff_order = (stats.loc["easy","mean"] < stats.loc["medium","mean"] < stats.loc["hard","mean"])
     summary.append({
         "feature": col,
-        "easy_med": stats.loc["easy","median"] if "easy" in stats.index else np.nan,
-        "medium_med": stats.loc["medium","median"] if "medium" in stats.index else np.nan,
-        "hard_med": stats.loc["hard","median"] if "hard" in stats.index else np.nan,
+        "easy_med": stats.loc["easy","mean"] if "easy" in stats.index else np.nan,
+        "medium_med": stats.loc["medium","mean"] if "medium" in stats.index else np.nan,
+        "hard_med": stats.loc["hard","mean"] if "hard" in stats.index else np.nan,
         "anova_p": pval,
         "spearman_r": rho,
         "increasing_order": diff_order
@@ -127,8 +128,8 @@ res = pd.DataFrame(res).sort_values("anova_p").reset_index(drop=True)
 # Gráficos comparativos de tiempos
 # =========================================================
 plt.figure(figsize=(10,6))
-melted = df.melt(id_vars=["category"], value_vars=key_time_cols, var_name="Metric", value_name="Time")
-sns.boxplot(data=melted, x="category", y="Time", hue="Metric")
+melted = df.melt(id_vars=["category"], value_vars=key_time_cols, var_name="Metric", value_name="Value")
+sns.boxplot(data=melted, x="category", y="Value", hue="Metric")
 plt.title("Comparativa de tiempos por categoría")
 plt.tight_layout()
 plt.savefig(os.path.join(OUT_DIR, "group_differences.png"), dpi=200)

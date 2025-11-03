@@ -1,22 +1,11 @@
 === Evaluación de las categorías (easy / medium / hard) ===
 
 Total instancias analizadas: 2401
-Columnas de tiempo analizadas: start_time_len, start_time_flat_len, start_time_min, start_time_max, start_time_mean, start_time_std, start_time_gini, start_time_num_zero, start_time_zero_ratio, solveTime, flatTime, totalTime, maxTime, boolVariables_runtime
+Columnas de tiempo analizadas: solveTime, totalTime, maxTime
 
-- start_time_std: ρ=0.775, p=2.45e-320, medianas (E/M/H) = 472.76 / 720.87 / 951.77, orden creciente=True
-- start_time_max: ρ=0.774, p=2.26e-312, medianas (E/M/H) = 1624.00 / 2505.50 / 3317.00, orden creciente=True
-- start_time_mean: ρ=0.773, p=2.54e-292, medianas (E/M/H) = 787.88 / 1226.95 / 1623.80, orden creciente=True
-- maxTime: ρ=0.754, p=0.00e+00, medianas (E/M/H) = 111252.00 / 162184.00 / 216112.00, orden creciente=True
-- flatTime: ρ=0.670, p=0.00e+00, medianas (E/M/H) = 194.42 / 601.70 / 1719.66, orden creciente=True
-- start_time_flat_len: ρ=0.643, p=0.00e+00, medianas (E/M/H) = 252.00 / 582.50 / 1250.00, orden creciente=True
-- boolVariables_runtime: ρ=0.619, p=2.77e-256, medianas (E/M/H) = 2169.00 / 7836.50 / 25873.50, orden creciente=True
-- totalTime: ρ=0.602, p=0.00e+00, medianas (E/M/H) = 3219.00 / 47855.50 / 213422.50, orden creciente=True
-- solveTime: ρ=0.596, p=0.00e+00, medianas (E/M/H) = 3557.23 / 50869.70 / 210584.50, orden creciente=True
-- start_time_len: ρ=0.524, p=7.05e-168, medianas (E/M/H) = 16.00 / 28.00 / 39.00, orden creciente=True
-- start_time_num_zero: ρ=0.515, p=2.64e-181, medianas (E/M/H) = 8.00 / 12.00 / 18.00, orden creciente=True
-- start_time_gini: ρ=-0.233, p=1.58e-18, medianas (E/M/H) = 0.35 / 0.34 / 0.34, orden creciente=False
-- start_time_zero_ratio: ρ=-0.725, p=5.70e-38, medianas (E/M/H) = 0.03 / 0.02 / 0.02, orden creciente=False
-- start_time_min: ρ=nan, p=nan, medianas (E/M/H) = 0.00 / 0.00 / 0.00, orden creciente=False
+- maxTime: ρ=0.754, p=0.00e+00, medianas (E/M/H) = 105732.20 / 151906.00 / 209389.22, orden creciente=True
+- totalTime: ρ=0.602, p=0.00e+00, medianas (E/M/H) = 21229.06 / 67454.66 / 183291.40, orden creciente=True
+- solveTime: ρ=0.596, p=0.00e+00, medianas (E/M/H) = 22737.38 / 67393.40 / 180576.91, orden creciente=True
 
 === Análisis de diferencias significativas ===
 Principales features que diferencian grupos:
@@ -37,7 +26,7 @@ Principales features que diferencian grupos:
   flatBoolConstraints                 p=0.00e+00  ρ=0.644
 
 === Valoración global ===
-Las categorías son razonables pero podrían ajustarse: algunos solapamientos entre grupos.
+Las categorías están muy bien estructuradas: tiempos y métricas crecen consistentemente con la dificultad.
 
-Correlación media tiempo-dificultad: ρ=0.484
-Proporción de métricas con orden creciente E<M<H: 78.6%
+Correlación media tiempo-dificultad: ρ=0.651
+Proporción de métricas con orden creciente E<M<H: 100.0%
