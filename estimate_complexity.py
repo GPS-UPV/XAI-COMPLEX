@@ -294,6 +294,7 @@ def main():
     unsup = unsupervised_complexity(X_scl)
 
     # 3) Calibración supervisada (si hay labels.csv)
+    #TODO: Isa añadir labels supervised
     labels = _load_labels_csv("./graphs/labels.csv")
     sup = supervised_calibration(df, X_scl, labels)
 

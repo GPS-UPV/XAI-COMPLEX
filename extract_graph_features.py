@@ -82,8 +82,6 @@ def _get_edge_index_from_hdata(hdata, key):
         return None
     return None
 
-# ---------------- utilidades nuevas (tolerantes a formatos) ----------------
-
 def _as_numpy(x, dtype=float):
     if x is None:
         return None
@@ -391,7 +389,8 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     features['n_jobs'] = int(n_jobs) if n_jobs is not None else None
     features['n_machines'] = int(n_machs) if n_machs is not None else None
     features['seed'] = int(seed) if seed is not None else None
-
+    
+    #? GRAPH FEATURES
     # --- 1) node.x stats (como antes) ---
     N = None
     try:
@@ -455,7 +454,7 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
         for name in ['min','max','mean','median','std','range','q1','q3','gini']:
             features[f'clustering_{name}'] = None
 
-    try:
+    try: ##TODO: Isa revisar (grafo dirigido)
         if use_approx_betweenness and G_d.number_of_nodes() > betweenness_samples:
             btw = nx.betweenness_centrality(G_d, normalized=True, k=betweenness_samples)
         else:
@@ -465,12 +464,11 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     except Exception as e:
         features['betweenness_error'] = str(e)
 
-    # --- 4) === NUEVO === importar features del generador (top-level) ---
+    # --- 4) tesis christian ---
     genf = _extract_generator_features(hdata)
     features.update(genf)
 
-    # --- 5) === NUEVO === completar con cálculos ligeros SOLO si faltan ---
-    # Datos base
+    # --- 5) solución errores datos  ---
     P = _ensure_2d(_get_node_attr(hdata, ['P','p','proc_time','processing_time','duration','dur','proc_times','times']))
     E = _ensure_2d(_get_node_attr(hdata, ['E','energy','energy_per_speed','energy_cost','energies']))
     R = _get_node_attr(hdata, ['R','release','r','release_date','release_time'])
@@ -478,6 +476,7 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     job_ids = _get_node_attr(hdata, ['job','job_id','j','op_job','job_idx','job_index'])
     mach_ids = _get_node_attr(hdata, ['machine','mach','m','machine_id','op_machine','machine_idx','machine_index'])
 
+    #TODO: revisar si hace falta
     # LBs makespan si no hay makespan_min/max
     if 'makespan_min' not in features or 'makespan_max' not in features:
         features.update(_compute_lb_makespan(P, job_ids, mach_ids, n_machs))
