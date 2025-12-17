@@ -1,0 +1,8 @@
+=== COMPLEXITY ESTIMATOR REPORT ===
+Instances: 2401
+Signal source: blend(unsup + prior)
+Mean complexity: 0.132
+Quantiles: q10=0.032 q50=0.104 q90=0.260
+Counts by category: {'hard': 816, 'easy': 793, 'medium': 792}
+Prior: YES (from generator metrics)
+Supervised: NO

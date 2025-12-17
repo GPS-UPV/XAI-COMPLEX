@@ -3,7 +3,7 @@ import json
 import os
 import traceback
 from collections import defaultdict
-
+import time
 import networkx as nx
 import numpy as np
 import pandas as pd
@@ -438,13 +438,13 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
         edges = list(zip(u.tolist(), v.tolist()))
         G_d.add_edges_from(edges)
 
-    n = G_d.number_of_nodes()
-    m = G_d.number_of_edges()
-    features['disj_graph_density'] = None if n <= 1 else 2.0 * m / (n * (n - 1))
+    n_d = G_d.number_of_nodes()
+    m_d = G_d.number_of_edges()
+    features['disj_graph_density'] = None if n_d <= 1 else 2.0 * m_d / (n_d * (n_d - 1))
 
     degrees = [d for _, d in G_d.degree()]
     for k, v in _agg_stats(degrees).items():
-        features[f'deg_{k}'] = v
+        features[f'deg_d_{k}'] = v
 
     if G_d.number_of_nodes() > 0:
         clustering = nx.clustering(G_d)
@@ -454,21 +454,37 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
         for name in ['min','max','mean','median','std','range','q1','q3','gini']:
             features[f'clustering_{name}'] = None
 
-    try: ##TODO: Isa revisar (grafo dirigido)
-        if use_approx_betweenness and G_d.number_of_nodes() > betweenness_samples:
-            btw = nx.betweenness_centrality(G_d, normalized=True, k=betweenness_samples)
+    # --- 4) Grafo no dirigido a partir de conjuntivas ---
+    G_c = nx.Graph()
+    G_c.add_nodes_from(range(N))
+    if conj_idx is not None:
+        u = conj_idx[0].astype(int); v = conj_idx[1].astype(int)
+        edges = list(zip(u.tolist(), v.tolist()))
+        G_c.add_edges_from(edges)
+        
+    n_c = G_c.number_of_nodes()
+    m_c = G_c.number_of_edges()
+    features['conj_graph_density'] = None if n_c <= 1 else 2.0 * m_c / (n_c * (n_c - 1))
+
+    degrees = [d for _, d in G_c.degree()]
+    for k, v in _agg_stats(degrees).items():
+        features[f'deg_c_{k}'] = v
+
+    try:
+        if use_approx_betweenness and G_c.number_of_nodes() > betweenness_samples:
+            btw = nx.betweenness_centrality(G_c, normalized=True, k=betweenness_samples)
         else:
-            btw = nx.betweenness_centrality(G_d, normalized=True)
+            btw = nx.betweenness_centrality(G_c, normalized=True)
         for k, v in _agg_stats(list(btw.values())).items():
             features[f'betweenness_{k}'] = v
     except Exception as e:
         features['betweenness_error'] = str(e)
 
-    # --- 4) tesis christian ---
+    # --- 5) tesis christian ---
     genf = _extract_generator_features(hdata)
     features.update(genf)
 
-    # --- 5) solución errores datos  ---
+    # --- 6) solución errores datos  ---
     P = _ensure_2d(_get_node_attr(hdata, ['P','p','proc_time','processing_time','duration','dur','proc_times','times']))
     E = _ensure_2d(_get_node_attr(hdata, ['E','energy','energy_per_speed','energy_cost','energies']))
     R = _get_node_attr(hdata, ['R','release','r','release_date','release_time'])
@@ -505,6 +521,9 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
 # ---------------- main: leer carpeta ./graphs ----------------
 
 def main(graphs_folder='./graphs', out_csv=None, verbose=False):
+    
+    start_time = time.time()
+    
     if out_csv is None:
         out_csv = os.path.join(graphs_folder, 'features.csv')
     os.makedirs(graphs_folder, exist_ok=True)
@@ -599,6 +618,15 @@ def main(graphs_folder='./graphs', out_csv=None, verbose=False):
         json.dump(debug, fh, indent=2, ensure_ascii=False)
 
     print(f"\nTerminado. Guardado {out_csv} (filas: {len(df)}) y debug -> {debug_path}")
+    
+    execution_time = time.time() - start_time
+    
+    hours, rest = divmod(execution_time, 3600)
+    minutes, seconds = divmod(rest, 60)
+    
+    report_path = os.path.join(graphs_folder, 'graph_features_report.txt')
+    with open(report_path, "w", encoding='utf-8') as fr:
+        fr.write(f"Tiempo de ejecución: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
 
 if __name__ == '__main__':
     # pon verbose=True si quieres el PROBE
