@@ -324,9 +324,12 @@ def main():
     q1, q2 = np.quantile(complexity, [0.33, 0.66])
     cats = np.where(complexity <= q1, "easy",
             np.where(complexity <= q2, "medium", "hard"))
+    job_machines = np.array(df.index.to_series().apply(lambda x: list(map(int, x.split("-")[:2]))).to_list())
 
     out = pd.DataFrame({
         "instance_id": df.index,
+        "jobs": job_machines[:,0],
+        "machines": job_machines[:,1],
         "complexity_0_1": complexity,
         "category": cats,
         "s_iforest": unsup["iforest"],
