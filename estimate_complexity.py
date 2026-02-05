@@ -18,12 +18,14 @@ import numpy as np
 import pandas as pd
 
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import RobustScaler, MinMaxScaler
 from sklearn.neighbors import LocalOutlierFactor, NearestNeighbors
 from sklearn.covariance import MinCovDet
 from sklearn.ensemble import IsolationForest, RandomForestRegressor
 from sklearn.model_selection import cross_val_score, KFold
 from sklearn.metrics import make_scorer, r2_score
+from sklearn.decomposition import PCA
+
 
 warnings.filterwarnings("ignore", category=UserWarning)
 np.set_printoptions(edgeitems=3, suppress=True)
@@ -77,7 +79,7 @@ def _load_features_json(path_json="./graphs/features.json", path_csv="./graphs/f
     df = df.dropna(axis=1, how="all")
     return df
 
-def _load_labels_csv(path="./graphs/labels.csv") -> pd.DataFrame:
+def _load_labels_csv(path="./solutions/solution_features.csv") -> pd.DataFrame:
     if not os.path.exists(path):
         return None
     lab = pd.read_csv(path)
@@ -143,31 +145,87 @@ def _build_matrix(df: pd.DataFrame):
     X_scl = scaler.fit_transform(X_imp)
     return X, X_scl, imputer, scaler
 
+def normalise(X_scl: pd.DataFrame):
+    
+    mask = [c for c in X_scl.columns if X_scl[c].nunique() > 1]
+    
+    X = X_scl[mask].to_numpy()
+ 
+    col_min = X.min(axis=0, keepdims=True)
+    X_pos = X - np.minimum(col_min, 0.0)
+    
+    col_sum = X_pos.sum(axis=0, keepdims=True)
+    
+    X_norm = np.divide(
+        X_pos, col_sum,
+        out=np.zeros_like(X_pos),
+        where=col_sum != 0
+    )
+    
+    return X_norm
+
 # ------------------ complejidad no supervisada ----------------------
 
 def unsupervised_complexity(X_scl: np.ndarray, random_state=42) -> Dict[str, np.ndarray]:
-    n = X_scl.shape[0]
+    n = 3
+    
+    X_norm = normalise(X_scl)
+    
+    #A = np.cov(Xn.T, bias=True)
+    #L, E = np.linalg.eigh(A); i = L.argsort()[::-1]; L = L[i]; E = E[:,i]; print('EVD:\n', E, '\n')
+    #U, S, Vt = np.linalg.svd(A) # np devuelve valores singulares en orden no creciente
+    #print('SVD:\n', S, '\n')
+    #
+    #aux = len(Vt) * [None]
+    #for i in range(len(Vt)):
+    #    aux[i] = [(Vt[i][j], j) for j in range(len(Vt[i]))]
+    #    aux[i].sort(reverse=True)
+    #
+    #feat = len(Vt) * [None]
+    #for i in range(len(aux)):
+    #    feat[i] = [X_scl.columns[i+1] for _, i in aux[i][:29]]
+    #
+    #for i in range(len(S)):
+    #    print(f"{S[i]}      {feat[i]}")
+                
+    #split = int(len(X_scl)*0.9)
+    #
+    #X_train, X_test = X_scl[:split], X_scl[split:]
+    #max_K = np.min(X_train.shape); pca = PCA(n_components=max_K).fit(X_train)
+    #Z_train = pca.transform(X_train); Z_test = pca.transform(X_test)
+    #Ks = np.array([1, 2, 5, 10, 20, 30, 40, 50, max_K])
+    #L_train = np.empty_like(Ks, dtype=float); L_test = np.empty_like(Ks, dtype=float)
+    #for i, K in enumerate(range(24,31)):
+    #    Z_train_K = Z_train.copy(); Z_train_K[:, K:] = 0.0; hX_train = pca.inverse_transform(Z_train_K)
+    #    L_train[i] = np.square(X_train - hX_train).sum(axis=1).mean()
+    #    Z_test_K = Z_test.copy(); Z_test_K[:, K:] = 0.0; hX_test = pca.inverse_transform(Z_test_K)
+    #    L_test[i] = np.square(X_test - hX_test).sum(axis=1).mean()
+    #    print(f"K_train {K} {L_train[i]}, K_test {K} {L_test[i]}")
+    
+    # mejor valor de k=29, el 30 sube mucho, la mitad de los valores singulares son el mismo valor (3.17962645817263e-07)
+    
+    Xr = PCA(n_components=29).fit_transform(X_norm - X_norm.mean(0))
+        
+    iforest = IsolationForest(n_estimators=100, random_state=random_state, n_jobs=-1)
+    iforest.fit(Xr)
+    s_if = _safe_minmax(-iforest.score_samples(Xr))
 
-    iforest = IsolationForest(n_estimators=400, random_state=random_state, n_jobs=-1)
-    iforest.fit(X_scl)
-    s_if = _safe_minmax(-iforest.score_samples(X_scl))
-
-    lof = LocalOutlierFactor(n_neighbors=min(20, max(5, int(math.sqrt(n)))), contamination="auto")
-    lof.fit(X_scl)
+    lof = LocalOutlierFactor(n_neighbors=100)
+    lof.fit(Xr)
     s_lof = _safe_minmax(-lof.negative_outlier_factor_)
 
-    mcd = MinCovDet(random_state=random_state)
-    mcd.fit(X_scl)
-    s_md = _safe_minmax(np.sqrt(np.maximum(mcd.mahalanobis(X_scl), 0.0)))
+    #mcd = MinCovDet(random_state=random_state)
+    #mcd.fit(Xr)
+    #s_md = np.sqrt(np.maximum(mcd.mahalanobis(Xr), 0.0))
+    #s_md_n = _safe_minmax(np.sqrt(np.maximum(mcd.mahalanobis(Xr), 0.0)))
 
-    k = min(20, max(5, int(math.sqrt(n))))
-    knn = NearestNeighbors(n_neighbors=k, n_jobs=-1)
-    knn.fit(X_scl)
-    dists, _ = knn.kneighbors(X_scl)
-    s_knn = _safe_minmax(dists[:, 1:].mean(axis=1) if dists.shape[1] > 1 else dists.mean(axis=1))
+    knn = NearestNeighbors(n_neighbors=100, n_jobs=-1)
+    knn.fit(Xr)
+    dists, _ = knn.kneighbors(Xr)
+    s_knn = _safe_minmax(dists.mean(axis=1)) #if dists.shape[1] > 1 else dists.mean(axis=1))
 
-    s_ens = _safe_minmax(np.vstack([s_if, s_lof, s_md, s_knn]).mean(axis=0))
-    return {"iforest": s_if, "lof": s_lof, "mahalanobis": s_md, "knn_density": s_knn, "complexity_unsup": s_ens}
+    s_ens = _safe_minmax(np.vstack([s_if, s_lof, s_knn]).mean(axis=0))
+    return {"iforest": s_if, "lof": s_lof, "knn_density": s_knn, "complexity_unsup": s_ens}
 
 # -------------------- prior de complejidad (nuevo) ------------------
 
@@ -228,9 +286,9 @@ def _status_to_complexity(status: str) -> float:
         return np.nan
     s = status.strip().upper()
     if "OPTIMAL" in s: return 0.0
-    if "FEAS" in s:    return 0.5
-    if "TIME" in s:    return 1.0
-    if "FAIL" in s or "INFEAS" in s: return 1.0
+    if "FEASIBLE" in s:    return 0.5
+    if "TIMEOUT" in s:    return 1.0
+    if "FAIL" in s or "INFEAS" in s or "UNKNOWN" in s: return 1.0
     return np.nan
 
 def supervised_calibration(df_feats: pd.DataFrame,
@@ -239,33 +297,40 @@ def supervised_calibration(df_feats: pd.DataFrame,
     y_candidates = {}
 
     if labels is None:
-        return {"used": False}
+        return {"used": False, "reason": "labels is None"}
 
-    if "runtime_ms" in labels.columns:
-        rt = labels["runtime_ms"].astype(float).replace([np.inf, -np.inf], np.nan)
+    if "solveTime" in labels.columns:
+        rt = labels["solveTime"].astype(float).replace([np.inf, -np.inf], np.nan)
         q_low, q_high = rt.quantile([0.05, 0.95])
-        y_candidates["from_runtime"] = _safe_minmax(rt.clip(q_low, q_high).values)
+        y_candidates["from_solveTime"] = _safe_minmax(rt.clip(q_low, q_high).values)
 
-    for col in labels.columns:
-        if col.lower() in {"status", "solver_status", "cp_status"}:
-            y_candidates["from_status"] = labels[col].map(_status_to_complexity).values
+    if "quality_tag" in  labels.columns:
+        y_candidates["from_quality_tag"] = labels["quality_tag"].map(_status_to_complexity).values
 
     y = None; y_name = None
-    if "from_runtime" in y_candidates and np.isfinite(y_candidates["from_runtime"]).sum() > 0:
-        y, y_name = y_candidates["from_runtime"], "runtime_ms"
-    elif "from_status" in y_candidates and np.isfinite(y_candidates["from_status"]).sum() > 0:
-        y, y_name = y_candidates["from_status"], "status"
+    if "from_solveTime" in y_candidates and np.isfinite(y_candidates["from_solveTime"]).sum() > 0 and "from_quality_tag" in y_candidates and np.isfinite(y_candidates["from_quality_tag"]).sum() > 0:
+        y, y_name = y_candidates["from_solveTime"] * y_candidates["from_quality_tag"], "solveTime*quality_tag"
+    elif "from_solveTime" in y_candidates and np.isfinite(y_candidates["from_solveTime"]).sum() > 0:
+        y, y_name = y_candidates["from_solveTime"], "solveTime"
+    elif "from_quality_tag" in y_candidates and np.isfinite(y_candidates["from_quality_tag"]).sum() > 0:
+        y, y_name = y_candidates["from_quality_tag"], "quality_tag"
     else:
         return {"used": False, "reason": "No usable labels"}
-
-    y_series = pd.Series(y, index=labels.index).reindex(df_feats.index)
+      
+    id1 = [str(c).split('-')[0] for c in labels.index]
+    
+    id2 = [str(c).split('-')[0] + "_" + str(c).split('-')[1] for c in df_feats.index]
+                
+    y_series = pd.Series(y, index=id1).reindex(id2)
+    
     mask = np.isfinite(y_series.values)
+        
     if mask.sum() < 20:
         return {"used": False, "reason": "Too few labels"}
 
     Xs = X_scl[mask]; ys = y_series.values[mask]
     rf = RandomForestRegressor(n_estimators=600, max_features="sqrt", random_state=42, n_jobs=-1)
-    cv = KFold(n_splits=5, shuffle=True, random_state=42)
+    cv = KFold(n_splits=3, shuffle=True, random_state=42)
     r2 = cross_val_score(rf, Xs, ys, scoring=make_scorer(r2_score), cv=cv).mean()
     rf.fit(Xs, ys)
     y_pred_full = np.clip(rf.predict(X_scl), 0.0, 1.0)
@@ -291,12 +356,11 @@ def main():
 
     # 2) Ensamble no supervisado sobre TODAS las numéricas (grafo + generador)
     X_raw, X_scl, imputer, scaler = _build_matrix(df)
-    unsup = unsupervised_complexity(X_scl)
+    unsup = unsupervised_complexity(X_raw)
 
     # 3) Calibración supervisada (si hay labels.csv)
-    #TODO: Isa añadir labels supervised
-    labels = _load_labels_csv("./graphs/labels.csv")
-    sup = supervised_calibration(df, X_scl, labels)
+    labels = _load_labels_csv("./solutions/solution_features.csv")
+    sup = supervised_calibration(df, X_raw, labels)
 
     # 4) Blending de señales
     complexity = unsup["complexity_unsup"]
@@ -334,12 +398,13 @@ def main():
         "category": cats,
         "s_iforest": unsup["iforest"],
         "s_lof": unsup["lof"],
-        "s_mahalanobis": unsup["mahalanobis"],
         "s_knn": unsup["knn_density"]
     }).set_index("instance_id")
 
     if prior is not None:
         out["complexity_prior_0_1"] = prior
+        
+    out["complexity_unsupervised_0_1"] = unsup["complexity_unsup"]
 
     if sup.get("used", False):
         out["complexity_supervised_0_1"] = sup["complexity_sup_pred"]
@@ -381,7 +446,7 @@ def main():
     if sup.get("used", False):
         lines.append(f"Supervised: YES ({sup.get('model')}) target={sup.get('target_from')}  cv_r2≈{sup.get('cv_r2_mean'):.3f}")
     else:
-        lines.append("Supervised: NO")
+        lines.append(f"Supervised: NO ({sup.get('reason')})")
 
     with open(out_txt, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
