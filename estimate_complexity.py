@@ -331,7 +331,7 @@ def supervised_calibration(df_feats: pd.DataFrame,
             q_low, q_high = rt.quantile([0.05, 0.95])
             y_candidates[c] = _safe_minmax(rt.clip(q_low, q_high).values)
             no_unique.append(c)
-    
+            
     y_norm = y_candidates[no_unique].to_numpy()
         
     #split = int(len(y_norm)*0.9)
@@ -363,7 +363,7 @@ def supervised_calibration(df_feats: pd.DataFrame,
     id1 = [str(c).split('-')[0].replace("_","-") + "-0.pt" for c in labels.index]
                         
     y_series = pd.Series(y, index=id1).reindex(df_feats.index)
-            
+    
     mask = np.isfinite(y_series.values)
         
     if mask.sum() < 20:
@@ -373,7 +373,9 @@ def supervised_calibration(df_feats: pd.DataFrame,
     Xr = PCA(n_components=29).fit_transform(X_norm - X_norm.mean(0))
     
     
-    Xs = Xr[mask]; ys = y_series.values[mask]
+    Xs = Xr[mask]
+    ys = y_series.values[mask]
+
     rf = RandomForestRegressor(n_estimators=600, max_features="sqrt", random_state=42, n_jobs=-1)
     cv = KFold(n_splits=5, shuffle=True, random_state=42)
     r2 = cross_val_score(rf, Xs, ys, scoring=make_scorer(r2_score), cv=cv).mean()
