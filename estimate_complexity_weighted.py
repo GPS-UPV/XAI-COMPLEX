@@ -421,11 +421,12 @@ def build_weighted_y_0_1(labels: pd.DataFrame,
         d[f"{prefix}raw_propagations"] = prop_raw
         d[f"{prefix}raw_model_size"] = msize_raw
         d[f"{prefix}raw_quality"] = q_raw
+        
 
-        # transformadas (sin normalizar)
-        d[f"{prefix}t_fail_log1p"] = fail_log
-        d[f"{prefix}t_prop_log1p"] = prop_log
-        d[f"{prefix}t_msize_log1p"] = msize_log
+        # # transformadas (sin normalizar)
+        # d[f"{prefix}t_fail_log1p"] = fail_log
+        # d[f"{prefix}t_prop_log1p"] = prop_log
+        # d[f"{prefix}t_msize_log1p"] = msize_log
 
         # clipped
         d[f"{prefix}c_rt"] = rt_clip
@@ -449,6 +450,9 @@ def build_weighted_y_0_1(labels: pd.DataFrame,
             d[f"{prefix}term_{k}"] = terms[k]
 
         d[f"{prefix}sum_terms"] = sum_terms
+        d[f"{prefix}raw_sum_terms"] = rt_ratio+gap_raw+fail_raw+prop_raw+msize_raw+q_raw
+        d[f"{prefix}n_sum_terms"] = rt_norm+gap_norm+fail_norm+prop_norm+msize_norm+q_norm
+        d[f"{prefix}c_sum_terms"] = rt_clip+gap_clip+fail_clip+prop_clip+msize_clip+q_filled
         d[f"{prefix}y"] = y_series.values
 
     if add_columns and return_weights:
