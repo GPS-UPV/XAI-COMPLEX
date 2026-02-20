@@ -2,6 +2,7 @@ import json, os, math, warnings
 from typing import Dict, Any, List
 import numpy as np
 import pandas as pd
+import re
 
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import RobustScaler
@@ -15,6 +16,13 @@ warnings.filterwarnings("ignore", category=UserWarning)
 np.set_printoptions(edgeitems=3, suppress=True)
 
 # --------------------------- utilidades -----------------------------
+
+def normalize_id_from_solutions(sol_id: str) -> str:
+    m = re.match(r"^(\d+)_(\d+)-(\d+)-", str(sol_id))
+    if not m:
+        return np.nan
+    j, mchs, seed = m.groups()
+    return f"{j}-{mchs}-{seed}.pt"
 
 def _safe_minmax(x: np.ndarray) -> np.ndarray:
     x = np.asarray(x, dtype=float)
@@ -516,14 +524,15 @@ def print_weighted_y_formula(weights: Dict[str, float] | None = None,
                              decimals: int = 3) -> None:
     """Imprime por pantalla la fórmula de y usada por build_weighted_y_0_1()."""
     print(weighted_y_formula_str(weights=weights, decimals=decimals))
+def supervised_calibration(
+    df_feats: pd.DataFrame,
+    X_scl: np.ndarray,
+    labels: pd.DataFrame,
+    dump_weighted_components_path: str | None = None
+) -> Dict[str, Any]:
 
-def supervised_calibration(df_feats: pd.DataFrame,
-                           X_scl: np.ndarray,
-                           labels: pd.DataFrame,
-                           dump_weighted_components_path: str | None = None) -> Dict[str, Any]:
-    """Calibración supervisada: aprende a mapear X -> y (hardness) si hay labels disponibles."""
-    if labels is None:
-        return {"used": False}
+    if labels is None or len(labels) == 0:
+        return {"used": False, "reason": "No labels"}
 
     y_candidates: Dict[str, np.ndarray] = {}
     meta: Dict[str, Any] = {}
@@ -534,10 +543,6 @@ def supervised_calibration(df_feats: pd.DataFrame,
         y_candidates["from_y"] = np.clip(_safe_minmax(_clip_quantiles_arr(y0)), 0.0, 1.0)
 
     # 1) Preferido: y ponderada a partir de solution_features (solveTime, gap, failures, etc.)
-    #    Si dump_weighted_components_path se indica, además volcamos un CSV con:
-    #      - columnas raw (sin normalizar)
-    #      - columnas transformadas/clipped/normalizadas
-    #      - cada término ponderado y la suma final
     try:
         if dump_weighted_components_path:
             y_w, w_used, labels_dbg = build_weighted_y_0_1(
@@ -546,7 +551,6 @@ def supervised_calibration(df_feats: pd.DataFrame,
                 add_columns=True,
                 prefix="y_"
             )
-            # Guardamos SOLO el debug en un CSV aparte (no se mezcla con complexity_scores*.csv)
             os.makedirs(os.path.dirname(dump_weighted_components_path) or ".", exist_ok=True)
             labels_dbg.to_csv(dump_weighted_components_path, index=True)
         else:
@@ -564,8 +568,9 @@ def supervised_calibration(df_feats: pd.DataFrame,
     # 2) runtime_ms (si existe)
     if "runtime_ms" in labels.columns:
         rt = pd.to_numeric(labels["runtime_ms"], errors="coerce").replace([np.inf, -np.inf], np.nan)
-        q_low, q_high = rt.quantile([0.05, 0.95])
-        y_candidates["from_runtime_ms"] = _safe_minmax(rt.clip(q_low, q_high).values)
+        if rt.notna().sum() > 0:
+            q_low, q_high = rt.quantile([0.05, 0.95])
+            y_candidates["from_runtime_ms"] = _safe_minmax(rt.clip(q_low, q_high).values)
 
     # 3) status (si existe)
     for col in labels.columns:
@@ -585,13 +590,82 @@ def supervised_calibration(df_feats: pd.DataFrame,
     if y is None:
         return {"used": False, "reason": "No usable labels", **meta}
 
-    y_series = pd.Series(y, index=labels.index).reindex(df_feats.index)
-    mask = np.isfinite(y_series.values)
-    if mask.sum() < 20:
-        return {"used": False, "reason": "Too few labels", "target_from": y_name, **meta}
+    # -----------------------------
+    # FIX: Alineación robusta labels -> df_feats
+    # -----------------------------
+    def _normalize_id_to_pt(raw_id: str) -> str | None:
+        """
+        Convierte IDs de solution_features a IDs del grafo:
+          "10_10-0-1-cp-sat.json" -> "10-10-0.pt"
+          "10_10-0-1-cp-sat"      -> "10-10-0.pt"
+        Si ya viene como "10-10-0.pt", la deja.
+        """
+        s = str(raw_id)
 
+        # Caso ya normalizado
+        if re.match(r"^\d+-\d+-\d+\.pt$", s):
+            return s
+
+        # Caso típico solutions: "J_M-SEED-..." (con _ entre J y M)
+        m = re.match(r"^(\d+)_(\d+)-(\d+)-", s)
+        if m:
+            j, mchs, seed = m.groups()
+            return f"{j}-{mchs}-{seed}.pt"
+
+        # A veces puede venir sin "_" pero con "-": "10-10-0-..."
+        m2 = re.match(r"^(\d+)-(\d+)-(\d+)-", s)
+        if m2:
+            j, mchs, seed = m2.groups()
+            return f"{j}-{mchs}-{seed}.pt"
+
+        return None
+
+    # 1) De dónde sacamos el id de instancia en labels:
+    #    - preferimos una columna explícita si existe
+    #    - si no, usamos labels.index
+    if "instance_id" in labels.columns:
+        raw_ids = labels["instance_id"]
+    elif "instance" in labels.columns:
+        raw_ids = labels["instance"]
+    elif "inst_id" in labels.columns:
+        raw_ids = labels["inst_id"]
+    else:
+        raw_ids = pd.Series(labels.index, index=labels.index)
+
+    idx_norm = raw_ids.apply(_normalize_id_to_pt)
+    idx_norm = idx_norm.astype("object")
+
+    # 2) Construimos la serie y con índice normalizado
+    y_series = pd.Series(y, index=idx_norm)
+
+    # 3) Quitamos los que no se pudieron normalizar
+    y_series = y_series[~y_series.index.isna()]
+
+    # 4) Si hay duplicados (varias soluciones por instancia), agregamos
+    #    (media es lo más simple; podrías usar max si quieres "hardest")
+    if y_series.index.duplicated().any():
+        y_series = y_series.groupby(level=0).mean()
+        meta["labels_aggregated"] = "mean_over_duplicates"
+
+    # 5) Reindex a df_feats.index
+    #    (aquí es donde antes se perdía todo y mask.sum daba 0)
+    y_series = y_series.reindex(df_feats.index)
+
+    mask = np.isfinite(y_series.values)
+
+    meta["n_labels_raw"] = int(len(labels))
+    meta["n_labels_normalized"] = int(pd.Series(idx_norm).notna().sum())
+    meta["n_labels_aligned"] = int(mask.sum())
+    meta["target_from"] = y_name
+
+    if mask.sum() < 20:
+        return {"used": False, "reason": "Too few labels after alignment", **meta}
+
+    # -----------------------------
+    # Entrenamiento supervisado
+    # -----------------------------
     Xs = X_scl[mask]
-    ys = y_series.values[mask]
+    ys = y_series.values[mask].astype(float)
 
     rf = RandomForestRegressor(
         n_estimators=600,
@@ -613,7 +687,6 @@ def supervised_calibration(df_feats: pd.DataFrame,
         "complexity_sup_pred": y_pred_full,
         **meta
     }
-
 # -------------------------------- main --------------------------------
 
 def main():
@@ -638,7 +711,7 @@ def main():
     labels = _load_labels_csv("./graphs/labels.csv")
     if labels is None:
         labels = _load_labels_csv("./solutions/solution_features.csv")  # fallback
-
+    
     # Dump opcional (separado) con TODAS las columnas de la fórmula de y (raw / log / clipped / norm / términos / suma).
     sup = supervised_calibration(
         df,
