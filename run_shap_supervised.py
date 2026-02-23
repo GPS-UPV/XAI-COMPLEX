@@ -15,13 +15,12 @@ FEATURES_JSON = "./graphs/features.json"
 SCORES_CSV    = "./graphs/complexity_scores_W.csv"
 OUT_DIR       = "./figures"
 
-# Por orden de preferencia: primero el componente supervisado si existe.
 YCOL_PREF     = [
     "complexity_supervised_0_1",
     "complexity_sup_pred",
     "complexity_sup",
     "sup_pred",
-    "complexity_0_1",  # fallback: blend final (menos recomendable para SHAP del regresor)
+    "complexity_0_1",
 ]
 
 
@@ -43,17 +42,6 @@ def pick_ycol(df: pd.DataFrame) -> str:
 
 
 def coerce_features_to_numeric(df_feats: pd.DataFrame) -> tuple[pd.DataFrame, list[str], list[str]]:
-    """Convierte df_feats a numérico de forma robusta.
-
-    - dict/list/tuplas/sets -> NaN
-    - strings tipo '{}', '[]', '', 'None' -> NaN
-    - resto: pd.to_numeric(errors='coerce')
-
-    Devuelve:
-      df_num: solo columnas numéricas (float)
-      dropped_all_nan: columnas eliminadas por ser todo NaN
-      dropped_constant: columnas eliminadas por ser constantes
-    """
     df_num = df_feats.copy()
 
     def _to_num(v):
@@ -95,10 +83,8 @@ def main():
     y = pd.to_numeric(y, errors="coerce")
     mask = np.isfinite(y.values)
 
-    # --- Features robustas (evita el error "could not convert string to float: '{}'" ) ---
     df_num, dropped_all_nan, dropped_constant = coerce_features_to_numeric(df_feats)
 
-    # Importante: alinear de nuevo y a df_num.index por si cambió algo (no debería)
     y = scores.reindex(df_num.index)[ycol]
     y = pd.to_numeric(y, errors="coerce")
     mask = np.isfinite(y.values)
@@ -111,7 +97,6 @@ def main():
     if mask.sum() < 20:
         raise RuntimeError(f"Demasiadas pocas labels alineadas tras limpieza: {int(mask.sum())}")
 
-    # RandomForest de sklearn no acepta NaNs => imputamos
     imputer = SimpleImputer(strategy="median")
     X = imputer.fit_transform(df_num.values.astype(float))
 
@@ -119,7 +104,6 @@ def main():
 
     ys = y.values.astype(float)
 
-    # --- Entrenamiento RF (igual que en tu pipeline) ---
     rf = RandomForestRegressor(
         n_estimators=600,
         max_features="sqrt",
@@ -134,18 +118,15 @@ def main():
     rf.fit(X[mask], ys[mask])
 
     # --- SHAP ---
-    # Nota: calculamos SHAP solo para instancias con label válida
     Xs = X[mask]
     Xs_df = pd.DataFrame(Xs, index=df_num.index[mask], columns=feature_names)
 
     explainer = shap.TreeExplainer(rf)
-    shap_values = explainer.shap_values(Xs)  # (n_samples, n_features)
+    shap_values = explainer.shap_values(Xs)
 
-    # Guardar SHAP matrix
     shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
     shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
 
-    # Importancia global (mean |SHAP|)
     imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
     imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
 
