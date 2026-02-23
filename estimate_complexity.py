@@ -436,6 +436,18 @@ def main():
             blend["unsup"], blend["sup"] = 0.6, 0.4
         complexity = _safe_minmax(complexity)
         blend["sup_target"] = sup.get("target_from")
+        
+    id1 = [str(c).split('-')[0].replace("_","-") + "-0.pt" for c in labels[:-1].index]
+    
+    labels2 = labels.iloc[:-1].copy()
+    labels2.index = id1
+    pd_sol = labels2.reindex(df.index)
+    
+    pd_sol["supervised_complexity"] = sup["complexity_sup_pred"]
+                    
+    # Dataframe con todas las características
+    df_char = df.merge(pd_sol, on="instance_id", how="left")
+    df_char.to_csv("all_features.csv")
 
     # 5) Categorías por cuantiles
     q1, q2 = np.quantile(complexity, [0.33, 0.66])
