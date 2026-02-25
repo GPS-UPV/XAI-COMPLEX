@@ -23,11 +23,9 @@ YCOL_PREF     = [
     "complexity_0_1",
 ]
 
-
 def load_features(path: str) -> pd.DataFrame:
     with open(path, "r") as f:
         data = json.load(f)
-    # Formato típico: { "10-10-0.pt": {feat: val, ...}, ... }
     df = pd.DataFrame.from_dict(data, orient="index")
     return df
 
