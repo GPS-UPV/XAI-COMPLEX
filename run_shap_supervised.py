@@ -74,12 +74,15 @@ def main():
 
     df_feats = load_features(FEATURES_JSON)
     scores = pd.read_csv(SCORES_CSV, index_col=0)
+    df_all_feats = pd.read_csv("all_features.csv", index_col=0)
 
     # --- Target ---
     ycol = pick_ycol(scores)
     y = scores.reindex(df_feats.index)[ycol]
     y = pd.to_numeric(y, errors="coerce")
     mask = np.isfinite(y.values)
+    
+    df_all = df_all_feats.reindex(df_feats.index)
 
     df_num, dropped_all_nan, dropped_constant = coerce_features_to_numeric(df_feats)
 
@@ -120,26 +123,76 @@ def main():
     Xs_df = pd.DataFrame(Xs, index=df_num.index[mask], columns=feature_names)
 
     explainer = shap.TreeExplainer(rf)
-    shap_values = explainer.shap_values(Xs)
+    #shap_values = explainer.shap_values(Xs)
 
-    shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
-    shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    #shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
+    #shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    
+    #shap_and_feats_df = df_all.join(shap_df.add_suffix("_shap"))
+    #shap_and_feats_df.to_csv("all_features_and_shap.csv")
+    
+    shap_df = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    shap_df.index= Xs_df.index
+    shap_df = shap_df.drop(columns="Unnamed: 0")
 
-    imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
-    imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
+    #imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
+    #imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
 
+    optimal_mask, feasible_mask, timeout_mask = [], [], []
+    
+    for i in df_all.index:
+        if "OPTIMAL" in df_all.loc[i, "quality_tag"].strip().upper():
+            optimal_mask.append(i)
+        elif "FEASIBLE" in df_all.loc[i, "quality_tag"].strip().upper():
+            feasible_mask.append(i)
+        elif "TIMEOUT" in df_all.loc[i, "quality_tag"].strip().upper():
+            timeout_mask.append(i)
+    
+    Xs_df_optimal, Xs_df_feasible, Xs_df_timeout = Xs_df.loc[optimal_mask], Xs_df.loc[feasible_mask], Xs_df.loc[timeout_mask]
+    
+    shap_values_optimal, shap_values_feasible, shap_values_timeout = shap_df.loc[optimal_mask].values, shap_df.loc[feasible_mask].values, shap_df.loc[timeout_mask].values
+
+    xmin, xmax = shap_df.min(axis=None), shap_df.max(axis=None)
+    
     # Summary plot (beeswarm)
     plt.figure()
-    shap.summary_plot(shap_values, Xs_df, show=False, max_display=20)
+    shap.summary_plot(shap_values_optimal, Xs_df_optimal, show=False, max_display=20)
+    plt.xlim(xmin, xmax)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}.png"), dpi=220)
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_optimal.png"), dpi=220)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_values_feasible, Xs_df_feasible, show=False, max_display=20)
+    plt.xlim(xmin, xmax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_feasible.png"), dpi=220)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_values_timeout, Xs_df_timeout, show=False, max_display=20)
+    plt.xlim(xmin, xmax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_timeout.png"), dpi=220)
     plt.close()
 
     # Bar plot
     plt.figure()
-    shap.summary_plot(shap_values, Xs_df, plot_type="bar", show=False, max_display=20)
+    shap.summary_plot(shap_values_optimal, Xs_df_optimal, plot_type="bar", show=False, max_display=20)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}.png"), dpi=220)
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_optimal.png"), dpi=220)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_values_feasible, Xs_df_feasible, plot_type="bar", show=False, max_display=20)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_feasible.png"), dpi=220)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_values_timeout, Xs_df_timeout, plot_type="bar", show=False, max_display=20)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_timeout.png"), dpi=220)
     plt.close()
 
     print("OK: SHAP guardado en", OUT_DIR)

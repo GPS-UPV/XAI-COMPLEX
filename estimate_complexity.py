@@ -448,6 +448,11 @@ def main():
     # Dataframe con todas las características
     df_char = df.merge(pd_sol, on="instance_id", how="left")
     df_char.to_csv("all_features.csv")
+    
+    df_shap = pd.read_csv("./figures/shap_values_complexity_supervised_0_1.csv", index_col=0)
+    
+    shap_and_feats_df = df_char.join(df_shap.add_suffix("_shap"))
+    shap_and_feats_df.to_csv("all_features_and_shap.csv")
 
     # 5) Categorías por cuantiles
     q1, q2 = np.quantile(complexity, [0.33, 0.66])
