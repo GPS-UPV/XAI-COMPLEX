@@ -117,7 +117,13 @@ def main():
     print(f"[model] RandomForestRegressor | CV R2 mean: {r2:.4f}")
 
     rf.fit(X[mask], ys[mask])
-
+    
+    #df_taillard = load_features("./graphs_taillard/features.json")
+    #df_num_t, dropped_all_nan_t, dropped_constant_t = coerce_features_to_numeric(df_taillard)
+    #Xt = imputer.fit_transform(df_num_t.values.astype(float))
+    
+    #yt = rf.predict(Xt)
+    
     # --- SHAP ---
     Xs = X[mask]
     Xs_df = pd.DataFrame(Xs, index=df_num.index[mask], columns=feature_names)
@@ -157,6 +163,7 @@ def main():
     # Summary plot (beeswarm)
     plt.figure()
     shap.summary_plot(shap_values_optimal, Xs_df_optimal, show=False, max_display=20)
+    plt.gca().xaxis.label.set_visible(False)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_optimal.png"), dpi=220)
@@ -164,6 +171,7 @@ def main():
     
     plt.figure()
     shap.summary_plot(shap_values_feasible, Xs_df_feasible, show=False, max_display=20)
+    plt.gca().xaxis.label.set_visible(False)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_feasible.png"), dpi=220)
@@ -171,6 +179,7 @@ def main():
     
     plt.figure()
     shap.summary_plot(shap_values_timeout, Xs_df_timeout, show=False, max_display=20)
+    plt.gca().xaxis.label.set_visible(False)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_timeout.png"), dpi=220)
@@ -179,18 +188,24 @@ def main():
     # Bar plot
     plt.figure()
     shap.summary_plot(shap_values_optimal, Xs_df_optimal, plot_type="bar", show=False, max_display=20)
+    plt.gca().xaxis.label.set_visible(False)
+    plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_optimal.png"), dpi=220)
     plt.close()
     
     plt.figure()
     shap.summary_plot(shap_values_feasible, Xs_df_feasible, plot_type="bar", show=False, max_display=20)
+    plt.gca().xaxis.label.set_visible(False)
+    plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_feasible.png"), dpi=220)
     plt.close()
     
     plt.figure()
     shap.summary_plot(shap_values_timeout, Xs_df_timeout, plot_type="bar", show=False, max_display=20)
+    plt.gca().xaxis.label.set_visible(False)
+    plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_timeout.png"), dpi=220)
     plt.close()
