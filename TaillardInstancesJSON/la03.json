@@ -1,0 +1,461 @@
+{
+    "nbJobs": [0,1,2,3,4,5,6,7,8,9],
+    "nbMchs": [0,1,2,3,4],
+    "speed": 1,
+    "timeEnergy": [
+        {
+            "jobId": 0,
+            "operations": {
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 23,
+                            "energyCons": 23
+                        }
+                    ]
+                },
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 45,
+                            "energyCons": 45
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 82,
+                            "energyCons": 82
+                        }
+                    ]
+                },
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 84,
+                            "energyCons": 84
+                        }
+                    ]
+                },
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 38,
+                            "energyCons": 38
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": 1,
+            "operations": {
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 21,
+                            "energyCons": 21
+                        }
+                    ]
+                },
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 29,
+                            "energyCons": 29
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 18,
+                            "energyCons": 18
+                        }
+                    ]
+                },
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 41,
+                            "energyCons": 41
+                        }
+                    ]
+                },
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 50,
+                            "energyCons": 50
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": 2,
+            "operations": {
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 38,
+                            "energyCons": 38
+                        }
+                    ]
+                },
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 54,
+                            "energyCons": 54
+                        }
+                    ]
+                },
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 16,
+                            "energyCons": 16
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 52,
+                            "energyCons": 52
+                        }
+                    ]
+                },
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 52,
+                            "energyCons": 52
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": 3,
+            "operations": {
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 37,
+                            "energyCons": 37
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 54,
+                            "energyCons": 54
+                        }
+                    ]
+                },
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 74,
+                            "energyCons": 74
+                        }
+                    ]
+                },
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 62,
+                            "energyCons": 62
+                        }
+                    ]
+                },
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 57,
+                            "energyCons": 57
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": 4,
+            "operations": {
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 57,
+                            "energyCons": 57
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 81,
+                            "energyCons": 81
+                        }
+                    ]
+                },
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 61,
+                            "energyCons": 61
+                        }
+                    ]
+                },
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 68,
+                            "energyCons": 68
+                        }
+                    ]
+                },
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 30,
+                            "energyCons": 30
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": 5,
+            "operations": {
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 81,
+                            "energyCons": 81
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 79,
+                            "energyCons": 79
+                        }
+                    ]
+                },
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 89,
+                            "energyCons": 89
+                        }
+                    ]
+                },
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 89,
+                            "energyCons": 89
+                        }
+                    ]
+                },
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 11,
+                            "energyCons": 11
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": 6,
+            "operations": {
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 33,
+                            "energyCons": 33
+                        }
+                    ]
+                },
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 20,
+                            "energyCons": 20
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 91,
+                            "energyCons": 91
+                        }
+                    ]
+                },
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 20,
+                            "energyCons": 20
+                        }
+                    ]
+                },
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 66,
+                            "energyCons": 66
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": 7,
+            "operations": {
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 24,
+                            "energyCons": 24
+                        }
+                    ]
+                },
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 84,
+                            "energyCons": 84
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 32,
+                            "energyCons": 32
+                        }
+                    ]
+                },
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 55,
+                            "energyCons": 55
+                        }
+                    ]
+                },
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 8,
+                            "energyCons": 8
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": 8,
+            "operations": {
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 56,
+                            "energyCons": 56
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 7,
+                            "energyCons": 7
+                        }
+                    ]
+                },
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 54,
+                            "energyCons": 54
+                        }
+                    ]
+                },
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 64,
+                            "energyCons": 64
+                        }
+                    ]
+                },
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 39,
+                            "energyCons": 39
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": 9,
+            "operations": {
+                "4": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 40,
+                            "energyCons": 40
+                        }
+                    ]
+                },
+                "1": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 83,
+                            "energyCons": 83
+                        }
+                    ]
+                },
+                "0": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 19,
+                            "energyCons": 19
+                        }
+                    ]
+                },
+                "2": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 8,
+                            "energyCons": 8
+                        }
+                    ]
+                },
+                "3": {
+                    "speed-scaling": [
+                        {
+                            "procTime": 7,
+                            "energyCons": 7
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "minMakespan": 349,
+    "minEnergy": 2383,
+    "maxMinMakespan": 2034,
+    "maxMinEnergy": 0
+}

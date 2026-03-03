@@ -1,4 +1,3 @@
-# generate_graphs_strict.py
 import os
 from collections import defaultdict
 from itertools import permutations
