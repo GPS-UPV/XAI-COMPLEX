@@ -141,6 +141,7 @@ def build_graph(parsed, inst_meta=None):
     data.n_machs = num_mchs
     data.P = torch.from_numpy(proc_flat)
     data.E = torch.from_numpy(energy_flat)
+    data.operation_cost = torch.from_numpy(proc_by_order.reshape(-1).astype(np.float32))
     data.job = torch.from_numpy(job_ids)
     data.machine = torch.from_numpy(mach_ids)
     data.op = torch.from_numpy(op_ids)
@@ -157,21 +158,45 @@ def build_graph(parsed, inst_meta=None):
     data["node"].op_mask = op_mask
 
     if inst_meta is not None:
-        raw_features = None
-        for k in ["speed","rddd","max_makespan","min_makespan","max_min_makespan","max_energy","min_energy","max_min_energy"]:
+        for k in [
+            "speed", "rddd",
+            "max_makespan", "min_makespan", "max_min_makespan",
+            "max_energy", "min_energy", "max_min_energy",
+        ]:
             if k in inst_meta and inst_meta[k] is not None:
                 v = inst_meta[k]
                 if isinstance(v, np.generic):
                     v = v.item()
                 setattr(data, k, v)
-        if isinstance(inst_meta.get("features"), dict):
-            raw_features = inst_meta["features"]
-            data.gen_features = raw_features
+
+        alias_map = {
+            "max_makespan": "makespan_max",
+            "min_makespan": "makespan_min",
+            "max_min_makespan": "makespan_range",
+            "max_energy": "energy_sum_max",
+            "min_energy": "energy_sum_min",
+            "max_min_energy": "energy_sum_range",
+        }
+        for src, dst in alias_map.items():
+            if src in inst_meta and inst_meta[src] is not None:
+                v = inst_meta[src]
+                if isinstance(v, np.generic):
+                    v = v.item()
+                setattr(data, dst, v)
+
+        raw_features = inst_meta.get("features") if isinstance(inst_meta.get("features"), dict) else None
+        if raw_features is not None:
             mapping = {
                 "max_makespan": "makespan_max",
                 "min_makespan": "makespan_min",
+                "max_min_makespan": "makespan_range",
+                "makespan_range": "makespan_range",
                 "max_sum_energy": "energy_sum_max",
                 "min_sum_energy": "energy_sum_min",
+                "max_min_sum_energy": "energy_sum_range",
+                "max_energy": "energy_sum_max",
+                "min_energy": "energy_sum_min",
+                "max_min_energy": "energy_sum_range",
                 "max_processing_time_value": "p_value_max",
                 "min_processing_time_value": "p_value_min",
                 "mean_processing_time_value": "p_value_mean",
@@ -186,7 +211,10 @@ def build_graph(parsed, inst_meta=None):
             }
             for src, dst in mapping.items():
                 if src in raw_features and raw_features[src] is not None:
-                    setattr(data, dst, raw_features[src])
+                    v = raw_features[src]
+                    if isinstance(v, np.generic):
+                        v = v.item()
+                    setattr(data, dst, v)
 
     return data
 
