@@ -652,7 +652,7 @@ def supervised_calibration(
     y_series = y_series.reindex(df_feats.index)
 
     mask = np.isfinite(y_series.values)
-
+    
     meta["n_labels_raw"] = int(len(labels))
     meta["n_labels_normalized"] = int(pd.Series(idx_norm).notna().sum())
     meta["n_labels_aligned"] = int(mask.sum())
@@ -699,6 +699,8 @@ def main():
 
     df_raw = _load_features_json(feats_json, feats_csv)
     df = _clean_and_engineer(df_raw)
+    
+    df = df.drop(columns=[c for c in df.columns if "energy" in c.strip().lower() or "num_nodes" == c])
 
     # 1) Prior desde el generador (si procede)
     prior = prior_complexity_from_generator(df)
@@ -719,6 +721,13 @@ def main():
         labels,
         dump_weighted_components_path="./graphs/weighted_y_components.csv"
     )
+    
+    labels = labels[:-1].set_index(df.index).drop(columns=["file"])
+    
+    # Dataframe con todas las características
+    df_all = df.join(labels)
+    df_all["complexity_supervised_0_1"] = sup["complexity_sup_pred"]
+    df_all.to_csv("all_features.csv")
 
     # 4) Blending de señales
     complexity = unsup["complexity_unsup"]

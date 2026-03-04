@@ -73,6 +73,7 @@ def main():
     os.makedirs(OUT_DIR, exist_ok=True)
 
     df_feats = load_features(FEATURES_JSON)
+    df_feats = df_feats.drop(columns=[c for c in df_feats.columns if "energy" in c.strip().lower() or "num_nodes" == c])
     scores = pd.read_csv(SCORES_CSV, index_col=0)
     df_all_feats = pd.read_csv("all_features.csv", index_col=0)
 
@@ -119,7 +120,7 @@ def main():
     rf.fit(X[mask], ys[mask])
     
     df_taillard = load_features("./TaillardInstancesGRAPHS/features.json")
-    df_pred_t = df_taillard[df_num.columns]
+    df_pred_t = df_taillard[feature_names]
     
     Xt = imputer.fit_transform(df_pred_t.values.astype(float))
     Xt_df = pd.DataFrame(Xt, index=df_pred_t.index, columns=feature_names)
@@ -131,26 +132,31 @@ def main():
     Xs_df = pd.DataFrame(Xs, index=df_num.index[mask], columns=feature_names)
 
     explainer = shap.TreeExplainer(rf)
-    shap_values_t = explainer.shap_values(Xt)
+    shap_values = explainer.shap_values(Xs)
+    shap_values_taillard = explainer.shap_values(Xt)
 
-    shap_df_t = pd.DataFrame(shap_values_t, index=Xt_df.index, columns=feature_names)
-    shap_df_t.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
+    shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
+    shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
     
-    df_all_taillard = df_taillard.join(shap_df_t.add_suffix('_shap'))
+    df_all_and_shap = df_all.join(shap_df.add_suffix('_shap'))
+    df_all_and_shap.to_csv('all_features_and_shap.csv')
+
+    shap_df_taillard = pd.DataFrame(shap_values_taillard, index=Xt_df.index, columns=feature_names)
+    shap_df_taillard.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
     
-    df_all_taillard['sup_complexity'] = yt
-    
+    df_taillard['complexity_supervised_0_1'] = yt
+    df_all_taillard = df_taillard.join(shap_df_taillard.add_suffix('_shap'))
     df_all_taillard.to_csv('all_taillard.csv')
     
-    #shap_and_feats_df = df_all.join(shap_df.add_suffix("_shap_t"))
-    #shap_and_feats_df.to_csv("all_features_and_shap.csv")
-    
-    shap_df = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
-    shap_df.index= Xs_df.index
-    shap_df = shap_df.drop(columns="Unnamed: 0")
+    #shap_df = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    #shap_df.index= Xs_df.index
+    #shap_df = shap_df.drop(columns="Unnamed: 0")
 
-    imp = shap_df_t.abs().mean(axis=0).sort_values(ascending=False)
-    imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}_taillard.csv"), header=["mean_abs_shap"])
+    imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
+    imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
+
+    imp_taillard = shap_df_taillard.abs().mean(axis=0).sort_values(ascending=False)
+    imp_taillard.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}_taillard.csv"), header=["mean_abs_shap"])
 
     optimal_mask, feasible_mask, timeout_mask = [], [], []
     
@@ -201,7 +207,7 @@ def main():
     plt.close()
     
     plt.figure()
-    shap.summary_plot(shap_values_t, Xt, show=False, max_display=20)
+    shap.summary_plot(shap_values_taillard, Xt_df, show=False, max_display=20)
     plt.gca().xaxis.label.set_visible(False)
     plt.gca().yaxis.set_tick_params(labelsize=18)
     plt.gca().xaxis.set_tick_params(labelsize=18)
@@ -242,7 +248,7 @@ def main():
     plt.close()
     
     plt.figure()
-    shap.summary_plot(shap_values_t, Xt, plot_type="bar", show=False, max_display=20)
+    shap.summary_plot(shap_values_taillard, Xt_df, plot_type="bar", show=False, max_display=20)
     plt.gca().xaxis.label.set_visible(False)
     plt.gca().yaxis.set_tick_params(labelsize=18)
     plt.gca().xaxis.set_tick_params(labelsize=18)

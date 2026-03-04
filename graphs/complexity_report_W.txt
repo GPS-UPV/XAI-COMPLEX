@@ -1,8 +1,8 @@
 === COMPLEXITY ESTIMATOR REPORT ===
 Instances: 2401
 Signal source: blend(unsup + prior + sup[from_weighted])
-Mean complexity: 0.417
-Quantiles: q10=0.092 q50=0.406 q90=0.796
+Mean complexity: 0.416
+Quantiles: q10=0.085 q50=0.406 q90=0.797
 Counts by category: {'hard': 816, 'easy': 793, 'medium': 792}
 Prior: YES (from generator metrics)
-Supervised: YES (RandomForestRegressor) target=from_weighted  cv_r2≈0.897
+Supervised: YES (RandomForestRegressor) target=from_weighted  cv_r2≈0.896
