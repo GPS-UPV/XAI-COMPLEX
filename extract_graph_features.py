@@ -520,7 +520,7 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
 
 # ---------------- main: leer carpeta ./graphs ----------------
 
-def main(graphs_folder='./graphs', out_csv=None, verbose=False):
+def main(graphs_folder='./TaillardInstancesGRAPHS', out_csv=None, verbose=False):
     
     start_time = time.time()
     

@@ -118,31 +118,39 @@ def main():
 
     rf.fit(X[mask], ys[mask])
     
-    #df_taillard = load_features("./graphs_taillard/features.json")
-    #df_num_t, dropped_all_nan_t, dropped_constant_t = coerce_features_to_numeric(df_taillard)
-    #Xt = imputer.fit_transform(df_num_t.values.astype(float))
+    df_taillard = load_features("./TaillardInstancesGRAPHS/features.json")
+    df_pred_t = df_taillard[df_num.columns]
     
-    #yt = rf.predict(Xt)
-    
+    Xt = imputer.fit_transform(df_pred_t.values.astype(float))
+    Xt_df = pd.DataFrame(Xt, index=df_pred_t.index, columns=feature_names)
+    yt = rf.predict(Xt)
+    df_taillard['sup_pred_complexity'] = yt
+        
     # --- SHAP ---
     Xs = X[mask]
     Xs_df = pd.DataFrame(Xs, index=df_num.index[mask], columns=feature_names)
 
     explainer = shap.TreeExplainer(rf)
-    #shap_values = explainer.shap_values(Xs)
+    shap_values_t = explainer.shap_values(Xt)
 
-    #shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
-    #shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    shap_df_t = pd.DataFrame(shap_values_t, index=Xt_df.index, columns=feature_names)
+    shap_df_t.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
     
-    #shap_and_feats_df = df_all.join(shap_df.add_suffix("_shap"))
+    df_all_taillard = df_taillard.join(shap_df_t.add_suffix('_shap'))
+    
+    df_all_taillard['sup_complexity'] = yt
+    
+    df_all_taillard.to_csv('all_taillard.csv')
+    
+    #shap_and_feats_df = df_all.join(shap_df.add_suffix("_shap_t"))
     #shap_and_feats_df.to_csv("all_features_and_shap.csv")
     
     shap_df = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
     shap_df.index= Xs_df.index
     shap_df = shap_df.drop(columns="Unnamed: 0")
 
-    #imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
-    #imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
+    imp = shap_df_t.abs().mean(axis=0).sort_values(ascending=False)
+    imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}_taillard.csv"), header=["mean_abs_shap"])
 
     optimal_mask, feasible_mask, timeout_mask = [], [], []
     
@@ -159,55 +167,88 @@ def main():
     shap_values_optimal, shap_values_feasible, shap_values_timeout = shap_df.loc[optimal_mask].values, shap_df.loc[feasible_mask].values, shap_df.loc[timeout_mask].values
 
     xmin, xmax = shap_df.min(axis=None), shap_df.max(axis=None)
-    
+        
     # Summary plot (beeswarm)
     plt.figure()
     shap.summary_plot(shap_values_optimal, Xs_df_optimal, show=False, max_display=20)
     plt.gca().xaxis.label.set_visible(False)
+    plt.gca().yaxis.set_tick_params(labelsize=18)
+    plt.gca().xaxis.set_tick_params(labelsize=18)
+    plt.gca().yaxis
     plt.xlim(xmin, xmax)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_optimal.png"), dpi=220)
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_optimal.png"), dpi=400)
     plt.close()
     
     plt.figure()
     shap.summary_plot(shap_values_feasible, Xs_df_feasible, show=False, max_display=20)
     plt.gca().xaxis.label.set_visible(False)
+    plt.gca().yaxis.set_tick_params(labelsize=18)
+    plt.gca().xaxis.set_tick_params(labelsize=18)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_feasible.png"), dpi=220)
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_feasible.png"), dpi=400)
     plt.close()
     
     plt.figure()
     shap.summary_plot(shap_values_timeout, Xs_df_timeout, show=False, max_display=20)
     plt.gca().xaxis.label.set_visible(False)
+    plt.gca().yaxis.set_tick_params(labelsize=18)
+    plt.gca().xaxis.set_tick_params(labelsize=18)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_timeout.png"), dpi=220)
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_timeout.png"), dpi=400)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_values_t, Xt, show=False, max_display=20)
+    plt.gca().xaxis.label.set_visible(False)
+    plt.gca().yaxis.set_tick_params(labelsize=18)
+    plt.gca().xaxis.set_tick_params(labelsize=18)
+    plt.xlim(xmin, xmax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard.png"), dpi=400)
     plt.close()
 
     # Bar plot
     plt.figure()
     shap.summary_plot(shap_values_optimal, Xs_df_optimal, plot_type="bar", show=False, max_display=20)
     plt.gca().xaxis.label.set_visible(False)
+    plt.gca().yaxis.set_tick_params(labelsize=18)
+    plt.gca().xaxis.set_tick_params(labelsize=18)
     plt.xlim(0, 0.03)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_optimal.png"), dpi=220)
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_optimal.png"), dpi=400)
     plt.close()
     
     plt.figure()
     shap.summary_plot(shap_values_feasible, Xs_df_feasible, plot_type="bar", show=False, max_display=20)
     plt.gca().xaxis.label.set_visible(False)
+    plt.gca().yaxis.set_tick_params(labelsize=18)
+    plt.gca().xaxis.set_tick_params(labelsize=18)
     plt.xlim(0, 0.03)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_feasible.png"), dpi=220)
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_feasible.png"), dpi=400)
     plt.close()
     
     plt.figure()
     shap.summary_plot(shap_values_timeout, Xs_df_timeout, plot_type="bar", show=False, max_display=20)
     plt.gca().xaxis.label.set_visible(False)
+    plt.gca().yaxis.set_tick_params(labelsize=18)
+    plt.gca().xaxis.set_tick_params(labelsize=18)
     plt.xlim(0, 0.03)
     plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_timeout.png"), dpi=220)
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_timeout.png"), dpi=400)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_values_t, Xt, plot_type="bar", show=False, max_display=20)
+    plt.gca().xaxis.label.set_visible(False)
+    plt.gca().yaxis.set_tick_params(labelsize=18)
+    plt.gca().xaxis.set_tick_params(labelsize=18)
+    plt.xlim(0, 0.03)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard.png"), dpi=400)
     plt.close()
 
     print("OK: SHAP guardado en", OUT_DIR)
