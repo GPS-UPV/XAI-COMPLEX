@@ -1,0 +1,70 @@
+optimal:
+
+\huge \mathcal{B}_{mean} \\
+\huge \underline{C}_{\max}^{\,\mathrm{load}} \\
+\huge \mathcal{B}_{range} \\
+\huge \deg_d^{mean} \\
+\huge \mathcal{B}_{median} \\
+\huge \deg_d^{q3} \\
+\huge |E| \\
+\huge \deg_d^{max} \\
+\huge |E_d| \\
+\huge \mathcal{B}_{min} \\  
+\huge \mathcal{B}_{q1} \\  
+\huge \deg_c^{max} \\
+\huge \deg_d^{q1} \\ 
+\huge \deg_c^{range} \\
+\huge \deg_d^{median} \\
+\huge |J| \\ 
+\huge C_{range} \\ 
+\huge \mathcal{B}_{max} \\
+\huge \deg_d^{range} \\
+\huge \mathcal{B}_{q3} \\ 
+
+
+feasible:
+
+\huge \underline{C}_{\max}^{\,\mathrm{load}} \\
+\huge \mathcal{B}_{mean} \\
+\huge \mathcal{B}_{range} \\
+\huge \deg_d^{mean} \\
+\huge |E| \\
+\huge |E_d| \\
+\huge C_{range} \\ 
+\huge \mathcal{B}_{median} \\
+\huge |E_c| \\
+\huge \deg_d^{q3} \\
+\huge \deg_d^{max} \\
+\huge \mathcal{B}_{mean} \\
+\huge \mathcal{B}_{q1} \\
+\huge \deg_c^{max} \\
+\huge \mathcal{C}_{gini} \\
+\huge \deg_d^{gini} \\
+\huge \deg_d^{q1} \\
+\huge |\mathcal{O}| \\ 
+\huge \deg_d^{median} \\
+\huge \deg_c^{range} \\
+
+
+timeout:
+
+\huge \underline{C}_{\max}^{\,\mathrm{load}} \\
+\huge \mathcal{B}_{mean} \\
+\huge |E| \\
+\huge |E_d| \\
+\huge \mathcal{B}_{range} \\
+\huge \deg_d^{mean} \\
+\huge C_{range} \\ 
+\huge |E_c| \\
+\huge \deg_d^{gini} \\
+\huge \mathcal{C}_{gini} \\
+\huge \mathcal{B}_{median} \\
+\huge |\mathcal{O}| \\ 
+\huge \mathcal{C}_{mean} \\
+\huge |V| \\ 
+\huge \deg_d^{q3} \\
+\huge \deg_d^{max} \\
+\huge \deg_c^{max} \\
+\huge \mathcal{B}_{min} \\  
+\huge \mathcal{C}_{std} \\   
+\huge \deg_d^{q1} \\ 

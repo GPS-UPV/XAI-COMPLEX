@@ -120,7 +120,10 @@ def main():
     rf.fit(X[mask], ys[mask])
     
     df_taillard = load_features("./TaillardInstancesGRAPHS/features.json")
+    df_all_taillard = pd.read_csv("./all_taillard_with_groundtruth_and_est_tags.csv")
     df_pred_t = df_taillard[feature_names]
+    
+    df_all_taillard.index = df_pred_t.index
     
     Xt = imputer.fit_transform(df_pred_t.values.astype(float))
     Xt_df = pd.DataFrame(Xt, index=df_pred_t.index, columns=feature_names)
@@ -132,31 +135,35 @@ def main():
     Xs_df = pd.DataFrame(Xs, index=df_num.index[mask], columns=feature_names)
 
     explainer = shap.TreeExplainer(rf)
-    shap_values = explainer.shap_values(Xs)
-    shap_values_taillard = explainer.shap_values(Xt)
+    #shap_values = explainer.shap_values(Xs)
+    #shap_values_taillard = explainer.shap_values(Xt)
 
-    shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
-    shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    #shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
+    #shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
     
-    df_all_and_shap = df_all.join(shap_df.add_suffix('_shap'))
-    df_all_and_shap.to_csv('all_features_and_shap.csv')
+    #df_all_and_shap = df_all.join(shap_df.add_suffix('_shap'))
+    #df_all_and_shap.to_csv('all_features_and_shap.csv')
 
-    shap_df_taillard = pd.DataFrame(shap_values_taillard, index=Xt_df.index, columns=feature_names)
-    shap_df_taillard.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
+    #shap_df_taillard = pd.DataFrame(shap_values_taillard, index=Xt_df.index, columns=feature_names)
+    #shap_df_taillard.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
     
-    df_taillard['complexity_supervised_0_1'] = yt
-    df_all_taillard = df_taillard.join(shap_df_taillard.add_suffix('_shap'))
-    df_all_taillard.to_csv('all_taillard.csv')
+    #df_taillard['complexity_supervised_0_1'] = yt
+    #df_all_taillard = df_taillard.join(shap_df_taillard.add_suffix('_shap'))
+    #df_all_taillard.to_csv('all_taillard.csv')
     
-    #shap_df = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
-    #shap_df.index= Xs_df.index
-    #shap_df = shap_df.drop(columns="Unnamed: 0")
+    shap_df = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    shap_df.index= Xs_df.index
+    shap_df = shap_df[feature_names]
+    
+    shap_df_taillard = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
+    shap_df_taillard.index= Xt_df.index
+    shap_df_taillard = shap_df_taillard[feature_names]
 
-    imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
-    imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
+    #imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
+    #imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
 
-    imp_taillard = shap_df_taillard.abs().mean(axis=0).sort_values(ascending=False)
-    imp_taillard.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}_taillard.csv"), header=["mean_abs_shap"])
+    #imp_taillard = shap_df_taillard.abs().mean(axis=0).sort_values(ascending=False)
+    #imp_taillard.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}_taillard.csv"), header=["mean_abs_shap"])
 
     optimal_mask, feasible_mask, timeout_mask = [], [], []
     
@@ -167,11 +174,38 @@ def main():
             feasible_mask.append(i)
         elif "TIMEOUT" in df_all.loc[i, "quality_tag"].strip().upper():
             timeout_mask.append(i)
+            
+    easy_jsplib_mask, medium_jsplib_mask, hard_jsplib_mask = [], [], []
+            
+    for i in df_all_taillard.index:
+        if "EASY" in df_all_taillard.loc[i, "jsplib_tag"].strip().upper():
+            easy_jsplib_mask.append(i)
+        elif "MEDIUM" in df_all_taillard.loc[i, "jsplib_tag"].strip().upper():
+            medium_jsplib_mask.append(i)
+        elif "HARD" in df_all_taillard.loc[i, "jsplib_tag"].strip().upper():
+            hard_jsplib_mask.append(i)
+            
+    easy_predict_mask, medium_predict_mask, hard_predict_mask = set(), set(), set()
+            
+    for i in df_all_taillard.index:
+        if "EASY" in df_all_taillard.loc[i, "predict_tag"].strip().upper():
+            easy_predict_mask.add(i)
+        elif "MEDIUM" in df_all_taillard.loc[i, "predict_tag"].strip().upper():
+            medium_predict_mask.add(i)
+        elif "HARD" in df_all_taillard.loc[i, "predict_tag"].strip().upper():
+            hard_predict_mask.add(i)
+            
+    autores = {''.join(filter(str.isalpha, a)) : set() for a in df_all_taillard["instance_name"]}
+    
+    
+    for i in df_all_taillard.index:
+        a = ''.join(filter(str.isalpha, i[:-3]))
+        autores[a].add(i)
     
     Xs_df_optimal, Xs_df_feasible, Xs_df_timeout = Xs_df.loc[optimal_mask], Xs_df.loc[feasible_mask], Xs_df.loc[timeout_mask]
     
     shap_values_optimal, shap_values_feasible, shap_values_timeout = shap_df.loc[optimal_mask].values, shap_df.loc[feasible_mask].values, shap_df.loc[timeout_mask].values
-
+    
     xmin, xmax = shap_df.min(axis=None), shap_df.max(axis=None)
         
     # Summary plot (beeswarm)
@@ -205,16 +239,6 @@ def main():
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_timeout.png"), dpi=400)
     plt.close()
-    
-    plt.figure()
-    shap.summary_plot(shap_values_taillard, Xt_df, show=False, max_display=20)
-    plt.gca().xaxis.label.set_visible(False)
-    plt.gca().yaxis.set_tick_params(labelsize=18)
-    plt.gca().xaxis.set_tick_params(labelsize=18)
-    plt.xlim(xmin, xmax)
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard.png"), dpi=400)
-    plt.close()
 
     # Bar plot
     plt.figure()
@@ -247,15 +271,153 @@ def main():
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_timeout.png"), dpi=400)
     plt.close()
     
-    plt.figure()
-    shap.summary_plot(shap_values_taillard, Xt_df, plot_type="bar", show=False, max_display=20)
-    plt.gca().xaxis.label.set_visible(False)
-    plt.gca().yaxis.set_tick_params(labelsize=18)
-    plt.gca().xaxis.set_tick_params(labelsize=18)
-    plt.xlim(0, 0.03)
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard.png"), dpi=400)
-    plt.close()
+    for a in autores.keys():
+        easy_predict = list(autores[a].intersection(easy_predict_mask))
+        easy_jsplib = list(autores[a].intersection(easy_jsplib_mask))
+        
+        medium_predict = list(autores[a].intersection(medium_predict_mask))
+        medium_jsplib = list(autores[a].intersection(medium_jsplib_mask))
+        
+        hard_predict = list(autores[a].intersection(hard_predict_mask))
+        hard_jsplib = list(autores[a].intersection(hard_jsplib_mask))
+        
+        if len(easy_predict) != 0: 
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[easy_predict].values, Xt_df.loc[easy_predict], show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(xmin, xmax)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_easy_predict_{a}.png"), dpi=400)
+            plt.close()
+            
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[easy_predict].values, Xt_df.loc[easy_predict], plot_type="bar", show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(0, 0.03)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_easy_predict_{a}.png"), dpi=400)
+            plt.close()
+        else:
+            print(f"No hay easy_predict_{a}")
+        
+        if len(medium_predict) != 0:
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[medium_predict].values, Xt_df.loc[medium_predict], show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(xmin, xmax)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_medium_predict_{a}.png"), dpi=400)
+            plt.close()
+            
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[medium_predict].values, Xt_df.loc[medium_predict], plot_type="bar", show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(0, 0.03)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_medium_predict_{a}.png"), dpi=400)
+            plt.close()
+        else:
+            print(f"No hay medium_predict_{a}")
+        
+        if len(hard_predict) != 0:    
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[hard_predict].values, Xt_df.loc[hard_predict], show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(xmin, xmax)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_hard_predict_{a}.png"), dpi=400)
+            plt.close()
+            
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[hard_predict].values, Xt_df.loc[hard_predict], plot_type="bar", show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(0, 0.03)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_hard_predict_{a}.png"), dpi=400)
+            plt.close()
+        else:
+            print(f"No hay hard_predict_{a}")
+            
+        if len(easy_jsplib) != 0:
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[easy_jsplib].values, Xt_df.loc[easy_jsplib], show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(xmin, xmax)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_easy_jsplib_{a}.png"), dpi=400)
+            plt.close()
+            
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[easy_jsplib].values, Xt_df.loc[easy_jsplib], plot_type="bar", show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(0, 0.03)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_easy_jsplib_{a}.png"), dpi=400)
+            plt.close()
+        else:
+            print(f"No hay easy_jsplib_{a}")
+        
+        if len(medium_jsplib) != 0:
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[medium_jsplib].values, Xt_df.loc[medium_jsplib], show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(xmin, xmax)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_medium_jsplib_{a}.png"), dpi=400)
+            plt.close()
+            
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[medium_jsplib].values, Xt_df.loc[medium_jsplib], plot_type="bar", show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(0, 0.03)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_medium_jsplib_{a}.png"), dpi=400)
+            plt.close()
+        else:
+            print(f"No hay medium_jsplib_{a}")
+            
+        if len(hard_jsplib) != 0:
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[hard_jsplib].values, Xt_df.loc[hard_jsplib], show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(xmin, xmax)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_hard_jsplib_{a}.png"), dpi=400)
+            plt.close()
+        
+            plt.figure()
+            shap.summary_plot(shap_df_taillard.loc[hard_jsplib].values, Xt_df.loc[hard_jsplib], plot_type="bar", show=False, max_display=20)
+            plt.gca().xaxis.label.set_visible(False)
+            plt.gca().yaxis.set_tick_params(labelsize=18)
+            plt.gca().xaxis.set_tick_params(labelsize=18)
+            plt.xlim(0, 0.03)
+            plt.tight_layout()
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_hard_jsplib_{a}.png"), dpi=400)
+            plt.close()
+        else:
+            print(f"No hay hard_jsplib_{a}")
 
     print("OK: SHAP guardado en", OUT_DIR)
 
