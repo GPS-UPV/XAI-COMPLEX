@@ -103,7 +103,82 @@ def main():
     X = imputer.fit_transform(df_num.values.astype(float))
 
     feature_names = df_num.columns.tolist()
-
+    
+    feature_map = {
+        "n_jobs": r"$|J|$",
+        "n_machines": r"$|M|$",
+        #"node_x_col0_min": r"$$",
+        #"node_x_col0_max": r"$$",
+        #"node_x_col0_mean": r"$$",
+        #"node_x_col0_median": r"$$",
+        #"node_x_col0_std": r"$$",
+        #"node_x_col0_range": r"$$",
+        #"node_x_col0_q1": r"$$",
+        #"node_x_col0_q3": r"$$",
+        #"node_x_col0_gini": r"$$",
+        #"node_x_col1_min": r"$$",
+        #"node_x_col1_max": r"$$",
+        #"node_x_col1_mean": r"$$",
+        #"node_x_col1_median": r"$$",
+        #"node_x_col1_std": r"$$",
+        #"node_x_col1_range": r"$$",
+        #"node_x_col1_q1": r"$$",
+        #"node_x_col1_q3": r"$$",
+        #"node_x_col1_gini": r"$$",
+        #"node_x_overall_mean": r"$$",
+        #"node_x_overall_std": r"$$",
+        "num_conjunctive_edges": r"$|E_c|$",
+        "num_disjunctive_edges": r"$|E_d|$",
+        "num_nodes_total": r"$|V|$",
+        "num_edges_total": r"$|E|$",
+        "disj_graph_density": r"$dens(G^d)$",
+        "deg_d_min": r"$\deg_d^{min}$",
+        "deg_d_max": r"$\deg_d^{max}$",
+        "deg_d_mean": r"$\deg_d^{mean}$",
+        "deg_d_median": r"$\deg_d^{median}$",
+        "deg_d_std": r"$\deg_d^{std}$",
+        "deg_d_range": r"$\deg_d^{range}$",
+        "deg_d_q1": r"$\deg_d^{q1}$",
+        "deg_d_q3": r"$\deg_d^{q3}$",
+        "deg_d_gini": r"$\deg_d^{gini}$",
+        "clustering_min": r"$\mathcal{C}_{min}$",
+        "clustering_max": r"$\mathcal{C}_{max}$",
+        "clustering_mean": r"$\mathcal{C}_{mean}$",
+        "clustering_median": r"$\mathcal{C}_{median}$",
+        "clustering_std": r"$\mathcal{C}_{std}$",
+        "clustering_range": r"$\mathcal{C}_{range}$",
+        "clustering_q1": r"$\mathcal{C}_{q1}$",
+        "clustering_q3": r"$\mathcal{C}_{q3}$",
+        "clustering_gini": r"$\mathcal{C}_{gini}$",
+        "conj_graph_density": r"$dens(G^c)$",
+        "deg_c_min": r"$\deg_c^{min}$",
+        "deg_c_max": r"$\deg_c^{max}$",
+        "deg_c_mean": r"$\deg_c^{mean}$",
+        "deg_c_median": r"$\deg_c^{median}$",
+        "deg_c_std": r"$\deg_c^{std}$",
+        "deg_c_range": r"$\deg_c^{range}$",
+        "deg_c_q1": r"$\deg_c^{q1}$",
+        "deg_c_q3": r"$\deg_c^{q3}$",
+        "deg_c_gini": r"$\deg_c^{gini}$",
+        "betweenness_min": r"$\mathcal{B}_{min}$",
+        "betweenness_max": r"$\mathcal{B}_{max}$",
+        "betweenness_mean": r"$\mathcal{B}_{mean}$",
+        "betweenness_median": r"$\mathcal{B}_{median}$",
+        "betweenness_std": r"$\mathcal{B}_{std}$",
+        "betweenness_range": r"$\mathcal{B}_{range}$",
+        "betweenness_q1": r"$\mathcal{B}_{q1}$",
+        "betweenness_q3": r"$\mathcal{B}_{q3}$",
+        "betweenness_gini": r"$\mathcal{B}_{gini}$",
+        "makespan_min": r"$C_{min}$",
+        "makespan_range": r"$C_{range}$",
+        #"operation_cost_mean": r"$$",
+        #"operation_cost_std": r"$$",
+        "makespan_lb_job_sum": r"$\underline{C}_{\max}^{\,\mathrm{J}}$",
+        "makespan_lb_machine_sum": r"$\underline{C}_{\max}^{\,\mathrm{M}}$",
+        "makespan_lb_meanload": r"$\underline{C}_{\max}^{\,\mathrm{load}}$",
+        "num_op_nodes": r"$|\mathcal{O}|$",
+    }
+    
     ys = y.values.astype(float)
 
     rf = RandomForestRegressor(
@@ -175,25 +250,23 @@ def main():
         elif "TIMEOUT" in df_all.loc[i, "quality_tag"].strip().upper():
             timeout_mask.append(i)
             
-    easy_jsplib_mask, medium_jsplib_mask, hard_jsplib_mask = [], [], []
+    easy_jsplib_mask, medium_jsplib_mask, hard_jsplib_mask = set(), set(), set()
+    easy_predict_mask, medium_predict_mask, hard_predict_mask = set(), set(), set() 
             
     for i in df_all_taillard.index:
         if "EASY" in df_all_taillard.loc[i, "jsplib_tag"].strip().upper():
-            easy_jsplib_mask.append(i)
+            easy_jsplib_mask.add(i)
         elif "MEDIUM" in df_all_taillard.loc[i, "jsplib_tag"].strip().upper():
-            medium_jsplib_mask.append(i)
+            medium_jsplib_mask.add(i)
         elif "HARD" in df_all_taillard.loc[i, "jsplib_tag"].strip().upper():
-            hard_jsplib_mask.append(i)
-            
-    easy_predict_mask, medium_predict_mask, hard_predict_mask = set(), set(), set()
-            
-    for i in df_all_taillard.index:
+            hard_jsplib_mask.add(i)
+        
         if "EASY" in df_all_taillard.loc[i, "predict_tag"].strip().upper():
             easy_predict_mask.add(i)
         elif "MEDIUM" in df_all_taillard.loc[i, "predict_tag"].strip().upper():
             medium_predict_mask.add(i)
         elif "HARD" in df_all_taillard.loc[i, "predict_tag"].strip().upper():
-            hard_predict_mask.add(i)
+            hard_predict_mask.add(i)       
             
     autores = {''.join(filter(str.isalpha, a)) : set() for a in df_all_taillard["instance_name"]}
     
@@ -207,14 +280,18 @@ def main():
     shap_values_optimal, shap_values_feasible, shap_values_timeout = shap_df.loc[optimal_mask].values, shap_df.loc[feasible_mask].values, shap_df.loc[timeout_mask].values
     
     xmin, xmax = shap_df.min(axis=None), shap_df.max(axis=None)
+    
+    plt.rcParams['text.usetex'] = True
+    plt.ticklabel_format(useMathText=False)
         
     # Summary plot (beeswarm)
     plt.figure()
     shap.summary_plot(shap_values_optimal, Xs_df_optimal, show=False, max_display=20)
-    plt.gca().xaxis.label.set_visible(False)
-    plt.gca().yaxis.set_tick_params(labelsize=18)
-    plt.gca().xaxis.set_tick_params(labelsize=18)
-    plt.gca().yaxis
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=18)
+    ax.xaxis.set_tick_params(labelsize=18)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_optimal.png"), dpi=400)
@@ -222,9 +299,11 @@ def main():
     
     plt.figure()
     shap.summary_plot(shap_values_feasible, Xs_df_feasible, show=False, max_display=20)
-    plt.gca().xaxis.label.set_visible(False)
-    plt.gca().yaxis.set_tick_params(labelsize=18)
-    plt.gca().xaxis.set_tick_params(labelsize=18)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=18)
+    ax.xaxis.set_tick_params(labelsize=18)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_feasible.png"), dpi=400)
@@ -232,9 +311,11 @@ def main():
     
     plt.figure()
     shap.summary_plot(shap_values_timeout, Xs_df_timeout, show=False, max_display=20)
-    plt.gca().xaxis.label.set_visible(False)
-    plt.gca().yaxis.set_tick_params(labelsize=18)
-    plt.gca().xaxis.set_tick_params(labelsize=18)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=18)
+    ax.xaxis.set_tick_params(labelsize=18)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_timeout.png"), dpi=400)
@@ -243,9 +324,11 @@ def main():
     # Bar plot
     plt.figure()
     shap.summary_plot(shap_values_optimal, Xs_df_optimal, plot_type="bar", show=False, max_display=20)
-    plt.gca().xaxis.label.set_visible(False)
-    plt.gca().yaxis.set_tick_params(labelsize=18)
-    plt.gca().xaxis.set_tick_params(labelsize=18)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=18)
+    ax.xaxis.set_tick_params(labelsize=18)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_optimal.png"), dpi=400)
@@ -253,9 +336,11 @@ def main():
     
     plt.figure()
     shap.summary_plot(shap_values_feasible, Xs_df_feasible, plot_type="bar", show=False, max_display=20)
-    plt.gca().xaxis.label.set_visible(False)
-    plt.gca().yaxis.set_tick_params(labelsize=18)
-    plt.gca().xaxis.set_tick_params(labelsize=18)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=18)
+    ax.xaxis.set_tick_params(labelsize=18)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_feasible.png"), dpi=400)
@@ -263,9 +348,11 @@ def main():
     
     plt.figure()
     shap.summary_plot(shap_values_timeout, Xs_df_timeout, plot_type="bar", show=False, max_display=20)
-    plt.gca().xaxis.label.set_visible(False)
-    plt.gca().yaxis.set_tick_params(labelsize=18)
-    plt.gca().xaxis.set_tick_params(labelsize=18)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=18)
+    ax.xaxis.set_tick_params(labelsize=18)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_timeout.png"), dpi=400)
@@ -284,22 +371,26 @@ def main():
         if len(easy_predict) != 0: 
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[easy_predict].values, Xt_df.loc[easy_predict], show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_easy_predict_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_predict_{a}.png"), dpi=400)
             plt.close()
             
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[easy_predict].values, Xt_df.loc[easy_predict], plot_type="bar", show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(0, 0.03)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_easy_predict_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_predict_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay easy_predict_{a}")
@@ -307,22 +398,26 @@ def main():
         if len(medium_predict) != 0:
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[medium_predict].values, Xt_df.loc[medium_predict], show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_medium_predict_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_predict_{a}.png"), dpi=400)
             plt.close()
             
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[medium_predict].values, Xt_df.loc[medium_predict], plot_type="bar", show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(0, 0.03)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_medium_predict_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_predict_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay medium_predict_{a}")
@@ -330,22 +425,26 @@ def main():
         if len(hard_predict) != 0:    
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[hard_predict].values, Xt_df.loc[hard_predict], show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_hard_predict_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_predict_{a}.png"), dpi=400)
             plt.close()
             
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[hard_predict].values, Xt_df.loc[hard_predict], plot_type="bar", show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(0, 0.03)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_hard_predict_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_predict_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay hard_predict_{a}")
@@ -353,22 +452,26 @@ def main():
         if len(easy_jsplib) != 0:
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[easy_jsplib].values, Xt_df.loc[easy_jsplib], show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_easy_jsplib_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_jsplib_{a}.png"), dpi=400)
             plt.close()
             
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[easy_jsplib].values, Xt_df.loc[easy_jsplib], plot_type="bar", show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(0, 0.03)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_easy_jsplib_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_jsplib_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay easy_jsplib_{a}")
@@ -376,22 +479,26 @@ def main():
         if len(medium_jsplib) != 0:
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[medium_jsplib].values, Xt_df.loc[medium_jsplib], show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_medium_jsplib_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_jsplib_{a}.png"), dpi=400)
             plt.close()
             
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[medium_jsplib].values, Xt_df.loc[medium_jsplib], plot_type="bar", show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(0, 0.03)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_medium_jsplib_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_jsplib_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay medium_jsplib_{a}")
@@ -399,22 +506,26 @@ def main():
         if len(hard_jsplib) != 0:
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[hard_jsplib].values, Xt_df.loc[hard_jsplib], show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_taillard_hard_jsplib_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_jsplib_{a}.png"), dpi=400)
             plt.close()
         
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[hard_jsplib].values, Xt_df.loc[hard_jsplib], plot_type="bar", show=False, max_display=20)
-            plt.gca().xaxis.label.set_visible(False)
-            plt.gca().yaxis.set_tick_params(labelsize=18)
-            plt.gca().xaxis.set_tick_params(labelsize=18)
+            ax = plt.gca()
+            ax.xaxis.label.set_visible(False)
+            new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+            ax.set_yticklabels(new_labels, fontsize=18)
+            ax.xaxis.set_tick_params(labelsize=18)
             plt.xlim(0, 0.03)
             plt.tight_layout()
-            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_taillard_hard_jsplib_{a}.png"), dpi=400)
+            plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_jsplib_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay hard_jsplib_{a}")
