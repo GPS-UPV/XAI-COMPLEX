@@ -107,26 +107,26 @@ def main():
     feature_map = {
         "n_jobs": r"$|J|$",
         "n_machines": r"$|M|$",
-        #"node_x_col0_min": r"$$",
-        #"node_x_col0_max": r"$$",
-        #"node_x_col0_mean": r"$$",
-        #"node_x_col0_median": r"$$",
-        #"node_x_col0_std": r"$$",
-        #"node_x_col0_range": r"$$",
-        #"node_x_col0_q1": r"$$",
-        #"node_x_col0_q3": r"$$",
-        #"node_x_col0_gini": r"$$",
-        #"node_x_col1_min": r"$$",
-        #"node_x_col1_max": r"$$",
-        #"node_x_col1_mean": r"$$",
-        #"node_x_col1_median": r"$$",
-        #"node_x_col1_std": r"$$",
-        #"node_x_col1_range": r"$$",
-        #"node_x_col1_q1": r"$$",
-        #"node_x_col1_q3": r"$$",
-        #"node_x_col1_gini": r"$$",
-        #"node_x_overall_mean": r"$$",
-        #"node_x_overall_std": r"$$",
+        "node_x_col0_min": r"$E_d^{min}$",
+        "node_x_col0_max": r"$E_d^{max}$",
+        "node_x_col0_mean": r"$E_d^{mean}$",
+        "node_x_col0_median": r"$E_d^{median}$",
+        "node_x_col0_std": r"$E_d^{std}$",
+        "node_x_col0_range": r"$E_d^{range}$",
+        "node_x_col0_q1": r"$E_d^{q1}$",
+        "node_x_col0_q3": r"$E_d^{q3}$",
+        "node_x_col0_gini": r"$E_c^{gini}$",
+        "node_x_col1_min": r"$E_c^{min}$",
+        "node_x_col1_max": r"$E_c^{max}$",
+        "node_x_col1_mean": r"$E_c^{mean}$",
+        "node_x_col1_median": r"$E_c^{median}$",
+        "node_x_col1_std": r"$E_c^{std}$",
+        "node_x_col1_range": r"$E_c^{range}$",
+        "node_x_col1_q1": r"$E_c^{q1}$",
+        "node_x_col1_q3": r"$E_c^{q3}$",
+        "node_x_col1_gini": r"$E_c^{gini}$",
+        "node_x_overall_mean": r"$E^{mean}$",
+        "node_x_overall_std": r"$E^{std}$",
         "num_conjunctive_edges": r"$|E_c|$",
         "num_disjunctive_edges": r"$|E_d|$",
         "num_nodes_total": r"$|V|$",
@@ -171,8 +171,8 @@ def main():
         "betweenness_gini": r"$\mathcal{B}_{gini}$",
         "makespan_min": r"$C_{min}$",
         "makespan_range": r"$C_{range}$",
-        #"operation_cost_mean": r"$$",
-        #"operation_cost_std": r"$$",
+        "operation_cost_mean": r"$\mathcal{O}_cost^{mean}$",
+        "operation_cost_std": r"$\mathcal{O}_cost^{std}$",
         "makespan_lb_job_sum": r"$\underline{C}_{\max}^{\,\mathrm{J}}$",
         "makespan_lb_machine_sum": r"$\underline{C}_{\max}^{\,\mathrm{M}}$",
         "makespan_lb_meanload": r"$\underline{C}_{\max}^{\,\mathrm{load}}$",
@@ -290,8 +290,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=18)
-    ax.xaxis.set_tick_params(labelsize=18)
+    ax.set_yticklabels(new_labels, fontsize=22, fontweight="bold")
+    ax.xaxis.set_tick_params(labelsize=22)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_optimal.png"), dpi=400)
@@ -302,8 +302,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=18)
-    ax.xaxis.set_tick_params(labelsize=18)
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_feasible.png"), dpi=400)
@@ -314,8 +314,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=18)
-    ax.xaxis.set_tick_params(labelsize=18)
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_timeout.png"), dpi=400)
@@ -327,8 +327,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=18)
-    ax.xaxis.set_tick_params(labelsize=18)
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_optimal.png"), dpi=400)
@@ -339,8 +339,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=18)
-    ax.xaxis.set_tick_params(labelsize=18)
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_feasible.png"), dpi=400)
@@ -351,8 +351,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=18)
-    ax.xaxis.set_tick_params(labelsize=18)
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_timeout.png"), dpi=400)
@@ -374,8 +374,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_predict_{a}.png"), dpi=400)
@@ -386,8 +386,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_predict_{a}.png"), dpi=400)
@@ -401,8 +401,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_predict_{a}.png"), dpi=400)
@@ -413,8 +413,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_predict_{a}.png"), dpi=400)
@@ -428,8 +428,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_predict_{a}.png"), dpi=400)
@@ -440,8 +440,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_predict_{a}.png"), dpi=400)
@@ -455,8 +455,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_jsplib_{a}.png"), dpi=400)
@@ -467,8 +467,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_jsplib_{a}.png"), dpi=400)
@@ -482,8 +482,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_jsplib_{a}.png"), dpi=400)
@@ -494,8 +494,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_jsplib_{a}.png"), dpi=400)
@@ -509,8 +509,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_jsplib_{a}.png"), dpi=400)
@@ -521,14 +521,165 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=18)
-            ax.xaxis.set_tick_params(labelsize=18)
+            ax.set_yticklabels(new_labels, fontsize=22)
+            ax.xaxis.set_tick_params(labelsize=22)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_jsplib_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay hard_jsplib_{a}")
+            
+    easy_jsplib_mask, medium_jsplib_mask, hard_jsplib_mask, easy_predict_mask, medium_predict_mask, hard_predict_mask = list(easy_jsplib_mask), list(medium_jsplib_mask), list(hard_jsplib_mask), list(easy_predict_mask), list(medium_predict_mask), list(hard_predict_mask)
+            
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[easy_predict_mask].values, Xt_df.loc[easy_predict_mask], show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(xmin, xmax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_predict.png"), dpi=400)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[easy_predict_mask].values, Xt_df.loc[easy_predict_mask], plot_type="bar", show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(0, 0.03)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_predict.png"), dpi=400)
+    plt.close()
+
+
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[medium_predict_mask].values, Xt_df.loc[medium_predict_mask], show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(xmin, xmax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_predict.png"), dpi=400)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[medium_predict_mask].values, Xt_df.loc[medium_predict_mask], plot_type="bar", show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(0, 0.03)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_predict.png"), dpi=400)
+    plt.close()
+
+
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[hard_predict_mask].values, Xt_df.loc[hard_predict_mask], show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(xmin, xmax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_predict.png"), dpi=400)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[hard_predict_mask].values, Xt_df.loc[hard_predict_mask], plot_type="bar", show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(0, 0.03)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_predict.png"), dpi=400)
+    plt.close()
+    
+    
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[easy_jsplib_mask].values, Xt_df.loc[easy_jsplib_mask], show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(xmin, xmax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_jsplib.png"), dpi=400)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[easy_jsplib_mask].values, Xt_df.loc[easy_jsplib_mask], plot_type="bar", show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(0, 0.03)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_jsplib.png"), dpi=400)
+    plt.close()
+
+
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[medium_jsplib_mask].values, Xt_df.loc[medium_jsplib_mask], show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(xmin, xmax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_jsplib.png"), dpi=400)
+    plt.close()
+    
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[medium_jsplib_mask].values, Xt_df.loc[medium_jsplib_mask], plot_type="bar", show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(0, 0.03)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_jsplib.png"), dpi=400)
+    plt.close()
+    
+    
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[hard_jsplib_mask].values, Xt_df.loc[hard_jsplib_mask], show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(xmin, xmax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_jsplib.png"), dpi=400)
+    plt.close()
+
+    plt.figure()
+    shap.summary_plot(shap_df_taillard.loc[hard_jsplib_mask].values, Xt_df.loc[hard_jsplib_mask], plot_type="bar", show=False, max_display=20)
+    ax = plt.gca()
+    ax.xaxis.label.set_visible(False)
+    new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+    ax.set_yticklabels(new_labels, fontsize=22)
+    ax.xaxis.set_tick_params(labelsize=22)
+    plt.xlim(0, 0.03)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_jsplib.png"), dpi=400)
+    plt.close()
 
     print("OK: SHAP guardado en", OUT_DIR)
 
