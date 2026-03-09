@@ -2,7 +2,7 @@
 Instances: 2401
 Signal source: blend(unsup + prior + sup[from_weighted])
 Mean complexity: 0.416
-Quantiles: q10=0.085 q50=0.406 q90=0.797
+Quantiles: q10=0.085 q50=0.405 q90=0.796
 Counts by category: {'hard': 816, 'easy': 793, 'medium': 792}
 Prior: YES (from generator metrics)
-Supervised: YES (RandomForestRegressor) target=from_weighted  cv_r2≈0.896
+Supervised: YES (RandomForestRegressor) target=from_weighted cv_r2=0.896±0.008 cv_mae=0.055±0.001 cv_rmse=0.078±0.003 oof_spearman=0.934

@@ -1,0 +1,23 @@
+{
+  "target_from": "from_weighted",
+  "cv_r2_mean": 0.8958809114525831,
+  "cv_r2_std": 0.00832777612283515,
+  "cv_mae_mean": 0.055395104174340105,
+  "cv_mae_std": 0.0014915935097576025,
+  "cv_rmse_mean": 0.07840718157357393,
+  "cv_rmse_std": 0.003155624241116905,
+  "oof_r2": 0.8959774616403197,
+  "oof_mae": 0.055395911060473445,
+  "oof_rmse": 0.07845999813571285,
+  "oof_spearman_rho": 0.934494606747638,
+  "oof_spearman_p": 0.0,
+  "n_labels_aligned": 2401,
+  "weighted_weights": {
+    "rt": 0.35,
+    "gap": 0.2,
+    "fail": 0.15,
+    "prop": 0.1,
+    "msize": 0.1,
+    "q": 0.1
+  }
+}

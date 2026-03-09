@@ -10,7 +10,7 @@ from sklearn.neighbors import LocalOutlierFactor, NearestNeighbors
 from sklearn.covariance import MinCovDet
 from sklearn.ensemble import IsolationForest, RandomForestRegressor
 from sklearn.model_selection import KFold, cross_validate, cross_val_predict
-from sklearn.metrics import make_scorer, r2_score, mean_absolute_error, mean_squared_error
+from sklearn.metrics import make_scorer, r2_score, mean_absolute_error, root_mean_squared_error
 from scipy.stats import spearmanr
 import argparse
 
@@ -164,7 +164,7 @@ def _build_matrix(df: pd.DataFrame):
 def unsupervised_complexity(X_scl: np.ndarray, random_state=42) -> Dict[str, np.ndarray]:
     n = X_scl.shape[0]
 
-    iforest = IsolationForest(n_estimators=400, random_state=random_state, n_jobs=1)
+    iforest = IsolationForest(n_estimators=400, random_state=random_state, n_jobs=-1)
     iforest.fit(X_scl)
     s_if = _safe_minmax(-iforest.score_samples(X_scl))
 
@@ -177,7 +177,7 @@ def unsupervised_complexity(X_scl: np.ndarray, random_state=42) -> Dict[str, np.
     s_md = _safe_minmax(np.sqrt(np.maximum(mcd.mahalanobis(X_scl), 0.0)))
 
     k = min(20, max(5, int(math.sqrt(n))))
-    knn = NearestNeighbors(n_neighbors=k, n_jobs=1)
+    knn = NearestNeighbors(n_neighbors=k, n_jobs=-1)
     knn.fit(X_scl)
     dists, _ = knn.kneighbors(X_scl)
     s_knn = _safe_minmax(dists[:, 1:].mean(axis=1) if dists.shape[1] > 1 else dists.mean(axis=1))
@@ -637,23 +637,23 @@ def supervised_calibration(
         n_estimators=600,
         max_features="sqrt",
         random_state=random_state,
-        n_jobs=1
+        n_jobs=-1
     )
     cv = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
 
     scoring = {
         "r2": make_scorer(r2_score),
         "mae": "neg_mean_absolute_error",
-        "mse": "neg_mean_squared_error",
+        "rmse": "neg_root_mean_squared_error",
     }
-    cv_res = cross_validate(rf, Xs, ys, scoring=scoring, cv=cv, n_jobs=1, return_train_score=False)
-    oof = cross_val_predict(rf, Xs, ys, cv=cv, n_jobs=1)
+    cv_res = cross_validate(rf, Xs, ys, scoring=scoring, cv=cv, n_jobs=-1, return_train_score=False)
+    oof = cross_val_predict(rf, Xs, ys, cv=cv, n_jobs=-1)
     oof = np.clip(oof, 0.0, 1.0)
 
     spearman = spearmanr(ys, oof, nan_policy="omit")
     oof_r2 = r2_score(ys, oof)
     oof_mae = mean_absolute_error(ys, oof)
-    oof_rmse = float(np.sqrt(mean_squared_error(ys, oof)))
+    oof_rmse = root_mean_squared_error(ys, oof)
 
     rf.fit(Xs, ys)
     y_pred_full = np.clip(rf.predict(X_scl), 0.0, 1.0)
@@ -668,8 +668,8 @@ def supervised_calibration(
         "cv_r2_std": float(np.std(cv_res["test_r2"], ddof=1)),
         "cv_mae_mean": float(-np.mean(cv_res["test_mae"])),
         "cv_mae_std": float(np.std(-cv_res["test_mae"], ddof=1)),
-        "cv_rmse_mean": float(np.sqrt(np.mean(-cv_res["test_mse"]))),
-        "cv_rmse_std": float(np.std(np.sqrt(-cv_res["test_mse"]), ddof=1)),
+        "cv_rmse_mean": float(-np.mean(cv_res["test_rmse"])),
+        "cv_rmse_std": float(np.std(-cv_res["test_rmse"], ddof=1)),
         "oof_r2": float(oof_r2),
         "oof_mae": float(oof_mae),
         "oof_rmse": float(oof_rmse),

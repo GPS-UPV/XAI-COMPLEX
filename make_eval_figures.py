@@ -86,7 +86,7 @@ def main() -> None:
         whiskerprops={"linewidth": 1.0},
         capprops={"linewidth": 1.0},
     )
-    ax.set_xlabel("C(x) (0–1)")
+    ax.set_xlabel("P(x) (0–1)")
     ax.set_ylabel("Solver status")
     ax.set_xlim(0, 1)
     _style_ax(ax, y_grid=True, x_grid=False)
@@ -95,13 +95,13 @@ def main() -> None:
     plt.close(fig)
 
     # --------------------
-    # 2) Alignment with solver effort: C(x) vs solve time (log-x)
+    # 2) Alignment with solver effort: P(x) vs solve time (log-x)
     # --------------------
     fig, ax = plt.subplots(figsize=(6.5, 3.5))
     ax.scatter(df["solveTime"].to_numpy(), df["C"].to_numpy(), s=9, alpha=0.45, linewidths=0)
     ax.set_xscale("log")
     ax.set_xlabel("Solve time (ms)")
-    ax.set_ylabel("C(x) (0–1)")
+    ax.set_ylabel("P(x) (0–1)")
     _style_ax(ax, y_grid=True, x_grid=False)
     fig.tight_layout(pad=0.2)
     fig.savefig(FIGS / "score_vs_time_scatter.png", dpi=300)

@@ -1,22 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-Extrae *solution-level features* desde ./solutions/*.json y exporta CSV/JSON + reporte.
-Pensado para cotejar con tus estimaciones de complejidad (instance-level).
-
-Salidas por defecto:
-  - ./solutions/solution_features.csv
-  - ./solutions/solution_features.json
-  - ./solutions/solution_features_report.txt
-
-Uso:
-  python extract_solution_features.py
-  python extract_solution_features.py --solutions-dir ./solutions --out-prefix solution_features
-
-Requisitos: Python 3.8+, pandas, numpy
-"""
-
 import os
 import re
 import json
