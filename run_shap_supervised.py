@@ -4,11 +4,13 @@ import numpy as np
 import pandas as pd
 import shap
 import matplotlib.pyplot as plt
+import time
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
-from sklearn.model_selection import KFold, cross_val_score
-from sklearn.metrics import make_scorer, r2_score
+from sklearn.model_selection import KFold, cross_val_score, cross_validate, cross_val_predict
+from sklearn.metrics import make_scorer, r2_score, mean_absolute_error, root_mean_squared_error
+from scipy.stats import spearmanr
 
 
 FEATURES_JSON = "./graphs/features.json"
@@ -70,12 +72,17 @@ def coerce_features_to_numeric(df_feats: pd.DataFrame) -> tuple[pd.DataFrame, li
 
 
 def main():
+    
+    start_time = time.time()
+    
     os.makedirs(OUT_DIR, exist_ok=True)
 
     df_feats = load_features(FEATURES_JSON)
     df_feats = df_feats.drop(columns=[c for c in df_feats.columns if "energy" in c.strip().lower() or "num_nodes" == c])
     scores = pd.read_csv(SCORES_CSV, index_col=0)
-    df_all_feats = pd.read_csv("all_features.csv", index_col=0)
+    df_all_feats = pd.read_csv("./graphs/all_features.csv", index_col=0)
+    
+    drop_columns = ["seed", "speed", "rddd", "instance_name", "sup_pred_complexity"]
 
     # --- Target ---
     ycol = pick_ycol(scores)
@@ -84,17 +91,25 @@ def main():
     mask = np.isfinite(y.values)
     
     df_all = df_all_feats.reindex(df_feats.index)
-
+    df_all = df_all.drop(columns=[c for c in df_all.columns if "energy" in c.strip().lower() or c in drop_columns[1:3]])
+    
     df_num, dropped_all_nan, dropped_constant = coerce_features_to_numeric(df_feats)
 
     y = scores.reindex(df_num.index)[ycol]
     y = pd.to_numeric(y, errors="coerce")
     mask = np.isfinite(y.values)
+    
+    lines = []
+    lines.append("=== SHAP SUPERVISED REPORT ===\n")
 
     print(f"[target] {ycol} | aligned labels: {int(mask.sum())}/{len(mask)}")
+    lines.append(f"[target] {ycol} | aligned labels: {int(mask.sum())}/{len(mask)}")
     print(f"[features] raw: {df_feats.shape} -> numeric: {df_num.shape}")
+    lines.append(f"[features] raw: {df_feats.shape} -> numeric: {df_num.shape}")
     print(f"[features] dropped all-NaN cols: {len(dropped_all_nan)}")
+    lines.append(f"[features] dropped all-NaN cols: {len(dropped_all_nan)}")
     print(f"[features] dropped constant cols: {len(dropped_constant)}")
+    lines.append(f"[features] dropped constant cols: {len(dropped_constant)}\n")
 
     if mask.sum() < 20:
         raise RuntimeError(f"Demasiadas pocas labels alineadas tras limpieza: {int(mask.sum())}")
@@ -179,7 +194,17 @@ def main():
         "num_op_nodes": r"$|\mathcal{O}|$",
     }
     
-    ys = y.values.astype(float)
+    Xs = X[mask]
+    Xs_df = pd.DataFrame(Xs, index=df_num.index[mask], columns=feature_names)
+    ys = y.values.astype(float)[mask]
+    
+    rf_start_time = time.time()
+    
+    hours, rest = divmod(rf_start_time, 3600)
+    _, hours = divmod(hours, 24)
+    minutes, seconds = divmod(rest, 60)
+    
+    lines.append(f"RANDOM FOREST REGRESSOR FITTING STARTED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
 
     rf = RandomForestRegressor(
         n_estimators=600,
@@ -187,58 +212,152 @@ def main():
         random_state=42,
         n_jobs=-1,
     )
-
+    
     cv = KFold(n_splits=5, shuffle=True, random_state=42)
-    r2 = cross_val_score(rf, X[mask], ys[mask], scoring=make_scorer(r2_score), cv=cv).mean()
+    
+    r2 = cross_val_score(rf, Xs, ys, scoring=make_scorer(r2_score), cv=cv).mean()
     print(f"[model] RandomForestRegressor | CV R2 mean: {r2:.4f}")
+    lines.append(f"[model] RandomForestRegressor | CV R2 mean: {r2:.4f}\n")
+    
+    scoring = {
+        "r2": make_scorer(r2_score),
+        "mae": "neg_mean_absolute_error",
+        "rmse": "neg_root_mean_squared_error",
+    }
+    cv_res = cross_validate(rf, Xs, ys, scoring=scoring, cv=cv, n_jobs=-1, return_train_score=False)
+    oof = cross_val_predict(rf, Xs, ys, cv=cv, n_jobs=-1)
+    oof = np.clip(oof, 0.0, 1.0)
 
-    rf.fit(X[mask], ys[mask])
+    spearman = spearmanr(ys, oof, nan_policy="omit")
+    oof_r2 = r2_score(ys, oof)
+    oof_mae = mean_absolute_error(ys, oof)
+    oof_rmse = root_mean_squared_error(ys, oof)
+
+    rf.fit(Xs, ys)
+    
+    rf_end_time = time.time()
+    
+    hours, rest = divmod(rf_end_time, 3600)
+    _, hours = divmod(hours, 24)
+    minutes, seconds = divmod(rest, 60)
+    
+    lines.append(f"RANDOM FOREST REGRESSOR FITTING ENDED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
+    
+    rf_time = rf_end_time - rf_start_time
+        
+    y_pred_full = np.clip(rf.predict(Xs), 0.0, 1.0)
+
+    feat_imp = pd.Series(rf.feature_importances_, index=feature_names).sort_values(ascending=False)
+
+    metrics = {
+        "used": True,
+        "model": "RandomForestRegressor",
+        "cv_r2_mean": float(np.mean(cv_res["test_r2"])),
+        "cv_r2_std": float(np.std(cv_res["test_r2"], ddof=1)),
+        "cv_mae_mean": float(-np.mean(cv_res["test_mae"])),
+        "cv_mae_std": float(np.std(-cv_res["test_mae"], ddof=1)),
+        "cv_rmse_mean": float(-np.mean(cv_res["test_rmse"])),
+        "cv_rmse_std": float(np.std(-cv_res["test_rmse"], ddof=1)),
+        "oof_r2": float(oof_r2),
+        "oof_mae": float(oof_mae),
+        "oof_rmse": float(oof_rmse),
+        "oof_spearman_rho": float(spearman.statistic) if spearman.statistic == spearman.statistic else np.nan,
+        "oof_spearman_p": float(spearman.pvalue) if spearman.pvalue == spearman.pvalue else np.nan,
+        "complexity_sup_pred": y_pred_full,
+        "oof_pred_aligned": pd.Series(oof, index=df_feats.index[mask], name="oof_pred"),
+        "y_true_aligned": pd.Series(ys, index=df_feats.index[mask], name="y_true"),
+        "feature_importances": feat_imp,
+    }
+    
+    lines.append(
+        f"Supervised: YES ({metrics.get('model')}) "
+        f"cv_r2={metrics.get('cv_r2_mean'):.3f}±{metrics.get('cv_r2_std'):.3f} "
+        f"cv_mae={metrics.get('cv_mae_mean'):.3f}±{metrics.get('cv_mae_std'):.3f} "
+        f"cv_rmse={metrics.get('cv_rmse_mean'):.3f}±{metrics.get('cv_rmse_std'):.3f} "
+        f"oof_spearman={metrics.get('oof_spearman_rho'):.3f}\n"
+    )
+    
+    print(f"Supervised: YES ({metrics.get('model')}) ")
+    print(f"cv_r2={metrics.get('cv_r2_mean'):.3f}±{metrics.get('cv_r2_std'):.3f} ")
+    print(f"cv_mae={metrics.get('cv_mae_mean'):.3f}±{metrics.get('cv_mae_std'):.3f} ")
+    print(f"cv_rmse={metrics.get('cv_rmse_mean'):.3f}±{metrics.get('cv_rmse_std'):.3f} ")
+    print(f"oof_spearman={metrics.get('oof_spearman_rho'):.3f}")
     
     df_taillard = load_features("./TaillardInstancesGRAPHS/features.json")
-    df_all_taillard = pd.read_csv("./all_taillard_with_groundtruth_and_est_tags.csv")
+    df_taillard_tags = pd.read_csv("./all_taillard_with_groundtruth_and_est_tags.csv")
     df_pred_t = df_taillard[feature_names]
     
-    df_all_taillard.index = df_pred_t.index
+    df_taillard_tags.index = df_pred_t.index
     
+    df_taillard_tags = df_taillard_tags.drop(columns=[c for c in df_taillard_tags if "shap" in c or c in df_taillard.columns or "speed" in c or c in drop_columns])
+    
+    df_all_taillard = df_taillard.join(df_taillard_tags)
+                
     Xt = imputer.fit_transform(df_pred_t.values.astype(float))
     Xt_df = pd.DataFrame(Xt, index=df_pred_t.index, columns=feature_names)
     yt = rf.predict(Xt)
-    df_taillard['sup_pred_complexity'] = yt
-        
+    
     # --- SHAP ---
-    Xs = X[mask]
-    Xs_df = pd.DataFrame(Xs, index=df_num.index[mask], columns=feature_names)
-
+    
+    shap_start_time = time.time()
+        
+    hours, rest = divmod(shap_start_time, 3600)
+    _, hours = divmod(hours, 24)
+    minutes, seconds = divmod(rest, 60)
+    
+    lines.append(f"TREE EXPLAINER STARTED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
+    
     explainer = shap.TreeExplainer(rf)
-    #shap_values = explainer.shap_values(Xs)
-    #shap_values_taillard = explainer.shap_values(Xt)
-
-    #shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
-    #shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    shap_values = explainer.shap_values(Xs)
     
-    #df_all_and_shap = df_all.join(shap_df.add_suffix('_shap'))
-    #df_all_and_shap.to_csv('all_features_and_shap.csv')
-
-    #shap_df_taillard = pd.DataFrame(shap_values_taillard, index=Xt_df.index, columns=feature_names)
-    #shap_df_taillard.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
+    shap1_end_time = time.time()
+        
+    hours, rest = divmod(shap1_end_time, 3600)
+    _, hours = divmod(hours, 24)
+    minutes, seconds = divmod(rest, 60)
     
-    #df_taillard['complexity_supervised_0_1'] = yt
-    #df_all_taillard = df_taillard.join(shap_df_taillard.add_suffix('_shap'))
-    #df_all_taillard.to_csv('all_taillard.csv')
+    lines.append(f"EXPLANATION OF Xs OBTAINED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
     
-    shap_df = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
-    shap_df.index= Xs_df.index
-    shap_df = shap_df[feature_names]
+    shap1_time = shap1_end_time - shap_start_time
     
-    shap_df_taillard = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
-    shap_df_taillard.index= Xt_df.index
-    shap_df_taillard = shap_df_taillard[feature_names]
+    shap_values_taillard = explainer.shap_values(Xt)
+    
+    shap2_end_time = time.time()
+        
+    hours, rest = divmod(shap2_end_time, 3600)
+    _, hours = divmod(hours, 24)
+    minutes, seconds = divmod(rest, 60)
+    
+    lines.append(f"EXPLANATION OF Xt OBTAINED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
+    
+    shap2_time = shap2_end_time - shap1_end_time
+    
+    shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
+    shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    
+    df_all_and_shap = df_all.join(shap_df.add_suffix('_shap'))
+    df_all_and_shap.to_csv('all_features_and_shap.csv')
 
-    #imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
-    #imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
+    shap_df_taillard = pd.DataFrame(shap_values_taillard, index=Xt_df.index, columns=feature_names)
+    shap_df_taillard.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
+    
+    df_all_taillard['complexity_supervised_0_1'] = yt
+    df_all_taillard = df_all_taillard.join(shap_df_taillard.add_suffix('_shap'))
+    df_all_taillard.to_csv('all_taillard_and_shap.csv')
+    
+    # shap_df = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    # shap_df.index= Xs_df.index
+    # shap_df = shap_df[feature_names]
+    
+    # shap_df_taillard = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
+    # shap_df_taillard.index= Xt_df.index
+    # shap_df_taillard = shap_df_taillard[feature_names]
 
-    #imp_taillard = shap_df_taillard.abs().mean(axis=0).sort_values(ascending=False)
-    #imp_taillard.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}_taillard.csv"), header=["mean_abs_shap"])
+    imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
+    imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
+
+    imp_taillard = shap_df_taillard.abs().mean(axis=0).sort_values(ascending=False)
+    imp_taillard.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}_taillard.csv"), header=["mean_abs_shap"])
 
     optimal_mask, feasible_mask, timeout_mask = [], [], []
     
@@ -268,11 +387,12 @@ def main():
         elif "HARD" in df_all_taillard.loc[i, "predict_tag"].strip().upper():
             hard_predict_mask.add(i)       
             
-    autores = {''.join(filter(str.isalpha, a)) : set() for a in df_all_taillard["instance_name"]}
-    
+    autores = {}
     
     for i in df_all_taillard.index:
         a = ''.join(filter(str.isalpha, i[:-3]))
+        if a not in autores:
+            autores[a] = set()
         autores[a].add(i)
     
     Xs_df_optimal, Xs_df_feasible, Xs_df_timeout = Xs_df.loc[optimal_mask], Xs_df.loc[feasible_mask], Xs_df.loc[timeout_mask]
@@ -290,10 +410,9 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22, fontweight="bold")
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24, fontweight="bold")
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(xmin, xmax)
-    plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_optimal.png"), dpi=400)
     plt.close()
     
@@ -302,8 +421,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_feasible.png"), dpi=400)
@@ -314,8 +433,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_timeout.png"), dpi=400)
@@ -327,8 +446,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_optimal.png"), dpi=400)
@@ -339,8 +458,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_feasible.png"), dpi=400)
@@ -351,8 +470,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_timeout.png"), dpi=400)
@@ -368,14 +487,39 @@ def main():
         hard_predict = list(autores[a].intersection(hard_predict_mask))
         hard_jsplib = list(autores[a].intersection(hard_jsplib_mask))
         
+        autor = list(autores[a])
+        
+        shap.summary_plot(shap_df_taillard.loc[autor].values, Xt_df.loc[autor], show=False, max_display=20)
+        ax = plt.gca()
+        ax.xaxis.label.set_visible(False)
+        new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+        ax.set_yticklabels(new_labels, fontsize=24)
+        ax.xaxis.set_tick_params(labelsize=24)
+        plt.xlim(xmin, xmax)
+        plt.tight_layout()
+        plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_{a}.png"), dpi=400)
+        plt.close()
+        
+        plt.figure()
+        shap.summary_plot(shap_df_taillard.loc[autor].values, Xt_df.loc[autor], plot_type="bar", show=False, max_display=20)
+        ax = plt.gca()
+        ax.xaxis.label.set_visible(False)
+        new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
+        ax.set_yticklabels(new_labels, fontsize=24)
+        ax.xaxis.set_tick_params(labelsize=24)
+        plt.xlim(0, 0.03)
+        plt.tight_layout()
+        plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_{a}.png"), dpi=400)
+        plt.close()
+        
         if len(easy_predict) != 0: 
             plt.figure()
             shap.summary_plot(shap_df_taillard.loc[easy_predict].values, Xt_df.loc[easy_predict], show=False, max_display=20)
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_predict_{a}.png"), dpi=400)
@@ -386,14 +530,15 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_predict_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay easy_predict_{a}")
+            lines.append(f"No hay easy_predict_{a}")
         
         if len(medium_predict) != 0:
             plt.figure()
@@ -401,8 +546,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_predict_{a}.png"), dpi=400)
@@ -413,14 +558,15 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_predict_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay medium_predict_{a}")
+            lines.append(f"No hay medium_predict_{a}")
         
         if len(hard_predict) != 0:    
             plt.figure()
@@ -428,8 +574,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_predict_{a}.png"), dpi=400)
@@ -440,14 +586,15 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_predict_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay hard_predict_{a}")
+            lines.append(f"No hay hard_predict_{a}")
             
         if len(easy_jsplib) != 0:
             plt.figure()
@@ -455,8 +602,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_jsplib_{a}.png"), dpi=400)
@@ -467,14 +614,15 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_jsplib_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay easy_jsplib_{a}")
+            lines.append(f"No hay easy_jsplib_{a}")
         
         if len(medium_jsplib) != 0:
             plt.figure()
@@ -482,8 +630,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_jsplib_{a}.png"), dpi=400)
@@ -494,14 +642,15 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_jsplib_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay medium_jsplib_{a}")
+            lines.append(f"No hay medium_jsplib_{a}")
             
         if len(hard_jsplib) != 0:
             plt.figure()
@@ -509,8 +658,8 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(xmin, xmax)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_jsplib_{a}.png"), dpi=400)
@@ -521,14 +670,15 @@ def main():
             ax = plt.gca()
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-            ax.set_yticklabels(new_labels, fontsize=22)
-            ax.xaxis.set_tick_params(labelsize=22)
+            ax.set_yticklabels(new_labels, fontsize=24)
+            ax.xaxis.set_tick_params(labelsize=24)
             plt.xlim(0, 0.03)
             plt.tight_layout()
             plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_jsplib_{a}.png"), dpi=400)
             plt.close()
         else:
             print(f"No hay hard_jsplib_{a}")
+            lines.append(f"No hay hard_jsplib_{a}")
             
     easy_jsplib_mask, medium_jsplib_mask, hard_jsplib_mask, easy_predict_mask, medium_predict_mask, hard_predict_mask = list(easy_jsplib_mask), list(medium_jsplib_mask), list(hard_jsplib_mask), list(easy_predict_mask), list(medium_predict_mask), list(hard_predict_mask)
             
@@ -537,8 +687,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_predict.png"), dpi=400)
@@ -549,8 +699,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_predict.png"), dpi=400)
@@ -562,8 +712,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_predict.png"), dpi=400)
@@ -574,8 +724,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_predict.png"), dpi=400)
@@ -587,8 +737,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_predict.png"), dpi=400)
@@ -599,8 +749,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_predict.png"), dpi=400)
@@ -612,8 +762,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_easy_jsplib.png"), dpi=400)
@@ -624,8 +774,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_easy_jsplib.png"), dpi=400)
@@ -637,8 +787,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_medium_jsplib.png"), dpi=400)
@@ -649,8 +799,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_medium_jsplib.png"), dpi=400)
@@ -662,8 +812,8 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(xmin, xmax)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_summary_{ycol}_hard_jsplib.png"), dpi=400)
@@ -674,12 +824,37 @@ def main():
     ax = plt.gca()
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
-    ax.set_yticklabels(new_labels, fontsize=22)
-    ax.xaxis.set_tick_params(labelsize=22)
+    ax.set_yticklabels(new_labels, fontsize=24)
+    ax.xaxis.set_tick_params(labelsize=24)
     plt.xlim(0, 0.03)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_jsplib.png"), dpi=400)
     plt.close()
+    
+    hours, rest = divmod(rf_time, 3600)
+    minutes, seconds = divmod(rest, 60)
+    
+    lines.append(f"\nRANDOM FOREST FITTING TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
+    
+    hours, rest = divmod(shap1_time, 3600)
+    minutes, seconds = divmod(rest, 60)
+    
+    lines.append(f"\nSHAP VALUES EXPLAINER FOR Xs TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
+    
+    hours, rest = divmod(shap2_time, 3600)
+    minutes, seconds = divmod(rest, 60)
+    
+    lines.append(f"\nSHAP VALUES EXPLAINER FOR Xt TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
+
+    total_execution_time = time.time() - start_time
+    
+    hours, rest = divmod(total_execution_time, 3600)
+    minutes, seconds = divmod(rest, 60)
+    
+    lines.append(f"\nTOTAL EXECUTION TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
+
+    with open("shap_supervised_report.txt", "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
 
     print("OK: SHAP guardado en", OUT_DIR)
 

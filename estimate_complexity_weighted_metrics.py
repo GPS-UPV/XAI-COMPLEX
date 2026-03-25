@@ -526,6 +526,7 @@ def print_weighted_y_formula(weights: Dict[str, float] | None = None,
                              decimals: int = 3) -> None:
     """Imprime por pantalla la fórmula de y usada por build_weighted_y_0_1()."""
     print(weighted_y_formula_str(weights=weights, decimals=decimals))
+
 def supervised_calibration(
     df_feats: pd.DataFrame,
     X_scl: np.ndarray,
@@ -730,7 +731,10 @@ def main():
     )
 
     if args.dump_all_features:
-        labels_for_dump = labels.copy() if labels is not None else pd.DataFrame(index=df.index)
+        print('all_features')
+        id1 = [str(c).split('-')[0].replace("_","-") + "-0.pt" for c in labels[:-1].index]
+        labels_for_dump = labels.iloc[:-1].copy() if labels is not None else pd.DataFrame(index=df.index)
+        labels_for_dump.index = id1
         if labels_for_dump is None or len(labels_for_dump) == 0:
             labels_for_dump = pd.DataFrame(index=df.index)
         df_all = df.join(labels_for_dump, how="left")

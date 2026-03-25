@@ -1,0 +1,44 @@
+=== SHAP SUPERVISED REPORT ===
+
+[target] complexity_supervised_0_1 | aligned labels: 2401/2401
+[features] raw: (2401, 77) -> numeric: (2401, 65)
+[features] dropped all-NaN cols: 1
+[features] dropped constant cols: 11
+
+RANDOM FOREST REGRESSOR FITTING STARTED AT: 11:46:42
+
+[model] RandomForestRegressor | CV R2 mean: 0.9629
+
+RANDOM FOREST REGRESSOR FITTING ENDED AT: 11:47:13
+
+Supervised: YES (RandomForestRegressor) cv_r2=0.963±0.003 cv_mae=0.032±0.001 cv_rmse=0.045±0.002 oof_spearman=0.974
+
+TREE EXPLAINER STARTED AT: 11:47:14
+
+EXPLANATION OF Xs OBTAINED AT: 12:45:15
+
+EXPLANATION OF Xt OBTAINED AT: 12:49:05
+
+No hay hard_predict_abz
+No hay hard_predict_ft
+No hay medium_jsplib_ft
+No hay hard_jsplib_ft
+No hay hard_predict_la
+No hay hard_jsplib_la
+No hay medium_predict_orb
+No hay hard_predict_orb
+No hay medium_jsplib_orb
+No hay hard_jsplib_orb
+No hay hard_predict_swv
+No hay easy_predict_yn
+No hay hard_predict_yn
+No hay easy_jsplib_yn
+No hay medium_jsplib_yn
+
+RANDOM FOREST FITTING TIME: 00:00:31
+
+SHAP VALUES EXPLAINER FOR Xs TIME: 00:58:00
+
+SHAP VALUES EXPLAINER FOR Xt TIME: 00:03:50
+
+TOTAL EXECUTION TIME: 01:04:40
