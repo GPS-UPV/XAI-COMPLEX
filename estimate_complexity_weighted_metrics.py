@@ -708,11 +708,13 @@ def main():
     
     df = df.drop(columns=[c for c in df.columns if "energy" in c.strip().lower() or "num_nodes" == c])
 
+    mask = [c for c in df.columns if "_d_" not in c or "_c_" not in c]
+    
     # 1) Prior desde el generador (si procede)
-    prior = prior_complexity_from_generator(df)
+    prior = prior_complexity_from_generator(df[mask])
 
     # 2) Ensamble no supervisado sobre TODAS las numéricas (grafo + generador)
-    X_raw, X_scl, imputer, scaler = _build_matrix(df)
+    X_raw, X_scl, imputer, scaler = _build_matrix(df[mask])
     unsup = unsupervised_complexity(X_scl)
 
     # 3) Calibración supervisada (si hay labels.csv)
@@ -722,7 +724,7 @@ def main():
     
     # Dump opcional (separado) con TODAS las columnas de la fórmula de y (raw / log / clipped / norm / términos / suma).
     sup = supervised_calibration(
-        df,
+        df[mask],
         X_scl,
         labels,
         dump_weighted_components_path=os.path.join(args.graphs_dir, "weighted_y_components.csv"),
