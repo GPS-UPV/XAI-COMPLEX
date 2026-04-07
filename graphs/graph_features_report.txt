@@ -103,6 +103,7 @@ Features extracted
 - makespan_range
 - energy_sum_min
 - energy_sum_range
+- gen_features_raw
 - operation_cost_mean
 - operation_cost_std
 - makespan_lb_job_sum
@@ -113,4 +114,4 @@ Features extracted
 - energy_max_mean
 - num_op_nodes
 
-Tiempo de ejecución: 00:07:28
+Tiempo de ejecución: 02:02:24

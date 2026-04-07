@@ -83,6 +83,7 @@ def main():
     df_all_feats = pd.read_csv("./graphs/all_features.csv", index_col=0)
     
     drop_columns = ["seed", "speed", "rddd", "instance_name", "sup_pred_complexity"]
+    feat_mask = [c for c in df_feats.columns if "_d_" not in c or "_c_" not in c]
 
     # --- Target ---
     ycol = pick_ycol(scores)
@@ -91,13 +92,9 @@ def main():
     mask = np.isfinite(y.values)
     
     df_all = df_all_feats.reindex(df_feats.index)
-    df_all = df_all.drop(columns=[c for c in df_all.columns if "energy" in c.strip().lower() or c in drop_columns[1:3]])
+    df_all = df_all.drop(columns=[c for c in df_all.columns if "energy" in c.strip().lower() or c in drop_columns])
     
-    df_num, dropped_all_nan, dropped_constant = coerce_features_to_numeric(df_feats)
-
-    y = scores.reindex(df_num.index)[ycol]
-    y = pd.to_numeric(y, errors="coerce")
-    mask = np.isfinite(y.values)
+    df_num, dropped_all_nan, dropped_constant = coerce_features_to_numeric(df_feats[feat_mask])
     
     lines = []
     lines.append("=== SHAP SUPERVISED REPORT ===\n")
