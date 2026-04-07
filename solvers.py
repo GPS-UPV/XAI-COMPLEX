@@ -17,6 +17,7 @@ from numpyencoder import NumpyEncoder
 from minizinc import Instance, Model, Result, Solver, Status
 
 
+
 def compute_time_limit(
     nb_jobs: int,
     nb_machines: int,
@@ -68,59 +69,78 @@ class SOLVER:
         self.model = []
     
 
-    def solve(self, timeout=60, verbose=True, model_path="", path=""):
-        
-        self.model = Model(f"Minizinc/JSP{self.rddd}.mzn")
-        self.model.add_file(path,parse_data=True)
-        quit()
-        # self.model.add_string(f"JOBS = 1..{self.numJobs};\n")
-        # self.model.add_string(f"MACHINES = 1..{self.numMchs};\n")
-        # self.model.add_string(f"SPEED = {self.speed};\n")
-        # self.model.add_string(f"time = array3d(JOBS,MACHINES,1..SPEED,[{','.join(map(str, self.time))}]);\n")
-        # self.model.add_string(f"energy = array3d(JOBS,MACHINES,1..SPEED,[{','.join(map(str, self.energy))}]);\n")
-        # self.model.add_string(f"precedence = array2d(JOBS,MACHINES,[{','.join(map(str, self.precedence))}]);\n" )
-        # if verbose:
-        #     print(f"JOBS = 1..{self.numJobs};\n")
-        #     print(f"MACHINES = 1..{self.numMchs};\n")
-        #     print(f"SPEED = {self.speed};\n")
-        #     print(f"time = array3d(JOBS,MACHINES,1..SPEED,[{','.join(map(str, self.time))}]);\n")
-        #     print(f"energy = array3d(JOBS,MACHINES,1..SPEED,[{','.join(map(str, self.energy))}]);\n")
-        #     print(f"precedence = array2d(JOBS,MACHINES,[{','.join(map(str, self.precedence))}]);\n")
+    def solve(self, timeout=60000, verbose=True, model_path="", path="", processes=18):
+        self.model = Model(f"Minizinc\Models\RD\JSP{self.rddd}.mzn") #.\Minizinc\Models\RD\JSP0.mzn
 
-        if model_path != "":
+        if path:
+            # modo fichero .dzn
+            self.model.add_file(path, parse_data=True)
+        else:
+            # modo en memoria
+            self.model.add_string(f"JOBS = 1..{self.numJobs};\n")
+            self.model.add_string(f"MACHINES = 1..{self.numMchs};\n")
+            self.model.add_string(f"SPEED = {self.speed};\n")
+            self.model.add_string(
+                f"time = array3d(JOBS,MACHINES,1..SPEED,[{','.join(map(str, self.time))}]);\n"
+            )
+            self.model.add_string(
+                f"energy = array3d(JOBS,MACHINES,1..SPEED,[{','.join(map(str, self.energy))}]);\n"
+            )
+            self.model.add_string(
+                f"precedence = array2d(JOBS,MACHINES,[{','.join(map(str, self.precedence))}]);\n"
+            )
+
+        if verbose:
+            print(f"Model: Minizinc/JSP{self.rddd}.mzn")
+            print(f"Jobs={self.numJobs}, Machines={self.numMchs}, Speed={self.speed}")
+
+        if model_path:
             with open(model_path, "w", encoding="utf-8") as file:
                 file.writelines(self.model.__dict__["_code_fragments"])
-                
+
         self.instance = Instance(solver=Solver.lookup(self.solver), model=self.model)
+
         try:
             result = self.instance.solve(
-                timeout =timedelta(milliseconds=timeout),
+                timeout=timedelta(milliseconds=timeout),
                 free_search=True,
-                processes=18,
+                processes=processes,
             )
+
             if result:
                 self.solution = result.__dict__
-                if "status" in self.solution.keys():
+
+                if "status" in self.solution:
                     self.solution["status"] = str(result.status)
-                if "solution" in self.solution.keys():
+
+                if "solution" in self.solution:
                     self.solution["solution"] = result.solution.__dict__
-                if "time" in self.solution["statistics"].keys():
-                    self.solution["statistics"]["time"] = (self.solution["statistics"]["time"].total_seconds() *1000)
-                if "optTime" in self.solution["statistics"].keys():
-                    self.solution["statistics"]["optTime"] = (self.solution["statistics"]["optTime"].total_seconds() * 1000)
-                if "flatTime" in self.solution["statistics"].keys():
-                    self.solution["statistics"]["flatTime"] = (self.solution["statistics"]["flatTime"].total_seconds() * 1000)
-                if "initTime" in self.solution["statistics"].keys():
-                    self.solution["statistics"]["initTime"] = (self.solution["statistics"]["initTime"].total_seconds() * 1000)
-                if "solveTime" in self.solution["statistics"].keys():
-                    self.solution["statistics"]["solveTime"] = (self.solution["statistics"]["solveTime"].total_seconds() * 1000)
+
+                if "time" in self.solution["statistics"]:
+                    self.solution["statistics"]["time"] = (
+                        self.solution["statistics"]["time"].total_seconds() * 1000
+                    )
+                if "optTime" in self.solution["statistics"]:
+                    self.solution["statistics"]["optTime"] = (
+                        self.solution["statistics"]["optTime"].total_seconds() * 1000
+                    )
+                if "flatTime" in self.solution["statistics"]:
+                    self.solution["statistics"]["flatTime"] = (
+                        self.solution["statistics"]["flatTime"].total_seconds() * 1000
+                    )
+                if "initTime" in self.solution["statistics"]:
+                    self.solution["statistics"]["initTime"] = (
+                        self.solution["statistics"]["initTime"].total_seconds() * 1000
+                    )
+                if "solveTime" in self.solution["statistics"]:
+                    self.solution["statistics"]["solveTime"] = (
+                        self.solution["statistics"]["solveTime"].total_seconds() * 1000
+                    )
             else:
                 self.solution = {"solution": None}
+
         except Exception as e:
-            self.solution = {"solution": None}
+            self.solution = {"solution": None, "error": str(e)}
             print(f"Error: {e}")
-        if path != "":
-            with open(f"{path}-{self.solver}.json", "w", encoding="utf-8") as f:
-                json.dump(self.solution, f, indent=4,cls=NumpyEncoder)
+
         return self.solution
-    

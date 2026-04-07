@@ -4,14 +4,72 @@ import pandas as pd
 import time
 import torch
 
+
+from tqdm import tqdm
 from math import factorial
 from functools import lru_cache
-from tqdm import tqdm
+from types import SimpleNamespace
 from collections import defaultdict
-from itertools import permutations, product
-from typing import Any, Dict, List, Tuple, Optional
-from torch_geometric.data import HeteroData
 from IGJSP.generador import Generator
+from torch_geometric.data import HeteroData
+from itertools import permutations, product
+from solvers import SOLVER, compute_time_limit
+from typing import Any, Dict, List, Tuple, Optional
+
+
+# timeout dinámico
+Q_JOBS = range(2, 51)
+Q_MACHINES = range(2, 51)
+
+TIME_MIN = 400 / 2
+TIME_MAX = 120000 / 2
+
+def build_maxtime(q_jobs, q_machines, time_min, time_max):
+    t_job = ((min(q_jobs) * time_min) / 2, (max(q_jobs) * time_max / 100))
+    t_mach = ((min(q_machines) * time_min) / 2, (max(q_machines) * time_max / 100))
+
+    maxtime = (
+        np.array(
+            np.linspace(
+                t_job[0] + t_mach[0],
+                t_job[1] + t_mach[1],
+                len(q_jobs) * len(q_machines),
+                dtype=int,
+            )
+        )
+        .reshape(len(q_jobs), len(q_machines))
+        .astype(float)
+    )
+
+    return maxtime
+
+
+MAXTIME = build_maxtime(Q_JOBS, Q_MACHINES, TIME_MIN, TIME_MAX)
+
+
+def dynamic_timeout(instance):
+    j_idx = instance.numJobs - min(Q_JOBS)
+    m_idx = instance.numMchs - min(Q_MACHINES)
+
+    j_idx = max(0, min(j_idx, MAXTIME.shape[0] - 1))
+    m_idx = max(0, min(m_idx, MAXTIME.shape[1] - 1))
+
+    return float(MAXTIME[j_idx, m_idx])
+
+
+def dict_to_problem(inst_dict):
+    inst = dict(inst_dict)
+
+    # valores por defecto por si el generador no los trae
+    inst.setdefault("rddd", 0)
+    inst.setdefault("speed", 1)
+
+    # asegurar np.array
+    inst["Orden"] = np.asarray(inst["Orden"])
+    inst["ProcessingTime"] = np.asarray(inst["ProcessingTime"])
+    inst["EnergyConsumption"] = np.asarray(inst["EnergyConsumption"])
+
+    return SimpleNamespace(**inst)
 
 def extract_operations_strict(data: Dict[str, Any]) -> List[Tuple[int, int, int, float, float]]:
     """
@@ -412,6 +470,8 @@ def main():
     btw_map = [{} for _ in range(len(comb_iter))]
     unique_map = {}
 
+    solutions_rows = []
+    
     pbar = tqdm(comb_iter, total=len(comb_iter), desc="Matrices / grafos")
 
     for k, (comb, idx) in enumerate(pbar):
@@ -424,42 +484,70 @@ def main():
         inst_dict["ProcessingTime"] = np.array([[[1]]*size for i in range(size)])
         inst_dict["EnergyConsumption"] = np.array([[[1]]*size for i in range(size)])
         
-        gb = GraphBuilderStrict(inst_dict)
-        graph = gb.data
-        n_nodes = graph["node"].x.shape[0]
-        n_conj = graph[("node", "conjunctive", "node")].edge_index.shape[1]
-        n_disj = graph[("node", "disjunctive", "node")].edge_index.shape[1]
-    
-        btw_map[k]["job"] = np.repeat(range(size), size)
-        btw_map[k]["machine"] = inst_dict["Orden"].flatten()
-    
-        out[k], btw_map[k]["btw"] = extract_features(graph, k) 
-        out[k]["perm"] = idx       
-        out[k]["perm_idx"] = k       
+        problem = dict_to_problem(inst_dict)
+
+        timeout_ms = dynamic_timeout(problem)
+        solver = SOLVER(problem, solver="cp-sat")
+        sol = solver.solve(timeout=timeout_ms, verbose=False)
+
+        stats = sol.get("statistics", {}) if isinstance(sol, dict) else {}
+        stats.update({
+            "perm_idx": k,
+            "perm": idx,
+            "status": sol.get("status"),
+            "objective": sol.get("objective", np.nan),
+            # "solveTime": stats.get("solveTime", np.nan),
+            # "flatTime": stats.get("flatTime", np.nan),
+            # "time": stats.get("time", np.nan),
+            "timeout_ms": timeout_ms,
+        })
         
-        btw_mean = out[k]["betweenness_mean"]
+        solutions_rows.append(stats)
         
-        btw_map[k]["perm"] = idx
-        btw_map[k]["perm_idx"] = k 
-        btw_map[k]["betweenness_mean"] = btw_mean
+        ####GRAFOS####
+        # gb = GraphBuilderStrict(inst_dict)
+        # graph = gb.data
+        # n_nodes = graph["node"].x.shape[0]
+        # n_conj = graph[("node", "conjunctive", "node")].edge_index.shape[1]
+        # n_disj = graph[("node", "disjunctive", "node")].edge_index.shape[1]
+    
+        # btw_map[k]["job"] = np.repeat(range(size), size)
+        # btw_map[k]["machine"] = inst_dict["Orden"].flatten()
+    
+        # out[k], btw_map[k]["btw"] = extract_features(graph, k) 
+        # out[k]["perm"] = idx       
+        # out[k]["perm_idx"] = k       
+        
+        # btw_mean = out[k]["betweenness_mean"]
+        
+        # btw_map[k]["perm"] = idx
+        # btw_map[k]["perm_idx"] = k 
+        # btw_map[k]["betweenness_mean"] = btw_mean
                 
-        if (btw_mean not in unique_map): unique_map[btw_mean] = btw_map[k]
+        # if (btw_mean not in unique_map): unique_map[btw_mean] = btw_map[k]
         
-        pbar.set_postfix(nodes=n_nodes, conj=n_conj, disj=n_disj)
+        # pbar.set_postfix(nodes=n_nodes, conj=n_conj, disj=n_disj)
+        pbar.set_postfix(instance=k, idx=idx)
     
+    ####GRAFOS####
+    # df = pd.DataFrame(out)
+    # df.to_csv(f"{fname}.csv", index=False)
+    
+    # df_btw_map = pd.DataFrame(btw_map).explode(["job", "machine", "btw"], ignore_index=True)
+    # df_btw_map.to_csv(f"{fname}_btw_map.csv", index=False)
+    
+    # df_unique_map = pd.DataFrame.from_dict(unique_map, orient='index').explode(["job", "machine", "btw"], ignore_index=True)
+    # df_unique_map.to_csv(f"{fname}_unique_map.csv", index=False)
+    
+    
+    # Guardamos las solutions
+    df_solutions = pd.DataFrame(solutions_rows)
+    df_solutions.to_csv(f"{fname}_solutions.csv", index=False)
+    
+    
+    ####REPORT####
     lines.append(f"Number of combinations performed: {comb_iter.__len__()}")    
-    
-    df = pd.DataFrame(out)
-    df.to_csv(f"{fname}.csv", index=False)
-    
-    df_btw_map = pd.DataFrame(btw_map).explode(["job", "machine", "btw"], ignore_index=True)
-    df_btw_map.to_csv(f"{fname}_btw_map.csv", index=False)
-    
-    df_unique_map = pd.DataFrame.from_dict(unique_map, orient='index').explode(["job", "machine", "btw"], ignore_index=True)
-    df_unique_map.to_csv(f"{fname}_unique_map.csv", index=False)
-    
     lines.append(f"Generated file: {fname}")
-        
     lines.append(f"\nLIST OF POSSIBLE PERMUTATIONS FOR SIZE {size}")
     
     for i, p in enumerate(permutations(range(size), size)):
