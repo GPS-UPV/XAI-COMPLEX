@@ -1,11 +1,9 @@
 import itertools
 import json
 from pathlib import Path
-from tqdm import tqdm
+
 import numpy as np
 import pandas as pd
-from sklearn.cluster import AgglomerativeClustering
-from itertools import permutations, product
 
 
 def row_sorted(M: np.ndarray) -> np.ndarray:
@@ -29,16 +27,95 @@ def canonical_key_from_row_sorted(M: np.ndarray, col_perms) -> tuple:
     return best_key, best_matrix
 
 
+def decode_perm_idx_digits(perm_idx: np.ndarray, base: int = 24, length: int = 4) -> np.ndarray:
+    """
+    Convierte perm_idx en base-24 y devuelve sus 4 dígitos.
+    Cada dígito identifica una de las 24 permutaciones de tamaño 4.
+    """
+    x = np.asarray(perm_idx, dtype=np.int64).copy()
+    digits = np.empty((x.size, length), dtype=np.int16)
+    for pos in range(length - 1, -1, -1):
+        digits[:, pos] = x % base
+        x //= base
+    return digits
+
+
+def build_perm_matrices_from_perm_idx(perm_idx: np.ndarray) -> np.ndarray:
+    """
+    Reconstruye directamente la matriz 4x4 de máquinas a partir de perm_idx.
+    Evita parsear la columna string `perm` y evita iterrows().
+    """
+    perm_lookup = np.array(list(itertools.permutations(range(4), 4)), dtype=np.int8)  # (24, 4)
+    digits = decode_perm_idx_digits(perm_idx, base=24, length=4)                       # (N, 4)
+    return perm_lookup[digits]                                                         # (N, 4, 4)
+
+
+def grouped_matrix_stats(class_ids: np.ndarray, perm_mats: np.ndarray):
+    """
+    Calcula, por exact_class_id:
+      1) signed_diff: reproduce EXACTAMENTE la lógica actual:
+         mean_{i<j} (M_i - M_j).sum(axis=0)
+         pero sin construir todas las parejas O(n^2).
+      2) abs_diff: media de diferencias absolutas por columna (invariante al orden).
+      3) mean/std de la matriz 4x4 por clase.
+
+    Devuelve:
+      exact_ids, counts, signed_mean, abs_mean, mean_mats, std_mats
+    """
+    class_ids = np.asarray(class_ids, dtype=np.int32)
+    perm_mats = np.asarray(perm_mats)
+
+    order = np.argsort(class_ids, kind="mergesort")
+    cls = class_ids[order]
+    mats = perm_mats[order].astype(np.float64, copy=False)
+
+    exact_ids, start, counts = np.unique(cls, return_index=True, return_counts=True)
+    pair_counts = counts * (counts - 1) // 2
+
+    # --- matrices media y std por clase ---
+    sum_mats = np.add.reduceat(mats, start, axis=0)
+    mean_mats = sum_mats / counts[:, None, None]
+
+    sq_sum_mats = np.add.reduceat(mats ** 2, start, axis=0)
+    std_mats = np.sqrt(np.maximum(sq_sum_mats / counts[:, None, None] - mean_mats ** 2, 0.0))
+
+    # --- signed diff exacto respecto a tu lógica actual ---
+    # Tu código usa: (M_i - M_j).sum(axis=0), así que basta con las sumas por columna.
+    col_sums = mats.sum(axis=1)  # (N, 4)
+
+    # Dentro de cada bloque ordenado, sum_{i<j}(c_i - c_j) = sum_k (n - 1 - 2k) * c_k
+    local_pos = np.arange(len(cls)) - np.repeat(start, counts)
+    weights = (counts.repeat(counts) - 1 - 2 * local_pos).astype(np.int64)
+    signed_sum = np.add.reduceat(col_sums * weights[:, None], start, axis=0)
+
+    signed_mean = np.full((len(exact_ids), 4), np.nan, dtype=np.float64)
+    valid = pair_counts > 0
+    signed_mean[valid] = signed_sum[valid] / pair_counts[valid, None]
+
+    # --- abs diff recomendado: invariante al orden dentro de la clase ---
+    abs_mean = np.full((len(exact_ids), 4), np.nan, dtype=np.float64)
+    for g, (s, c) in enumerate(zip(start, counts)):
+        if c < 2:
+            continue
+        block = col_sums[s:s + c]  # (c, 4)
+        pc = c * (c - 1) // 2
+        coeff = 2 * np.arange(c, dtype=np.int64) - c + 1
+        for j in range(4):
+            x = np.sort(block[:, j])
+            abs_mean[g, j] = (coeff @ x) / pc
+
+    return exact_ids, counts, signed_mean, abs_mean, mean_mats, std_mats
+
+
 def main(base_path: str = ".",
          btw_filename: str = "4x4_perms_btw_map.csv",
          sol_filename: str = "4x4_perms_solutions.csv",
-         all4x4: str = "4x4_all.csv",
-         n_macro_classes: int = 4) -> None:
+         all4x4_filename: str = "4x4_all.csv") -> None:
 
     base = Path(base_path)
     btw_path = base / btw_filename
     sol_path = base / sol_filename
-    all4x4_path = base / all4x4
+    all4x4_path = base / all4x4_filename
 
     if not btw_path.exists():
         raise FileNotFoundError(f"No existe {btw_path}")
@@ -78,29 +155,37 @@ def main(base_path: str = ".",
         "perm_idx": perm_indices,
         "exact_class_id": [exact_class_map[ck] for ck in canon_keys],
     }).sort_values("perm_idx")
-    
-    
-    
-    # 2.1) Cruce con matriz original para tener la matriz 4x4 representativa de cada perm_idx
+
+    # 2.1) Análisis rápido de patrones de cambio en máquinas por clase exacta
     all4x4 = all4x4.merge(perm_to_exact_class, on="perm_idx", how="left")
-    all4x4_perm = all4x4[["perm_idx", "exact_class_id","perm"]].copy().set_index("perm_idx")
-    list_of_permutation =  list(permutations(range(4), 4)) 
 
-    all4x4_perm["perm_matrix"] = [np.array(list(map(lambda x:  list(list_of_permutation[int(x)]) ,v["perm"][1:-1].split(",")))) for k, v in all4x4_perm.iterrows()]
-    # pbar = tqdm(list(range(len(exact_class_map))), desc="Calculating differences between perm matrices")
-    for i in list(range(len(exact_class_map))):
-        x1 = all4x4_perm.query(f"exact_class_id == {i}")
-        # x1 = all4x4_perm.query(f"exact_class_id == {i}")
-        
-        diff_x1 = np.array([np.array(x1["perm_matrix"].iloc[i] - x1["perm_matrix"].iloc[j]).sum(axis=0) for i in range(len(x1)) for j in range(i, len(x1)) if i != j])
-        # diff_x2 = np.array([np.array(x2["perm_matrix"].iloc[i] - x2["perm_matrix"].iloc[j]).sum(axis=0) for i in range(len(x2)) for j in range(i, len(x2)) if i != j])
-        # for l in diff_x1:
-        #     print(l)
-        # print(np.unique(diff_x1.flatten()), len(np.unique(diff_x1.flatten())))
-        print(diff_x1.sum(axis=0) / len(diff_x1))
+    perm_mats = build_perm_matrices_from_perm_idx(all4x4["perm_idx"].to_numpy())
+    exact_ids, counts, signed_mean, abs_mean, mean_mats, std_mats = grouped_matrix_stats(
+        all4x4["exact_class_id"].to_numpy(),
+        perm_mats,
+    )
 
+    machine_pattern_df = pd.DataFrame({
+        "exact_class_id": exact_ids,
+        "n_instances": counts,
+        "signed_diff_m0": signed_mean[:, 0],
+        "signed_diff_m1": signed_mean[:, 1],
+        "signed_diff_m2": signed_mean[:, 2],
+        "signed_diff_m3": signed_mean[:, 3],
+        "abs_diff_m0": abs_mean[:, 0],
+        "abs_diff_m1": abs_mean[:, 1],
+        "abs_diff_m2": abs_mean[:, 2],
+        "abs_diff_m3": abs_mean[:, 3],
+        "mean_perm_matrix_json": [json.dumps(M.tolist()) for M in mean_mats],
+        "std_perm_matrix_json": [json.dumps(M.tolist()) for M in std_mats],
+    })
 
-    
+    for row in machine_pattern_df.itertuples(index=False):
+        print(
+            f"exact_class_id={row.exact_class_id:>3} | n={row.n_instances:>4} | "
+            f"signed_mean={[row.signed_diff_m0, row.signed_diff_m1, row.signed_diff_m2, row.signed_diff_m3]}"
+        )
+
     # 3) Prototipos de clases exactas
     proto_rows = []
     for ck, cid in exact_class_map.items():
@@ -140,87 +225,24 @@ def main(base_path: str = ".",
     ).reset_index()
 
     exact_summary = exact_summary.merge(proto_df, on="exact_class_id", how="left")
+    exact_summary = exact_summary.merge(machine_pattern_df, on="exact_class_id", how="left")
 
-    # 5) Macroclases
-    X = proto_df[[f"b_{i}{j}" for i in range(4) for j in range(4)]].values
-    clustering = AgglomerativeClustering(n_clusters=n_macro_classes, linkage="ward")
-    proto_df["macro_class_id"] = clustering.fit_predict(X)
-
-    exact_summary = exact_summary.merge(
-        proto_df[["exact_class_id", "macro_class_id"]],
-        on="exact_class_id",
-        how="left",
-    )
-
-    macro_summary = exact_summary.groupby("macro_class_id").agg(
-        n_exact_classes=("exact_class_id", "nunique"),
-        n_permutations=("n_permutations", "sum"),
-        makespan_mean=("makespan_mean", "mean"),
-        makespan_median=("makespan_median", "mean"),
-        failures_mean=("failures_mean", "mean"),
-        failures_median=("failures_median", "mean"),
-        nSolutions_mean=("nSolutions_mean", "mean"),
-        solveTime_mean=("solveTime_mean", "mean"),
-        prop_mean=("propagations_mean", "mean"),
-        betweenness_mean=("betweenness_mean", "mean"),
-        betweenness_range=("betweenness_range", "mean"),
-        row_dispersion=("row_dispersion", "mean"),
-        col_dispersion=("col_dispersion", "mean"),
-    ).reset_index().sort_values("makespan_mean")
-
-    # representante de cada macroclase
-    reps = []
-    for mc in sorted(proto_df["macro_class_id"].unique()):
-        sub = proto_df[proto_df["macro_class_id"] == mc].copy()
-        Xs = sub[[f"b_{i}{j}" for i in range(4) for j in range(4)]].values
-        cen = Xs.mean(axis=0)
-        idx = np.argmin(((Xs - cen) ** 2).sum(axis=1))
-        reps.append((
-            mc,
-            int(sub.iloc[idx]["exact_class_id"]),
-            sub.iloc[idx]["matrix_json"],
-        ))
-    rep_df = pd.DataFrame(
-        reps,
-        columns=[
-            "macro_class_id",
-            "representative_exact_class_id",
-            "representative_matrix_json",
-        ],
-    )
-    macro_summary = macro_summary.merge(rep_df, on="macro_class_id", how="left")
-
-    # Etiquetas interpretables simples
-    ms = macro_summary.set_index("macro_class_id")
-    labels = {}
-    for mc, row in ms.iterrows():
-        if row["betweenness_mean"] == ms["betweenness_mean"].max():
-            labels[mc] = "high-centralized"
-        elif row["row_dispersion"] == ms["row_dispersion"].max():
-            labels[mc] = "row-asymmetric"
-        elif row["col_dispersion"] == ms["col_dispersion"].max():
-            labels[mc] = "machine-asymmetric"
-        else:
-            labels[mc] = "balanced-low"
-    macro_summary["macro_label"] = macro_summary["macro_class_id"].map(labels)
-
-    # 6) Guardado
+    # 5) Guardado
     out_perm = base / "betweenness_perm_to_exact_class_4x4.csv"
     out_exact = base / "betweenness_exact_taxonomy_4x4.csv"
-    out_macro = base / "betweenness_macro_taxonomy_4x4.csv"
+    out_machine = base / "betweenness_machine_patterns_4x4.csv"
+    out_all4x4 = base / "4x4_all_with_exact_classes.csv"
 
     perm_to_exact_class.to_csv(out_perm, index=False)
-    exact_summary.sort_values(["macro_class_id", "makespan_mean", "exact_class_id"]).to_csv(out_exact, index=False)
-    # macro_summary.to_csv(out_macro, index=False)
-    all4x4.to_csv(base / "4x4_all_with_exact_classes.csv", index=False)
+    machine_pattern_df.to_csv(out_machine, index=False)
+    exact_summary.sort_values(["makespan_mean", "exact_class_id"]).to_csv(out_exact, index=False)
+    all4x4.to_csv(out_all4x4, index=False)
 
     print(f"[OK] exact classes: {len(unique_canon)}")
-    print(f"[OK] macro classes: {n_macro_classes}")
     print(f"[OK] saved: {out_perm}")
+    print(f"[OK] saved: {out_machine}")
     print(f"[OK] saved: {out_exact}")
-    print(f"[OK] saved: {out_macro}")
-    print()
-    print(macro_summary.to_string(index=False))
+    print(f"[OK] saved: {out_all4x4}")
 
 
 if __name__ == "__main__":
