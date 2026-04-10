@@ -708,8 +708,8 @@ def main():
     
     df = df.drop(columns=[c for c in df.columns if "energy" in c.strip().lower() or "num_nodes" == c])
 
-    mask = [c for c in df.columns if "_d_" not in c or "_c_" not in c]
-    
+    mask = [c for c in df.columns if "betweenness_c_" not in c and not (("deg" in c or "clustering" in c) and ("_c_" not in c and "_d_" not in c)) and "graph_density" != c]
+        
     # 1) Prior desde el generador (si procede)
     prior = prior_complexity_from_generator(df[mask])
 

@@ -78,6 +78,27 @@ def grouped_matrix_stats(class_ids: np.ndarray, perm_mats: np.ndarray):
 
     sq_sum_mats = np.add.reduceat(mats ** 2, start, axis=0)
     std_mats = np.sqrt(np.maximum(sq_sum_mats / counts[:, None, None] - mean_mats ** 2, 0.0))
+        
+    # --- nº de valores distintos por columna en cada matriz ---
+    distinct_col_sums = []  # lista de arrays (uno por grupo)
+    distinct_col_sums_group = np.zeros((len(exact_ids), 4), dtype=np.int32)
+
+    for g, (s, c) in enumerate(zip(start, counts)):
+        block = mats[s:s+c]  # (c, 4, 4)
+
+        # Para cada matriz (c matrices), contamos valores distintos por columna
+        # Resultado: (c, 4)
+        distinct_per_matrix = np.array([
+            [np.unique(block[m, :, j]).size for j in range(4)]
+            for m in range(c)
+        ])
+
+        # Guardamos el resultado por matriz (lista de arrays)
+        distinct_col_sums.append(distinct_per_matrix)
+
+        # Suma por columnas del grupo entero
+        distinct_col_sums_group[g] = distinct_per_matrix.sum(axis=0)
+        
 
     # --- signed diff exacto respecto a tu lógica actual ---
     # Tu código usa: (M_i - M_j).sum(axis=0), así que basta con las sumas por columna.
@@ -104,7 +125,7 @@ def grouped_matrix_stats(class_ids: np.ndarray, perm_mats: np.ndarray):
             x = np.sort(block[:, j])
             abs_mean[g, j] = (coeff @ x) / pc
 
-    return exact_ids, counts, signed_mean, abs_mean, mean_mats, std_mats
+    return exact_ids, counts, signed_mean, abs_mean, mean_mats, std_mats, distinct_col_sums, distinct_col_sums_group
 
 
 def main(base_path: str = ".",
@@ -160,7 +181,7 @@ def main(base_path: str = ".",
     all4x4 = all4x4.merge(perm_to_exact_class, on="perm_idx", how="left")
 
     perm_mats = build_perm_matrices_from_perm_idx(all4x4["perm_idx"].to_numpy())
-    exact_ids, counts, signed_mean, abs_mean, mean_mats, std_mats = grouped_matrix_stats(
+    exact_ids, counts, signed_mean, abs_mean, mean_mats, std_mats, distinct_col_sums, distinct_col_sums_group = grouped_matrix_stats(
         all4x4["exact_class_id"].to_numpy(),
         perm_mats,
     )
@@ -178,6 +199,8 @@ def main(base_path: str = ".",
         "abs_diff_m3": abs_mean[:, 3],
         "mean_perm_matrix_json": [json.dumps(M.tolist()) for M in mean_mats],
         "std_perm_matrix_json": [json.dumps(M.tolist()) for M in std_mats],
+        "distinct_col_sums": [json.dumps(M.tolist()) for M in distinct_col_sums],
+        "distinct_col_sums_group": distinct_col_sums_group.tolist()
     })
 
     for row in machine_pattern_df.itertuples(index=False):
