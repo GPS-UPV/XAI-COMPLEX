@@ -13,8 +13,9 @@ from collections import defaultdict
 from IGJSP.generador import Generator
 from torch_geometric.data import HeteroData
 from itertools import permutations, product
-from solvers import SOLVER, compute_time_limit
+# from solvers import SOLVER, compute_time_limit
 from typing import Any, Dict, List, Tuple, Optional
+from collections import Counter
 
 
 # timeout dinámico
@@ -469,6 +470,14 @@ def main():
     out = [None] * comb_iter.__len__()
     btw_map = [{} for _ in range(len(comb_iter))]
     unique_map = {}
+    
+    signatures = {
+        (4,): "4",
+        (3,1): "3+1",
+        (2,2): "2+2",
+        (2,1,1): "2+1+1",
+        (1,1,1,1): "1+1+1+1"
+    }
 
     solutions_rows = []
     
@@ -484,71 +493,87 @@ def main():
         inst_dict["ProcessingTime"] = np.array([[[1]]*size for i in range(size)])
         inst_dict["EnergyConsumption"] = np.array([[[1]]*size for i in range(size)])
         
-        problem = dict_to_problem(inst_dict)
+        ####SOLUTIONS####
+        # problem = dict_to_problem(inst_dict)
 
-        timeout_ms = dynamic_timeout(problem)
-        solver = SOLVER(problem, solver="cp-sat")
-        sol = solver.solve(timeout=timeout_ms, verbose=False)
+        # timeout_ms = dynamic_timeout(problem)
+        # solver = SOLVER(problem, solver="cp-sat")
+        # sol = solver.solve(timeout=timeout_ms, verbose=False)
 
-        stats = sol.get("statistics", {}) if isinstance(sol, dict) else {}
-        stats.update({
-            "perm_idx": k,
-            "perm": idx,
-            "status": sol.get("status"),
-            "objective": sol.get("objective", np.nan),
-            # "solveTime": stats.get("solveTime", np.nan),
-            # "flatTime": stats.get("flatTime", np.nan),
-            # "time": stats.get("time", np.nan),
-            "timeout_ms": timeout_ms,
-        })
+        # stats = sol.get("statistics", {}) if isinstance(sol, dict) else {}
+        # stats.update({
+        #     "perm_idx": k,
+        #     "perm": idx,
+        #     "status": sol.get("status"),
+        #     "objective": sol.get("objective", np.nan),
+        #     # "solveTime": stats.get("solveTime", np.nan),
+        #     # "flatTime": stats.get("flatTime", np.nan),
+        #     # "time": stats.get("time", np.nan),
+        #     "timeout_ms": timeout_ms,
+        # })
         
-        solutions_rows.append(stats)
+        # solutions_rows.append(stats)
         
         ####GRAFOS####
-        # gb = GraphBuilderStrict(inst_dict)
-        # graph = gb.data
-        # n_nodes = graph["node"].x.shape[0]
-        # n_conj = graph[("node", "conjunctive", "node")].edge_index.shape[1]
-        # n_disj = graph[("node", "disjunctive", "node")].edge_index.shape[1]
+        gb = GraphBuilderStrict(inst_dict)
+        graph = gb.data
+        n_nodes = graph["node"].x.shape[0]
+        n_conj = graph[("node", "conjunctive", "node")].edge_index.shape[1]
+        n_disj = graph[("node", "disjunctive", "node")].edge_index.shape[1]
     
-        # btw_map[k]["job"] = np.repeat(range(size), size)
-        # btw_map[k]["machine"] = inst_dict["Orden"].flatten()
+        btw_map[k]["job"] = np.repeat(range(size), size)
+        btw_map[k]["machine"] = inst_dict["Orden"].flatten()
     
-        # out[k], btw_map[k]["btw"] = extract_features(graph, k) 
-        # out[k]["perm"] = idx       
-        # out[k]["perm_idx"] = k       
+        out[k], btw_map[k]["btw"] = extract_features(graph, k) 
+        out[k]["perm"] = idx       
+        out[k]["perm_idx"] = k    
+
+        multiplicities = sorted(Counter(idx).values(), reverse=True)
+
+        sig = signatures[tuple(multiplicities)]
         
-        # btw_mean = out[k]["betweenness_mean"]
+        out[k]["signature"] = sig
         
-        # btw_map[k]["perm"] = idx
-        # btw_map[k]["perm_idx"] = k 
-        # btw_map[k]["betweenness_mean"] = btw_mean
+        btw_mean = out[k]["betweenness_mean"]
+        
+        btw_map[k]["perm"] = idx
+        btw_map[k]["perm_idx"] = k 
+        btw_map[k]["betweenness_mean"] = btw_mean
+        btw_map[k]["signature"] = sig
                 
-        # if (btw_mean not in unique_map): unique_map[btw_mean] = btw_map[k]
+        if (btw_mean not in unique_map): unique_map[btw_mean] = btw_map[k]
         
         # pbar.set_postfix(nodes=n_nodes, conj=n_conj, disj=n_disj)
         pbar.set_postfix(instance=k, idx=idx)
     
     ####GRAFOS####
-    # df = pd.DataFrame(out)
-    # df.to_csv(f"{fname}.csv", index=False)
+    df = pd.DataFrame(out)
+    df.to_csv(f"{fname}.csv", index=False)
     
-    # df_btw_map = pd.DataFrame(btw_map).explode(["job", "machine", "btw"], ignore_index=True)
-    # df_btw_map.to_csv(f"{fname}_btw_map.csv", index=False)
+    df_btw_map = pd.DataFrame(btw_map).explode(["job", "machine", "btw"], ignore_index=True)
+    df_btw_map.to_csv(f"{fname}_btw_map.csv", index=False)
     
-    # df_unique_map = pd.DataFrame.from_dict(unique_map, orient='index').explode(["job", "machine", "btw"], ignore_index=True)
-    # df_unique_map.to_csv(f"{fname}_unique_map.csv", index=False)
+    df_unique_map = pd.DataFrame.from_dict(unique_map, orient='index').explode(["job", "machine", "btw"], ignore_index=True)
+    df_unique_map.to_csv(f"{fname}_unique_map.csv", index=False)
     
     
     # Guardamos las solutions
-    df_solutions = pd.DataFrame(solutions_rows)
-    df_solutions.to_csv(f"{fname}_solutions.csv", index=False)
+    # df_solutions = pd.DataFrame(solutions_rows)
+    # df_solutions.to_csv(f"{fname}_solutions.csv", index=False)
+    
+    # Leemos las solutions
+    df_solutions = pd.read_csv("./4x4_perms_solutions.csv", index_col=None)
+    df_solutions = df_solutions.drop(columns=["perm", "perm_idx"])
+    
+    # Guardamos todos los datos juntos
+    df_all = df.join(df_solutions)
+    df_all.to_csv("4x4_all.csv", index=None)
     
     
     ####REPORT####
     lines.append(f"Number of combinations performed: {comb_iter.__len__()}")    
     lines.append(f"Generated file: {fname}")
-    lines.append(f"\nLIST OF POSSIBLE PERMUTATIONS FOR SIZE {size}")
+    lines.append(f"\nLISTA DE POSIBLE PERMUTACIONES PARA TAMAÑO {size}\n")
     
     for i, p in enumerate(permutations(range(size), size)):
         lines.append(f"{i:>3}.- {p}") 
