@@ -31,4 +31,4 @@ LISTA DE POSIBLE PERMUTACIONES PARA TAMAÑO 4
  23.- (3, 2, 1, 0)
 
 
-Tiempo de ejecución: 00:17:05
+Tiempo de ejecución: 00:33:48

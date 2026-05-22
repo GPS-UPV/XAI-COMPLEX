@@ -324,65 +324,65 @@ def main():
     
     # --- SHAP ---
     
-    shap_start_time = time.time()
+    # shap_start_time = time.time()
         
-    hours, rest = divmod(shap_start_time, 3600)
-    _, hours = divmod(hours, 24)
-    minutes, seconds = divmod(rest, 60)
+    # hours, rest = divmod(shap_start_time, 3600)
+    # _, hours = divmod(hours, 24)
+    # minutes, seconds = divmod(rest, 60)
     
-    lines.append(f"TREE EXPLAINER STARTED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
+    # lines.append(f"TREE EXPLAINER STARTED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
     
-    explainer = shap.TreeExplainer(rf)
-    shap_values = explainer.shap_values(Xs)
+    # explainer = shap.TreeExplainer(rf)
+    # shap_values = explainer.shap_values(Xs)
     
-    shap1_end_time = time.time()
+    # shap1_end_time = time.time()
         
-    hours, rest = divmod(shap1_end_time, 3600)
-    _, hours = divmod(hours, 24)
-    minutes, seconds = divmod(rest, 60)
+    # hours, rest = divmod(shap1_end_time, 3600)
+    # _, hours = divmod(hours, 24)
+    # minutes, seconds = divmod(rest, 60)
     
-    lines.append(f"EXPLANATION OF Xs OBTAINED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
+    # lines.append(f"EXPLANATION OF Xs OBTAINED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
     
-    shap1_time = shap1_end_time - shap_start_time
+    # shap1_time = shap1_end_time - shap_start_time
     
-    shap_values_taillard = explainer.shap_values(Xt)
+    # shap_values_taillard = explainer.shap_values(Xt)
     
-    shap2_end_time = time.time()
+    # shap2_end_time = time.time()
         
-    hours, rest = divmod(shap2_end_time, 3600)
-    _, hours = divmod(hours, 24)
-    minutes, seconds = divmod(rest, 60)
+    # hours, rest = divmod(shap2_end_time, 3600)
+    # _, hours = divmod(hours, 24)
+    # minutes, seconds = divmod(rest, 60)
     
-    lines.append(f"EXPLANATION OF Xt OBTAINED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
+    # lines.append(f"EXPLANATION OF Xt OBTAINED AT: {int(hours):02}:{int(minutes):02}:{int(seconds):02}\n")
     
-    shap2_time = shap2_end_time - shap1_end_time
+    # shap2_time = shap2_end_time - shap1_end_time
     
-    shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
-    shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
+    # shap_df = pd.DataFrame(shap_values, index=Xs_df.index, columns=feature_names)
+    # shap_df.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
     
-    df_all_and_shap = df_all.join(shap_df.add_suffix('_shap'))
-    df_all_and_shap.to_csv('all_features_and_shap.csv')
+    # df_all_and_shap = df_all.join(shap_df.add_suffix('_shap'))
+    # df_all_and_shap.to_csv('all_features_and_shap.csv')
 
-    shap_df_taillard = pd.DataFrame(shap_values_taillard, index=Xt_df.index, columns=feature_names)
-    shap_df_taillard.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
+    # shap_df_taillard = pd.DataFrame(shap_values_taillard, index=Xt_df.index, columns=feature_names)
+    # shap_df_taillard.to_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
     
-    df_all_taillard['complexity_supervised_0_1'] = yt
-    df_all_taillard = df_all_taillard.join(shap_df_taillard.add_suffix('_shap'))
-    df_all_taillard.to_csv('all_taillard_and_shap.csv')
+    # df_all_taillard['complexity_supervised_0_1'] = yt
+    # df_all_taillard = df_all_taillard.join(shap_df_taillard.add_suffix('_shap'))
+    # df_all_taillard.to_csv('all_taillard_and_shap.csv')
     
-    # shap_df = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}.csv"))
-    # shap_df.index= Xs_df.index
-    # shap_df = shap_df[feature_names]
+    shap_df = pd.read_csv(os.path.join("./figures", f"shap_values_{ycol}.csv"))
+    shap_df.index= Xs_df.index
+    shap_df = shap_df[feature_names]
     
-    # shap_df_taillard = pd.read_csv(os.path.join(OUT_DIR, f"shap_values_{ycol}_taillard.csv"))
-    # shap_df_taillard.index= Xt_df.index
-    # shap_df_taillard = shap_df_taillard[feature_names]
+    shap_df_taillard = pd.read_csv(os.path.join("./figures", f"shap_values_{ycol}_taillard.csv"))
+    shap_df_taillard.index= Xt_df.index
+    shap_df_taillard = shap_df_taillard[feature_names]
 
-    imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
-    imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
+    # imp = shap_df.abs().mean(axis=0).sort_values(ascending=False)
+    # imp.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}.csv"), header=["mean_abs_shap"])
 
-    imp_taillard = shap_df_taillard.abs().mean(axis=0).sort_values(ascending=False)
-    imp_taillard.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}_taillard.csv"), header=["mean_abs_shap"])
+    # imp_taillard = shap_df_taillard.abs().mean(axis=0).sort_values(ascending=False)
+    # imp_taillard.to_csv(os.path.join(OUT_DIR, f"shap_importance_{ycol}_taillard.csv"), header=["mean_abs_shap"])
 
     optimal_mask, feasible_mask, timeout_mask = [], [], []
     
@@ -431,8 +431,11 @@ def main():
         
     # Summary plot (beeswarm)
     plt.figure()
-    shap.summary_plot(shap_values_optimal, Xs_df_optimal, show=False, max_display=20)
+    shap.summary_plot(shap_values_optimal, Xs_df_optimal, show=False, max_display=20, cmap="plasma")
     ax = plt.gca()
+    for c in ax.collections:
+        c.set_edgecolor("grey")
+        c.set_linewidth(0.5)
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
     ax.set_yticklabels(new_labels, fontsize=24, fontweight="bold")
@@ -442,8 +445,11 @@ def main():
     plt.close()
     
     plt.figure()
-    shap.summary_plot(shap_values_feasible, Xs_df_feasible, show=False, max_display=20)
+    shap.summary_plot(shap_values_feasible, Xs_df_feasible, show=False, max_display=20, cmap="plasma")
     ax = plt.gca()
+    for c in ax.collections:
+        c.set_edgecolor("grey")
+        c.set_linewidth(0.5)
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
     ax.set_yticklabels(new_labels, fontsize=24)
@@ -454,8 +460,11 @@ def main():
     plt.close()
     
     plt.figure()
-    shap.summary_plot(shap_values_timeout, Xs_df_timeout, show=False, max_display=20)
+    shap.summary_plot(shap_values_timeout, Xs_df_timeout, show=False, max_display=20, cmap="plasma")
     ax = plt.gca()
+    for c in ax.collections:
+        c.set_edgecolor("grey")
+        c.set_linewidth(0.5)
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
     ax.set_yticklabels(new_labels, fontsize=24)
@@ -514,8 +523,11 @@ def main():
         
         autor = list(autores[a])
         
-        shap.summary_plot(shap_df_taillard.loc[autor].values, Xt_df.loc[autor], show=False, max_display=20)
+        shap.summary_plot(shap_df_taillard.loc[autor].values, Xt_df.loc[autor], show=False, max_display=20, cmap="plasma")
         ax = plt.gca()
+        for c in ax.collections:
+            c.set_edgecolor("grey")
+            c.set_linewidth(0.5)
         ax.xaxis.label.set_visible(False)
         new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
         ax.set_yticklabels(new_labels, fontsize=24)
@@ -539,8 +551,11 @@ def main():
         
         if len(easy_predict) != 0: 
             plt.figure()
-            shap.summary_plot(shap_df_taillard.loc[easy_predict].values, Xt_df.loc[easy_predict], show=False, max_display=20)
+            shap.summary_plot(shap_df_taillard.loc[easy_predict].values, Xt_df.loc[easy_predict], show=False, max_display=20, cmap="plasma")
             ax = plt.gca()
+            for c in ax.collections:
+                c.set_edgecolor("grey")
+                c.set_linewidth(0.5)
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
             ax.set_yticklabels(new_labels, fontsize=24)
@@ -567,8 +582,11 @@ def main():
         
         if len(medium_predict) != 0:
             plt.figure()
-            shap.summary_plot(shap_df_taillard.loc[medium_predict].values, Xt_df.loc[medium_predict], show=False, max_display=20)
+            shap.summary_plot(shap_df_taillard.loc[medium_predict].values, Xt_df.loc[medium_predict], show=False, max_display=20, cmap="plasma")
             ax = plt.gca()
+            for c in ax.collections:
+                c.set_edgecolor("grey")
+                c.set_linewidth(0.5)
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
             ax.set_yticklabels(new_labels, fontsize=24)
@@ -595,8 +613,11 @@ def main():
         
         if len(hard_predict) != 0:    
             plt.figure()
-            shap.summary_plot(shap_df_taillard.loc[hard_predict].values, Xt_df.loc[hard_predict], show=False, max_display=20)
+            shap.summary_plot(shap_df_taillard.loc[hard_predict].values, Xt_df.loc[hard_predict], show=False, max_display=20, cmap="plasma")
             ax = plt.gca()
+            for c in ax.collections:
+                c.set_edgecolor("grey")
+                c.set_linewidth(0.5)
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
             ax.set_yticklabels(new_labels, fontsize=24)
@@ -623,8 +644,11 @@ def main():
             
         if len(easy_jsplib) != 0:
             plt.figure()
-            shap.summary_plot(shap_df_taillard.loc[easy_jsplib].values, Xt_df.loc[easy_jsplib], show=False, max_display=20)
+            shap.summary_plot(shap_df_taillard.loc[easy_jsplib].values, Xt_df.loc[easy_jsplib], show=False, max_display=20, cmap="plasma")
             ax = plt.gca()
+            for c in ax.collections:
+                c.set_edgecolor("grey")
+                c.set_linewidth(0.5)
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
             ax.set_yticklabels(new_labels, fontsize=24)
@@ -651,8 +675,11 @@ def main():
         
         if len(medium_jsplib) != 0:
             plt.figure()
-            shap.summary_plot(shap_df_taillard.loc[medium_jsplib].values, Xt_df.loc[medium_jsplib], show=False, max_display=20)
+            shap.summary_plot(shap_df_taillard.loc[medium_jsplib].values, Xt_df.loc[medium_jsplib], show=False, max_display=20, cmap="plasma")
             ax = plt.gca()
+            for c in ax.collections:
+                c.set_edgecolor("grey")
+                c.set_linewidth(0.5)
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
             ax.set_yticklabels(new_labels, fontsize=24)
@@ -679,8 +706,11 @@ def main():
             
         if len(hard_jsplib) != 0:
             plt.figure()
-            shap.summary_plot(shap_df_taillard.loc[hard_jsplib].values, Xt_df.loc[hard_jsplib], show=False, max_display=20)
+            shap.summary_plot(shap_df_taillard.loc[hard_jsplib].values, Xt_df.loc[hard_jsplib], show=False, max_display=20, cmap="plasma")
             ax = plt.gca()
+            for c in ax.collections:
+                c.set_edgecolor("grey")
+                c.set_linewidth(0.5)
             ax.xaxis.label.set_visible(False)
             new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
             ax.set_yticklabels(new_labels, fontsize=24)
@@ -708,8 +738,11 @@ def main():
     easy_jsplib_mask, medium_jsplib_mask, hard_jsplib_mask, easy_predict_mask, medium_predict_mask, hard_predict_mask = list(easy_jsplib_mask), list(medium_jsplib_mask), list(hard_jsplib_mask), list(easy_predict_mask), list(medium_predict_mask), list(hard_predict_mask)
             
     plt.figure()
-    shap.summary_plot(shap_df_taillard.loc[easy_predict_mask].values, Xt_df.loc[easy_predict_mask], show=False, max_display=20)
+    shap.summary_plot(shap_df_taillard.loc[easy_predict_mask].values, Xt_df.loc[easy_predict_mask], show=False, max_display=20, cmap="plasma")
     ax = plt.gca()
+    for c in ax.collections:
+        c.set_edgecolor("grey")
+        c.set_linewidth(0.5)
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
     ax.set_yticklabels(new_labels, fontsize=24)
@@ -733,8 +766,11 @@ def main():
 
 
     plt.figure()
-    shap.summary_plot(shap_df_taillard.loc[medium_predict_mask].values, Xt_df.loc[medium_predict_mask], show=False, max_display=20)
+    shap.summary_plot(shap_df_taillard.loc[medium_predict_mask].values, Xt_df.loc[medium_predict_mask], show=False, max_display=20, cmap="plasma")
     ax = plt.gca()
+    for c in ax.collections:
+        c.set_edgecolor("grey")
+        c.set_linewidth(0.5)
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
     ax.set_yticklabels(new_labels, fontsize=24)
@@ -758,8 +794,11 @@ def main():
 
 
     plt.figure()
-    shap.summary_plot(shap_df_taillard.loc[hard_predict_mask].values, Xt_df.loc[hard_predict_mask], show=False, max_display=20)
+    shap.summary_plot(shap_df_taillard.loc[hard_predict_mask].values, Xt_df.loc[hard_predict_mask], show=False, max_display=20, cmap="plasma")
     ax = plt.gca()
+    for c in ax.collections:
+        c.set_edgecolor("grey")
+        c.set_linewidth(0.5)
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
     ax.set_yticklabels(new_labels, fontsize=24)
@@ -783,8 +822,11 @@ def main():
     
     
     plt.figure()
-    shap.summary_plot(shap_df_taillard.loc[easy_jsplib_mask].values, Xt_df.loc[easy_jsplib_mask], show=False, max_display=20)
+    shap.summary_plot(shap_df_taillard.loc[easy_jsplib_mask].values, Xt_df.loc[easy_jsplib_mask], show=False, max_display=20, cmap="plasma")
     ax = plt.gca()
+    for c in ax.collections:
+        c.set_edgecolor("grey")
+        c.set_linewidth(0.5)
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
     ax.set_yticklabels(new_labels, fontsize=24)
@@ -808,8 +850,11 @@ def main():
 
 
     plt.figure()
-    shap.summary_plot(shap_df_taillard.loc[medium_jsplib_mask].values, Xt_df.loc[medium_jsplib_mask], show=False, max_display=20)
+    shap.summary_plot(shap_df_taillard.loc[medium_jsplib_mask].values, Xt_df.loc[medium_jsplib_mask], show=False, max_display=20, cmap="plasma")
     ax = plt.gca()
+    for c in ax.collections:
+        c.set_edgecolor("grey")
+        c.set_linewidth(0.5)
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
     ax.set_yticklabels(new_labels, fontsize=24)
@@ -833,8 +878,11 @@ def main():
     
     
     plt.figure()
-    shap.summary_plot(shap_df_taillard.loc[hard_jsplib_mask].values, Xt_df.loc[hard_jsplib_mask], show=False, max_display=20)
+    shap.summary_plot(shap_df_taillard.loc[hard_jsplib_mask].values, Xt_df.loc[hard_jsplib_mask], show=False, max_display=20, cmap="plasma")
     ax = plt.gca()
+    for c in ax.collections:
+        c.set_edgecolor("grey")
+        c.set_linewidth(0.5)
     ax.xaxis.label.set_visible(False)
     new_labels = [feature_map.get(l.get_text(), l.get_text()) for l in ax.get_yticklabels()]
     ax.set_yticklabels(new_labels, fontsize=24)
@@ -856,30 +904,30 @@ def main():
     plt.savefig(os.path.join(OUT_DIR, f"shap_bar_{ycol}_hard_jsplib.png"), dpi=400)
     plt.close()
     
-    hours, rest = divmod(rf_time, 3600)
-    minutes, seconds = divmod(rest, 60)
+    # hours, rest = divmod(rf_time, 3600)
+    # minutes, seconds = divmod(rest, 60)
     
-    lines.append(f"\nRANDOM FOREST FITTING TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
+    # lines.append(f"\nRANDOM FOREST FITTING TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
     
-    hours, rest = divmod(shap1_time, 3600)
-    minutes, seconds = divmod(rest, 60)
+    # hours, rest = divmod(shap1_time, 3600)
+    # minutes, seconds = divmod(rest, 60)
     
-    lines.append(f"\nSHAP VALUES EXPLAINER FOR Xs TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
+    # lines.append(f"\nSHAP VALUES EXPLAINER FOR Xs TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
     
-    hours, rest = divmod(shap2_time, 3600)
-    minutes, seconds = divmod(rest, 60)
+    # hours, rest = divmod(shap2_time, 3600)
+    # minutes, seconds = divmod(rest, 60)
     
-    lines.append(f"\nSHAP VALUES EXPLAINER FOR Xt TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
+    # lines.append(f"\nSHAP VALUES EXPLAINER FOR Xt TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
 
-    total_execution_time = time.time() - start_time
+    # total_execution_time = time.time() - start_time
     
-    hours, rest = divmod(total_execution_time, 3600)
-    minutes, seconds = divmod(rest, 60)
+    # hours, rest = divmod(total_execution_time, 3600)
+    # minutes, seconds = divmod(rest, 60)
     
-    lines.append(f"\nTOTAL EXECUTION TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
+    # lines.append(f"\nTOTAL EXECUTION TIME: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
 
-    with open("shap_supervised_report.txt", "w", encoding="utf-8") as f:
-        f.write("\n".join(lines))
+    # with open("shap_supervised_report.txt", "w", encoding="utf-8") as f:
+    #     f.write("\n".join(lines))
 
     print("OK: SHAP guardado en", OUT_DIR)
 

@@ -444,6 +444,19 @@ def extract_features(graph, k):
 
     return features, arr
 
+def matrix_symmetry_level(matrix):
+    transpose = matrix.T
+    
+    # Calcular diferencia absoluta media
+    if np.allclose(matrix, transpose):
+        return 1.0
+    
+    # Calcular distancia de la transpuesta
+    dif = np.abs(matrix - transpose)
+    sym = 1.0 - (np.sum(dif) / (matrix.size * np.max(np.abs(matrix)) + 1e-9))
+    
+    return max(0.0, sym)
+        
 
 def main(size=4):
     
@@ -527,7 +540,7 @@ def main(size=4):
         btw_map[k]["job"] = np.repeat(range(size), size)
         btw_map[k]["machine"] = inst_dict["Orden"].flatten()
     
-        out[k], btw_map[k]["btw"] = extract_features(graph, k) 
+        out[k], btw  = extract_features(graph, k) 
         out[k]["perm"] = idx       
         out[k]["perm_idx"] = k    
 
@@ -537,12 +550,20 @@ def main(size=4):
         
         out[k]["signature"] = sig
         
+        btw_matrix = btw.reshape(4, 4)
+        
+        sym = matrix_symmetry_level(btw_matrix)
+        
+        out[k]["symmetry_level"] = sym
+        
         btw_mean = out[k]["betweenness_mean"]
         
+        btw_map[k]["btw"] = btw
         btw_map[k]["perm"] = idx
         btw_map[k]["perm_idx"] = k 
         btw_map[k]["betweenness_mean"] = btw_mean
         btw_map[k]["signature"] = sig
+        btw_map[k]["symmetry_level"] = sym
                 
         if (btw_mean not in unique_map): unique_map[btw_mean] = btw_map[k]
         
