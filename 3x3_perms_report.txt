@@ -1,0 +1,16 @@
+=== PERMUTATIONS GENERATOR REPORT ===
+
+Number of combinations performed: 216
+Generated file: 3x3_perms
+
+LISTA DE POSIBLE PERMUTACIONES PARA TAMAÑO 3
+
+  0.- (0, 1, 2)
+  1.- (0, 2, 1)
+  2.- (1, 0, 2)
+  3.- (1, 2, 0)
+  4.- (2, 0, 1)
+  5.- (2, 1, 0)
+
+
+Tiempo de ejecución: 00:01:00

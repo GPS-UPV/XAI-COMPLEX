@@ -124,8 +124,6 @@ def grouped_matrix_stats(class_ids: np.ndarray, perm_mats: np.ndarray):
         for j in range(4):
             x = np.sort(block[:, j])
             abs_mean[g, j] = (coeff @ x) / pc
-    print(distinct_col_sums_group)
-    quit()
     return exact_ids, counts, signed_mean, abs_mean, mean_mats, std_mats, distinct_col_sums, distinct_col_sums_group
 
 

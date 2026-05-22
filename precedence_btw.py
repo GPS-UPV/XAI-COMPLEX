@@ -3,7 +3,7 @@ import networkx as nx
 import pandas as pd
 import time
 import torch
-
+import os
 
 from tqdm import tqdm
 from math import factorial
@@ -13,7 +13,7 @@ from collections import defaultdict
 from IGJSP.generador import Generator
 from torch_geometric.data import HeteroData
 from itertools import permutations, product
-# from solvers import SOLVER, compute_time_limit
+from solvers import SOLVER, compute_time_limit
 from typing import Any, Dict, List, Tuple, Optional
 from collections import Counter
 
@@ -445,14 +445,13 @@ def extract_features(graph, k):
     return features, arr
 
 
-def main():
+def main(size=4):
     
     start_time = time.time()
     
     lines = []
     lines.append("=== PERMUTATIONS GENERATOR REPORT ===\n")
     
-    size = 4
     fname = f"{size}x{size}_perms"
     report_name = f"{fname}_report.txt"
 
@@ -471,14 +470,18 @@ def main():
     btw_map = [{} for _ in range(len(comb_iter))]
     unique_map = {}
     
+    # signatures = {
+    #     (4,): "4",
+    #     (3,1): "3+1",
+    #     (2,2): "2+2",
+    #     (2,1,1): "2+1+1",
+    #     (1,1,1,1): "1+1+1+1"
+    # }
     signatures = {
-        (4,): "4",
-        (3,1): "3+1",
-        (2,2): "2+2",
-        (2,1,1): "2+1+1",
-        (1,1,1,1): "1+1+1+1"
+            (3,): "3",
+            (2,1): "2+1",
+            (1,1,1): "1+1+1"
     }
-
     solutions_rows = []
     
     pbar = tqdm(comb_iter, total=len(comb_iter), desc="Matrices / grafos")
@@ -494,25 +497,25 @@ def main():
         inst_dict["EnergyConsumption"] = np.array([[[1]]*size for i in range(size)])
         
         ####SOLUTIONS####
-        # problem = dict_to_problem(inst_dict)
+        problem = dict_to_problem(inst_dict)
 
-        # timeout_ms = dynamic_timeout(problem)
-        # solver = SOLVER(problem, solver="cp-sat")
-        # sol = solver.solve(timeout=timeout_ms, verbose=False)
+        timeout_ms = dynamic_timeout(problem)
+        solver = SOLVER(problem, solver="cp-sat")
+        sol = solver.solve(timeout=timeout_ms, verbose=False)
 
-        # stats = sol.get("statistics", {}) if isinstance(sol, dict) else {}
-        # stats.update({
-        #     "perm_idx": k,
-        #     "perm": idx,
-        #     "status": sol.get("status"),
-        #     "objective": sol.get("objective", np.nan),
-        #     # "solveTime": stats.get("solveTime", np.nan),
-        #     # "flatTime": stats.get("flatTime", np.nan),
-        #     # "time": stats.get("time", np.nan),
-        #     "timeout_ms": timeout_ms,
-        # })
+        stats = sol.get("statistics", {}) if isinstance(sol, dict) else {}
+        stats.update({
+            "perm_idx": k,
+            "perm": idx,
+            "status": sol.get("status"),
+            "objective": sol.get("objective", np.nan),
+            # "solveTime": stats.get("solveTime", np.nan),
+            # "flatTime": stats.get("flatTime", np.nan),
+            # "time": stats.get("time", np.nan),
+            "timeout_ms": timeout_ms,
+        })
         
-        # solutions_rows.append(stats)
+        solutions_rows.append(stats)
         
         ####GRAFOS####
         gb = GraphBuilderStrict(inst_dict)
@@ -556,18 +559,20 @@ def main():
     df_unique_map = pd.DataFrame.from_dict(unique_map, orient='index').explode(["job", "machine", "btw"], ignore_index=True)
     df_unique_map.to_csv(f"{fname}_unique_map.csv", index=False)
     
+    if not os.path.exists(f"{fname}_solutions.csv"):
+        # Guardamos las solutions
+        df_solutions = pd.DataFrame(solutions_rows)
+        df_solutions.to_csv(f"{fname}_solutions.csv", index=False)
+    else:
+        # Leemos las solutions
+        df_solutions = pd.read_csv(f"{fname}_solutions.csv", index_col=None)
     
-    # Guardamos las solutions
-    # df_solutions = pd.DataFrame(solutions_rows)
-    # df_solutions.to_csv(f"{fname}_solutions.csv", index=False)
     
-    # Leemos las solutions
-    df_solutions = pd.read_csv("./4x4_perms_solutions.csv", index_col=None)
     df_solutions = df_solutions.drop(columns=["perm", "perm_idx"])
     
     # Guardamos todos los datos juntos
     df_all = df.join(df_solutions)
-    df_all.to_csv("4x4_all.csv", index=None)
+    df_all.to_csv(f"{size}x{size}_all.csv", index=None)
     
     
     ####REPORT####
@@ -590,4 +595,4 @@ def main():
         f.write("\n".join(lines))
 
 if __name__ == "__main__":
-    main()
+    main(size=5)
