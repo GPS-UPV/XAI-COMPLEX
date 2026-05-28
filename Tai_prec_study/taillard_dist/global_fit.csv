@@ -1,0 +1,13 @@
+scope_type,scope_value,n_files,model_type,distribution,params,n_params,loglik,aic,bic,gof_test,gof_stat,gof_pvalue
+global,all_instances,162,discrete,discrete_uniform_0_100,"{""low"": 0, ""high"": 100, ""fixed_support"": true}",0,-344684.8909208063,689369.7818416127,689369.7818416127,chi2_uniform_0_100_bins10,395.97189201821914,9.91011150383954e-80
+global,all_instances,162,discrete,discrete_uniform_minmax,"{""low"": 0, ""high"": 100}",2,-344684.8909208063,689373.7818416127,689392.2239374871,chi2_uniform_minmax_bins10,395.97189201821914,9.91011150383954e-80
+global,all_instances,162,discrete,poisson,"{""mu"": 49.60632514795276}",1,-891702.7722337885,1783407.544467577,1783416.7655155142,,,
+global,all_instances,162,discrete,discrete_uniform_1_99,"{""low"": 1, ""high"": 99, ""fixed_support"": true}",0,-inf,inf,inf,chi2_uniform_1_99_bins10,,
+global,all_instances,162,discrete,discrete_uniform_1_100,"{""low"": 1, ""high"": 100, ""fixed_support"": true}",0,-inf,inf,inf,chi2_uniform_1_100_bins10,,
+global,all_instances,162,discrete,discrete_uniform_0_99,"{""low"": 0, ""high"": 99, ""fixed_support"": true}",0,-inf,inf,inf,chi2_uniform_0_99_bins10,,
+global,all_instances,162,continuous_exploratory,uniform,"[0.0, 100.0]",2,-343941.7405107067,687887.4810214133,687905.9231172878,KS_continuous,0.016673539886993494,1.821514684380513e-18
+global,all_instances,162,continuous_exploratory,weibull_min,"[2.1547829861633905, -7.893914004311206, 64.9558366037299]",3,-353512.8183211206,707031.6366422412,707059.2997860528,KS_continuous,0.06909763776810485,1.67825365255126e-310
+global,all_instances,162,continuous_exploratory,lognorm,"[0.05105297671477452, -505.45547307308937, 554.3392710647278]",3,-355641.4814833155,711288.962966631,711316.6261104427,KS_continuous,0.06436490483311297,1.9193802001818682e-269
+global,all_instances,162,continuous_exploratory,gamma,"[1886.669399698992, -1180.1540677074763, 0.6518031794916939]",3,-355658.68593144603,711323.3718628921,711351.0350067037,KS_continuous,0.06253337693123917,2.4433781236052112e-254
+global,all_instances,162,continuous_exploratory,norm,"[49.60632514795276, 28.315627829338855]",2,-355681.05176123785,711366.1035224757,711384.5456183502,KS_continuous,0.0635491563769241,1.1608608424635093e-262
+global,all_instances,162,continuous_exploratory,expon,"[0.0, 49.60632514795276]",2,-366268.9829943471,732541.9659886942,732560.4080845687,KS_continuous,0.15705955545411404,0.0

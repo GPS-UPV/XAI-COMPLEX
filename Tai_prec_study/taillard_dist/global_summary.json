@@ -1,0 +1,33 @@
+{
+  "scope": "global_processing_times_all_instances",
+  "n_files": 162,
+  "families": [
+    "abz",
+    "ft",
+    "la",
+    "orb",
+    "swv",
+    "ta",
+    "yn"
+  ],
+  "n": 74686,
+  "min": 0.0,
+  "q25": 25.0,
+  "median": 49.0,
+  "q75": 74.0,
+  "max": 100.0,
+  "mean": 49.60632514795276,
+  "std": 28.31581739573804,
+  "cv": 0.5708106236711756,
+  "skewness": 0.04146449100317617,
+  "kurtosis_excess": -1.1928926199508738,
+  "unique_values": 101,
+  "best_discrete": "discrete_uniform_0_100",
+  "best_discrete_params": "{\"low\": 0, \"high\": 100, \"fixed_support\": true}",
+  "best_discrete_aic": 689369.7818416127,
+  "best_discrete_gof_pvalue": 9.91011150383954e-80,
+  "best_continuous_exploratory": "uniform",
+  "best_continuous_aic": 687887.4810214133,
+  "uniform_1_99_pvalue_bins10": NaN,
+  "uniform_1_99_chi2_bins10": NaN
+}

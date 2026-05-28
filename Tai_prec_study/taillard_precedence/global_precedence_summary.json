@@ -1,0 +1,22 @@
+{
+  "input": ".",
+  "n_files": 162,
+  "n_parse_errors": 2,
+  "families": [
+    "abz",
+    "ft",
+    "la",
+    "orb",
+    "swv",
+    "ta",
+    "yn"
+  ],
+  "total_jobs": 4821,
+  "min_machines": 5,
+  "max_machines": 20,
+  "mean_route_diversity_ratio": 0.9901234567901235,
+  "mean_position_entropy_norm": 0.8374774060372165,
+  "mean_abs_pairwise_bias": 0.1180643601459066,
+  "mean_adjacent_edge_density": 0.7879866848190434,
+  "mean_transitive_edge_density": 0.9668381344307271
+}
