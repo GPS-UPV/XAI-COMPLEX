@@ -1,0 +1,867 @@
+{
+  "checked": 172,
+  "passed": true,
+  "source_bks_used_for_validation_only": true,
+  "cases": [
+    {
+      "instance": "abz5",
+      "computed_lower_bound": 1028.0,
+      "source_bks_upper_bound": 1234.0
+    },
+    {
+      "instance": "abz6",
+      "computed_lower_bound": 835.0,
+      "source_bks_upper_bound": 943.0
+    },
+    {
+      "instance": "abz7",
+      "computed_lower_bound": 650.0,
+      "source_bks_upper_bound": 656.0
+    },
+    {
+      "instance": "abz8",
+      "computed_lower_bound": 597.0,
+      "source_bks_upper_bound": 667.0
+    },
+    {
+      "instance": "abz9",
+      "computed_lower_bound": 615.9999999999999,
+      "source_bks_upper_bound": 678.0
+    },
+    {
+      "instance": "dmu01",
+      "computed_lower_bound": 2363.0,
+      "source_bks_upper_bound": 2563.0
+    },
+    {
+      "instance": "dmu02",
+      "computed_lower_bound": 2452.0,
+      "source_bks_upper_bound": 2706.0
+    },
+    {
+      "instance": "dmu03",
+      "computed_lower_bound": 2571.0000000000005,
+      "source_bks_upper_bound": 2731.0
+    },
+    {
+      "instance": "dmu04",
+      "computed_lower_bound": 2486.0,
+      "source_bks_upper_bound": 2669.0
+    },
+    {
+      "instance": "dmu05",
+      "computed_lower_bound": 2654.0,
+      "source_bks_upper_bound": 2749.0
+    },
+    {
+      "instance": "dmu06",
+      "computed_lower_bound": 2833.9999999999995,
+      "source_bks_upper_bound": 3244.0
+    },
+    {
+      "instance": "dmu07",
+      "computed_lower_bound": 2676.9999999999995,
+      "source_bks_upper_bound": 3046.0
+    },
+    {
+      "instance": "dmu08",
+      "computed_lower_bound": 2901.0,
+      "source_bks_upper_bound": 3188.0
+    },
+    {
+      "instance": "dmu09",
+      "computed_lower_bound": 2739.0,
+      "source_bks_upper_bound": 3092.0
+    },
+    {
+      "instance": "dmu10",
+      "computed_lower_bound": 2716.0,
+      "source_bks_upper_bound": 2984.0
+    },
+    {
+      "instance": "dmu13",
+      "computed_lower_bound": 3680.9999999999995,
+      "source_bks_upper_bound": 3681.0
+    },
+    {
+      "instance": "dmu14",
+      "computed_lower_bound": 3394.0,
+      "source_bks_upper_bound": 3394.0
+    },
+    {
+      "instance": "dmu15",
+      "computed_lower_bound": 3332.0,
+      "source_bks_upper_bound": 3343.0
+    },
+    {
+      "instance": "dmu18",
+      "computed_lower_bound": 3844.0,
+      "source_bks_upper_bound": 3844.0
+    },
+    {
+      "instance": "dmu21",
+      "computed_lower_bound": 4380.0,
+      "source_bks_upper_bound": 4380.0
+    },
+    {
+      "instance": "dmu22",
+      "computed_lower_bound": 4725.0,
+      "source_bks_upper_bound": 4725.0
+    },
+    {
+      "instance": "dmu23",
+      "computed_lower_bound": 4668.0,
+      "source_bks_upper_bound": 4668.0
+    },
+    {
+      "instance": "dmu24",
+      "computed_lower_bound": 4648.0,
+      "source_bks_upper_bound": 4648.0
+    },
+    {
+      "instance": "dmu25",
+      "computed_lower_bound": 4164.0,
+      "source_bks_upper_bound": 4164.0
+    },
+    {
+      "instance": "dmu26",
+      "computed_lower_bound": 4647.0,
+      "source_bks_upper_bound": 4647.0
+    },
+    {
+      "instance": "dmu27",
+      "computed_lower_bound": 4848.0,
+      "source_bks_upper_bound": 4848.0
+    },
+    {
+      "instance": "dmu28",
+      "computed_lower_bound": 4692.0,
+      "source_bks_upper_bound": 4692.0
+    },
+    {
+      "instance": "dmu29",
+      "computed_lower_bound": 4691.0,
+      "source_bks_upper_bound": 4691.0
+    },
+    {
+      "instance": "dmu30",
+      "computed_lower_bound": 4732.000000000001,
+      "source_bks_upper_bound": 4732.0
+    },
+    {
+      "instance": "dmu31",
+      "computed_lower_bound": 5640.0,
+      "source_bks_upper_bound": 5640.0
+    },
+    {
+      "instance": "dmu32",
+      "computed_lower_bound": 5927.0,
+      "source_bks_upper_bound": 5927.0
+    },
+    {
+      "instance": "dmu33",
+      "computed_lower_bound": 5728.0,
+      "source_bks_upper_bound": 5728.0
+    },
+    {
+      "instance": "dmu34",
+      "computed_lower_bound": 5385.0,
+      "source_bks_upper_bound": 5385.0
+    },
+    {
+      "instance": "dmu35",
+      "computed_lower_bound": 5635.0,
+      "source_bks_upper_bound": 5635.0
+    },
+    {
+      "instance": "dmu36",
+      "computed_lower_bound": 5621.0,
+      "source_bks_upper_bound": 5621.0
+    },
+    {
+      "instance": "dmu37",
+      "computed_lower_bound": 5851.0,
+      "source_bks_upper_bound": 5851.0
+    },
+    {
+      "instance": "dmu38",
+      "computed_lower_bound": 5713.0,
+      "source_bks_upper_bound": 5713.0
+    },
+    {
+      "instance": "dmu39",
+      "computed_lower_bound": 5747.0,
+      "source_bks_upper_bound": 5747.0
+    },
+    {
+      "instance": "dmu40",
+      "computed_lower_bound": 5577.0,
+      "source_bks_upper_bound": 5577.0
+    },
+    {
+      "instance": "dmu43",
+      "computed_lower_bound": 3121.0,
+      "source_bks_upper_bound": 3441.0
+    },
+    {
+      "instance": "ft06",
+      "computed_lower_bound": 52.0,
+      "source_bks_upper_bound": 55.0
+    },
+    {
+      "instance": "ft10",
+      "computed_lower_bound": 808.0,
+      "source_bks_upper_bound": 930.0
+    },
+    {
+      "instance": "ft20",
+      "computed_lower_bound": 1164.0,
+      "source_bks_upper_bound": 1165.0
+    },
+    {
+      "instance": "la01",
+      "computed_lower_bound": 666.0,
+      "source_bks_upper_bound": 666.0
+    },
+    {
+      "instance": "la02",
+      "computed_lower_bound": 655.0,
+      "source_bks_upper_bound": 655.0
+    },
+    {
+      "instance": "la03",
+      "computed_lower_bound": 588.0,
+      "source_bks_upper_bound": 597.0
+    },
+    {
+      "instance": "la04",
+      "computed_lower_bound": 567.0,
+      "source_bks_upper_bound": 590.0
+    },
+    {
+      "instance": "la05",
+      "computed_lower_bound": 593.0,
+      "source_bks_upper_bound": 593.0
+    },
+    {
+      "instance": "la06",
+      "computed_lower_bound": 926.0,
+      "source_bks_upper_bound": 926.0
+    },
+    {
+      "instance": "la07",
+      "computed_lower_bound": 890.0,
+      "source_bks_upper_bound": 890.0
+    },
+    {
+      "instance": "la08",
+      "computed_lower_bound": 863.0,
+      "source_bks_upper_bound": 863.0
+    },
+    {
+      "instance": "la09",
+      "computed_lower_bound": 951.0,
+      "source_bks_upper_bound": 951.0
+    },
+    {
+      "instance": "la10",
+      "computed_lower_bound": 958.0,
+      "source_bks_upper_bound": 958.0
+    },
+    {
+      "instance": "la11",
+      "computed_lower_bound": 1222.0,
+      "source_bks_upper_bound": 1222.0
+    },
+    {
+      "instance": "la12",
+      "computed_lower_bound": 1039.0,
+      "source_bks_upper_bound": 1039.0
+    },
+    {
+      "instance": "la13",
+      "computed_lower_bound": 1150.0,
+      "source_bks_upper_bound": 1150.0
+    },
+    {
+      "instance": "la14",
+      "computed_lower_bound": 1292.0,
+      "source_bks_upper_bound": 1292.0
+    },
+    {
+      "instance": "la15",
+      "computed_lower_bound": 1207.0,
+      "source_bks_upper_bound": 1207.0
+    },
+    {
+      "instance": "la16",
+      "computed_lower_bound": 875.0,
+      "source_bks_upper_bound": 945.0
+    },
+    {
+      "instance": "la17",
+      "computed_lower_bound": 739.0,
+      "source_bks_upper_bound": 784.0
+    },
+    {
+      "instance": "la18",
+      "computed_lower_bound": 770.0000000000001,
+      "source_bks_upper_bound": 848.0
+    },
+    {
+      "instance": "la19",
+      "computed_lower_bound": 708.9999999999999,
+      "source_bks_upper_bound": 842.0
+    },
+    {
+      "instance": "la20",
+      "computed_lower_bound": 807.0,
+      "source_bks_upper_bound": 902.0
+    },
+    {
+      "instance": "la21",
+      "computed_lower_bound": 995.0,
+      "source_bks_upper_bound": 1046.0
+    },
+    {
+      "instance": "la22",
+      "computed_lower_bound": 913.0000000000001,
+      "source_bks_upper_bound": 927.0
+    },
+    {
+      "instance": "la23",
+      "computed_lower_bound": 1032.0,
+      "source_bks_upper_bound": 1032.0
+    },
+    {
+      "instance": "la24",
+      "computed_lower_bound": 881.0000000000001,
+      "source_bks_upper_bound": 935.0
+    },
+    {
+      "instance": "la25",
+      "computed_lower_bound": 894.0000000000001,
+      "source_bks_upper_bound": 977.0
+    },
+    {
+      "instance": "la26",
+      "computed_lower_bound": 1218.0,
+      "source_bks_upper_bound": 1218.0
+    },
+    {
+      "instance": "la27",
+      "computed_lower_bound": 1235.0,
+      "source_bks_upper_bound": 1235.0
+    },
+    {
+      "instance": "la28",
+      "computed_lower_bound": 1216.0,
+      "source_bks_upper_bound": 1216.0
+    },
+    {
+      "instance": "la29",
+      "computed_lower_bound": 1114.0,
+      "source_bks_upper_bound": 1152.0
+    },
+    {
+      "instance": "la30",
+      "computed_lower_bound": 1355.0,
+      "source_bks_upper_bound": 1355.0
+    },
+    {
+      "instance": "la31",
+      "computed_lower_bound": 1784.0,
+      "source_bks_upper_bound": 1784.0
+    },
+    {
+      "instance": "la32",
+      "computed_lower_bound": 1850.0,
+      "source_bks_upper_bound": 1850.0
+    },
+    {
+      "instance": "la33",
+      "computed_lower_bound": 1719.0,
+      "source_bks_upper_bound": 1719.0
+    },
+    {
+      "instance": "la34",
+      "computed_lower_bound": 1721.0,
+      "source_bks_upper_bound": 1721.0
+    },
+    {
+      "instance": "la35",
+      "computed_lower_bound": 1888.0,
+      "source_bks_upper_bound": 1888.0
+    },
+    {
+      "instance": "la36",
+      "computed_lower_bound": 1224.0,
+      "source_bks_upper_bound": 1268.0
+    },
+    {
+      "instance": "la37",
+      "computed_lower_bound": 1355.0,
+      "source_bks_upper_bound": 1397.0
+    },
+    {
+      "instance": "la38",
+      "computed_lower_bound": 1077.0,
+      "source_bks_upper_bound": 1196.0
+    },
+    {
+      "instance": "la39",
+      "computed_lower_bound": 1221.0,
+      "source_bks_upper_bound": 1233.0
+    },
+    {
+      "instance": "la40",
+      "computed_lower_bound": 1170.0,
+      "source_bks_upper_bound": 1222.0
+    },
+    {
+      "instance": "orb01",
+      "computed_lower_bound": 929.0,
+      "source_bks_upper_bound": 1059.0
+    },
+    {
+      "instance": "orb02",
+      "computed_lower_bound": 766.0,
+      "source_bks_upper_bound": 888.0
+    },
+    {
+      "instance": "orb03",
+      "computed_lower_bound": 865.0,
+      "source_bks_upper_bound": 1005.0
+    },
+    {
+      "instance": "orb04",
+      "computed_lower_bound": 833.0,
+      "source_bks_upper_bound": 1005.0
+    },
+    {
+      "instance": "orb05",
+      "computed_lower_bound": 801.0,
+      "source_bks_upper_bound": 887.0
+    },
+    {
+      "instance": "orb06",
+      "computed_lower_bound": 930.0,
+      "source_bks_upper_bound": 1010.0
+    },
+    {
+      "instance": "orb07",
+      "computed_lower_bound": 345.0,
+      "source_bks_upper_bound": 397.0
+    },
+    {
+      "instance": "orb08",
+      "computed_lower_bound": 893.9999999999999,
+      "source_bks_upper_bound": 899.0
+    },
+    {
+      "instance": "orb09",
+      "computed_lower_bound": 873.0,
+      "source_bks_upper_bound": 934.0
+    },
+    {
+      "instance": "orb10",
+      "computed_lower_bound": 899.0,
+      "source_bks_upper_bound": 944.0
+    },
+    {
+      "instance": "swv01",
+      "computed_lower_bound": 1366.0,
+      "source_bks_upper_bound": 1407.0
+    },
+    {
+      "instance": "swv02",
+      "computed_lower_bound": 1475.0,
+      "source_bks_upper_bound": 1475.0
+    },
+    {
+      "instance": "swv03",
+      "computed_lower_bound": 1328.0,
+      "source_bks_upper_bound": 1398.0
+    },
+    {
+      "instance": "swv04",
+      "computed_lower_bound": 1393.0,
+      "source_bks_upper_bound": 1464.0
+    },
+    {
+      "instance": "swv05",
+      "computed_lower_bound": 1411.0000000000002,
+      "source_bks_upper_bound": 1424.0
+    },
+    {
+      "instance": "swv06",
+      "computed_lower_bound": 1513.0,
+      "source_bks_upper_bound": 1667.0
+    },
+    {
+      "instance": "swv09",
+      "computed_lower_bound": 1594.0,
+      "source_bks_upper_bound": 1655.0
+    },
+    {
+      "instance": "swv11",
+      "computed_lower_bound": 2983.0,
+      "source_bks_upper_bound": 2983.0
+    },
+    {
+      "instance": "swv12",
+      "computed_lower_bound": 2955.0,
+      "source_bks_upper_bound": 2972.0
+    },
+    {
+      "instance": "swv13",
+      "computed_lower_bound": 3104.0,
+      "source_bks_upper_bound": 3104.0
+    },
+    {
+      "instance": "swv14",
+      "computed_lower_bound": 2968.0,
+      "source_bks_upper_bound": 2968.0
+    },
+    {
+      "instance": "swv15",
+      "computed_lower_bound": 2885.0,
+      "source_bks_upper_bound": 2885.0
+    },
+    {
+      "instance": "swv16",
+      "computed_lower_bound": 2924.0,
+      "source_bks_upper_bound": 2924.0
+    },
+    {
+      "instance": "swv17",
+      "computed_lower_bound": 2794.0,
+      "source_bks_upper_bound": 2794.0
+    },
+    {
+      "instance": "swv18",
+      "computed_lower_bound": 2852.0,
+      "source_bks_upper_bound": 2852.0
+    },
+    {
+      "instance": "swv19",
+      "computed_lower_bound": 2843.0,
+      "source_bks_upper_bound": 2843.0
+    },
+    {
+      "instance": "swv20",
+      "computed_lower_bound": 2823.0,
+      "source_bks_upper_bound": 2823.0
+    },
+    {
+      "instance": "ta01js",
+      "computed_lower_bound": 1168.0,
+      "source_bks_upper_bound": 1231.0
+    },
+    {
+      "instance": "ta02js",
+      "computed_lower_bound": 1143.0,
+      "source_bks_upper_bound": 1244.0
+    },
+    {
+      "instance": "ta03js",
+      "computed_lower_bound": 1109.0,
+      "source_bks_upper_bound": 1218.0
+    },
+    {
+      "instance": "ta04js",
+      "computed_lower_bound": 1059.0,
+      "source_bks_upper_bound": 1175.0
+    },
+    {
+      "instance": "ta05js",
+      "computed_lower_bound": 1115.0,
+      "source_bks_upper_bound": 1224.0
+    },
+    {
+      "instance": "ta06js",
+      "computed_lower_bound": 1134.0,
+      "source_bks_upper_bound": 1238.0
+    },
+    {
+      "instance": "ta07js",
+      "computed_lower_bound": 1144.0,
+      "source_bks_upper_bound": 1227.0
+    },
+    {
+      "instance": "ta08js",
+      "computed_lower_bound": 1096.0,
+      "source_bks_upper_bound": 1217.0
+    },
+    {
+      "instance": "ta09js",
+      "computed_lower_bound": 1136.0,
+      "source_bks_upper_bound": 1274.0
+    },
+    {
+      "instance": "ta10js",
+      "computed_lower_bound": 1107.0,
+      "source_bks_upper_bound": 1241.0
+    },
+    {
+      "instance": "ta11js",
+      "computed_lower_bound": 1254.0000000000002,
+      "source_bks_upper_bound": 1357.0
+    },
+    {
+      "instance": "ta12js",
+      "computed_lower_bound": 1284.0,
+      "source_bks_upper_bound": 1367.0
+    },
+    {
+      "instance": "ta13js",
+      "computed_lower_bound": 1243.0,
+      "source_bks_upper_bound": 1342.0
+    },
+    {
+      "instance": "ta14js",
+      "computed_lower_bound": 1341.0,
+      "source_bks_upper_bound": 1345.0
+    },
+    {
+      "instance": "ta15js",
+      "computed_lower_bound": 1231.0,
+      "source_bks_upper_bound": 1339.0
+    },
+    {
+      "instance": "ta16js",
+      "computed_lower_bound": 1238.0,
+      "source_bks_upper_bound": 1360.0
+    },
+    {
+      "instance": "ta17js",
+      "computed_lower_bound": 1433.0,
+      "source_bks_upper_bound": 1462.0
+    },
+    {
+      "instance": "ta18js",
+      "computed_lower_bound": 1314.9999999999998,
+      "source_bks_upper_bound": 1396.0
+    },
+    {
+      "instance": "ta19js",
+      "computed_lower_bound": 1216.0,
+      "source_bks_upper_bound": 1332.0
+    },
+    {
+      "instance": "ta20js",
+      "computed_lower_bound": 1279.0,
+      "source_bks_upper_bound": 1348.0
+    },
+    {
+      "instance": "ta21js",
+      "computed_lower_bound": 1435.0,
+      "source_bks_upper_bound": 1642.0
+    },
+    {
+      "instance": "ta22js",
+      "computed_lower_bound": 1385.0,
+      "source_bks_upper_bound": 1600.0
+    },
+    {
+      "instance": "ta23js",
+      "computed_lower_bound": 1422.0,
+      "source_bks_upper_bound": 1557.0
+    },
+    {
+      "instance": "ta24js",
+      "computed_lower_bound": 1465.9999999999998,
+      "source_bks_upper_bound": 1644.0
+    },
+    {
+      "instance": "ta25js",
+      "computed_lower_bound": 1473.0000000000002,
+      "source_bks_upper_bound": 1595.0
+    },
+    {
+      "instance": "ta26js",
+      "computed_lower_bound": 1445.0,
+      "source_bks_upper_bound": 1643.0
+    },
+    {
+      "instance": "ta27js",
+      "computed_lower_bound": 1567.0,
+      "source_bks_upper_bound": 1680.0
+    },
+    {
+      "instance": "ta28js",
+      "computed_lower_bound": 1529.0,
+      "source_bks_upper_bound": 1603.0
+    },
+    {
+      "instance": "ta29js",
+      "computed_lower_bound": 1412.9999999999998,
+      "source_bks_upper_bound": 1625.0
+    },
+    {
+      "instance": "ta31js",
+      "computed_lower_bound": 1764.0,
+      "source_bks_upper_bound": 1764.0
+    },
+    {
+      "instance": "ta33js",
+      "computed_lower_bound": 1747.0,
+      "source_bks_upper_bound": 1791.0
+    },
+    {
+      "instance": "ta34js",
+      "computed_lower_bound": 1828.0,
+      "source_bks_upper_bound": 1828.0
+    },
+    {
+      "instance": "ta35js",
+      "computed_lower_bound": 1997.0,
+      "source_bks_upper_bound": 2007.0
+    },
+    {
+      "instance": "ta36js",
+      "computed_lower_bound": 1819.0000000000002,
+      "source_bks_upper_bound": 1819.0
+    },
+    {
+      "instance": "ta37js",
+      "computed_lower_bound": 1771.0,
+      "source_bks_upper_bound": 1771.0
+    },
+    {
+      "instance": "ta38js",
+      "computed_lower_bound": 1673.0,
+      "source_bks_upper_bound": 1673.0
+    },
+    {
+      "instance": "ta39js",
+      "computed_lower_bound": 1791.0,
+      "source_bks_upper_bound": 1795.0
+    },
+    {
+      "instance": "ta45js",
+      "computed_lower_bound": 1955.0,
+      "source_bks_upper_bound": 1997.0
+    },
+    {
+      "instance": "ta51js",
+      "computed_lower_bound": 2760.0,
+      "source_bks_upper_bound": 2760.0
+    },
+    {
+      "instance": "ta52js",
+      "computed_lower_bound": 2756.0,
+      "source_bks_upper_bound": 2756.0
+    },
+    {
+      "instance": "ta53js",
+      "computed_lower_bound": 2717.0,
+      "source_bks_upper_bound": 2717.0
+    },
+    {
+      "instance": "ta54js",
+      "computed_lower_bound": 2839.0,
+      "source_bks_upper_bound": 2839.0
+    },
+    {
+      "instance": "ta55js",
+      "computed_lower_bound": 2679.0,
+      "source_bks_upper_bound": 2679.0
+    },
+    {
+      "instance": "ta56js",
+      "computed_lower_bound": 2781.0,
+      "source_bks_upper_bound": 2781.0
+    },
+    {
+      "instance": "ta57js",
+      "computed_lower_bound": 2943.0,
+      "source_bks_upper_bound": 2943.0
+    },
+    {
+      "instance": "ta58js",
+      "computed_lower_bound": 2885.0,
+      "source_bks_upper_bound": 2885.0
+    },
+    {
+      "instance": "ta59js",
+      "computed_lower_bound": 2655.0,
+      "source_bks_upper_bound": 2655.0
+    },
+    {
+      "instance": "ta60js",
+      "computed_lower_bound": 2723.0,
+      "source_bks_upper_bound": 2723.0
+    },
+    {
+      "instance": "ta61js",
+      "computed_lower_bound": 2868.0,
+      "source_bks_upper_bound": 2868.0
+    },
+    {
+      "instance": "ta62js",
+      "computed_lower_bound": 2869.0,
+      "source_bks_upper_bound": 2869.0
+    },
+    {
+      "instance": "ta63js",
+      "computed_lower_bound": 2755.0,
+      "source_bks_upper_bound": 2755.0
+    },
+    {
+      "instance": "ta64js",
+      "computed_lower_bound": 2701.9999999999995,
+      "source_bks_upper_bound": 2702.0
+    },
+    {
+      "instance": "ta65js",
+      "computed_lower_bound": 2725.0,
+      "source_bks_upper_bound": 2725.0
+    },
+    {
+      "instance": "ta66js",
+      "computed_lower_bound": 2845.0,
+      "source_bks_upper_bound": 2845.0
+    },
+    {
+      "instance": "ta67js",
+      "computed_lower_bound": 2821.0,
+      "source_bks_upper_bound": 2825.0
+    },
+    {
+      "instance": "ta68js",
+      "computed_lower_bound": 2784.0,
+      "source_bks_upper_bound": 2784.0
+    },
+    {
+      "instance": "ta69js",
+      "computed_lower_bound": 3071.0,
+      "source_bks_upper_bound": 3071.0
+    },
+    {
+      "instance": "ta70js",
+      "computed_lower_bound": 2995.0,
+      "source_bks_upper_bound": 2995.0
+    },
+    {
+      "instance": "yn1",
+      "computed_lower_bound": 763.0,
+      "source_bks_upper_bound": 884.0
+    },
+    {
+      "instance": "yn2",
+      "computed_lower_bound": 795.0,
+      "source_bks_upper_bound": 904.0
+    },
+    {
+      "instance": "yn3",
+      "computed_lower_bound": 793.0,
+      "source_bks_upper_bound": 892.0
+    },
+    {
+      "instance": "yn4",
+      "computed_lower_bound": 871.0,
+      "source_bks_upper_bound": 967.0
+    }
+  ]
+}

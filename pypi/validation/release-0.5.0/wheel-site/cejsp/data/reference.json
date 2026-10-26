@@ -1,0 +1,18 @@
+{
+  "model_version": "jsplib-easy-v7-accuracy",
+  "sha256": "b5c7565d3c9d1516894c6aed626436e65eca7244588b0d9ee31789ed2dbe6071",
+  "dependencies": {
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1",
+    "joblib": "1.6.0",
+    "scipy": "1.17.1",
+    "ortools": "9.15.6755"
+  },
+  "source_commit": "8a6e36ef31263d36975e56fb481e0ba04e188d6f",
+  "source": "https://scheduleopt.github.io/benchmarks/jsplib",
+  "feature_backend": "trajectory",
+  "probe_budget": 3.0,
+  "evaluation": "Exploratory out-of-fold accuracy on 272 JSPLIB instances; not an external IGJSP validation",
+  "accuracy": 0.8419117647058824,
+  "easy_recall": 0.06666666666666667
+}

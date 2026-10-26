@@ -1,0 +1,54 @@
+{
+  "candidates": [
+    [
+      "graph_approx",
+      "random_forest"
+    ],
+    [
+      "structural",
+      "random_forest"
+    ],
+    [
+      "structural",
+      "extra_trees"
+    ],
+    [
+      "structural",
+      "hist_gradient"
+    ],
+    [
+      "structural",
+      "rbf_svm"
+    ],
+    [
+      "structural",
+      "ensemble"
+    ],
+    [
+      "hybrid",
+      "random_forest"
+    ],
+    [
+      "hybrid",
+      "extra_trees"
+    ],
+    [
+      "hybrid",
+      "hist_gradient"
+    ],
+    [
+      "hybrid",
+      "rbf_svm"
+    ],
+    [
+      "hybrid",
+      "ensemble"
+    ]
+  ],
+  "outer_folds": 5,
+  "inner_folds": 3,
+  "seed": 20261023,
+  "selection_objective": "0.5 accuracy + 0.5 macro-F1",
+  "old_test": "diagnostic only; already observed",
+  "features_seconds": 1.146947200060822
+}

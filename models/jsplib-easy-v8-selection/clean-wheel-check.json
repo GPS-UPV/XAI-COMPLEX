@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "model_version": "jsplib-easy-v8-selection",
+  "formats": [
+    "IGJSP JSON",
+    "DZN",
+    "Taillard"
+  ],
+  "same_votes": true,
+  "batch_invariance": true,
+  "category": "toy"
+}

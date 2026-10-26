@@ -1,0 +1,11 @@
+{
+  "schema": "cejsp.training.v1",
+  "model_version": "reference-v1",
+  "feature_backend": "graph",
+  "speed_index": null,
+  "protocol": {
+    "id": "",
+    "class_definitions": {"toy": "", "easy": "", "medium": "", "hard": "", "open": ""}
+  },
+  "examples": [{"path": "REPLACE_WITH_INSTANCE_PATH", "label": null, "base_instance_id": ""}]
+}

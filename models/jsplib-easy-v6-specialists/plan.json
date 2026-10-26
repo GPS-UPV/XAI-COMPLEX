@@ -1,0 +1,90 @@
+{
+  "configs": [
+    {
+      "id": "baseline",
+      "backend": "structural",
+      "kind": "extra_trees",
+      "trees": 200,
+      "params": {}
+    },
+    {
+      "id": "structural-ordinal-1",
+      "backend": "structural",
+      "kind": "ordinal_forest",
+      "trees": 300,
+      "params": {
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "id": "structural-ordinal-2",
+      "backend": "structural",
+      "kind": "ordinal_forest",
+      "trees": 300,
+      "params": {
+        "min_samples_leaf": 2
+      }
+    },
+    {
+      "id": "structural-specialist-forest",
+      "backend": "structural",
+      "kind": "easy_specialist",
+      "trees": 300,
+      "params": {
+        "specialist_kind": "forest"
+      }
+    },
+    {
+      "id": "structural-specialist-svm",
+      "backend": "structural",
+      "kind": "easy_specialist",
+      "trees": 300,
+      "params": {
+        "specialist_kind": "svm"
+      }
+    },
+    {
+      "id": "probe-ordinal-1",
+      "backend": "probe",
+      "kind": "ordinal_forest",
+      "trees": 300,
+      "params": {
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "id": "probe-ordinal-2",
+      "backend": "probe",
+      "kind": "ordinal_forest",
+      "trees": 300,
+      "params": {
+        "min_samples_leaf": 2
+      }
+    },
+    {
+      "id": "probe-specialist-forest",
+      "backend": "probe",
+      "kind": "easy_specialist",
+      "trees": 300,
+      "params": {
+        "specialist_kind": "forest"
+      }
+    },
+    {
+      "id": "probe-specialist-svm",
+      "backend": "probe",
+      "kind": "easy_specialist",
+      "trees": 300,
+      "params": {
+        "specialist_kind": "svm"
+      }
+    }
+  ],
+  "workers": 4,
+  "round": 3,
+  "objective": ".5 accuracy + .4 macro-F1 + .1 easy recall",
+  "split_seed": 20261024,
+  "inner_folds": 3,
+  "outer_folds": 5,
+  "ordinal_assumption": "An experimental ordered proxy for the historical classes, not a mathematical hardness order"
+}

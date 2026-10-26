@@ -1,0 +1,3 @@
+[console_scripts]
+cejsp = cejsp.cli:main
+xai-complex = xai_complex.cli:main

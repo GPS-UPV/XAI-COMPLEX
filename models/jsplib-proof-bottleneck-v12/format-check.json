@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "model_version": "jsplib-proof-bottleneck-v12",
+  "formats": [
+    "IGJSP JSON",
+    "DZN",
+    "Taillard"
+  ],
+  "same_votes": true,
+  "batch_invariance": true,
+  "category": "toy"
+}

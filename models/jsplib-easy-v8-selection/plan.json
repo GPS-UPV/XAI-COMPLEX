@@ -1,0 +1,142 @@
+{
+  "round": 5,
+  "workers": 8,
+  "configs": [
+    {
+      "id": "baseline",
+      "backend": "structural",
+      "kind": "extra_trees",
+      "trees": 200,
+      "params": {}
+    },
+    {
+      "id": "all-trajectory",
+      "backend": "trajectory",
+      "kind": "extra_trees",
+      "trees": 200,
+      "params": {}
+    },
+    {
+      "id": "structural-select-16-0.5",
+      "backend": "structural",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 16,
+        "easy_weight": 0.5
+      }
+    },
+    {
+      "id": "structural-select-16-1.0",
+      "backend": "structural",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 16,
+        "easy_weight": 1.0
+      }
+    },
+    {
+      "id": "structural-select-32-0.5",
+      "backend": "structural",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 32,
+        "easy_weight": 0.5
+      }
+    },
+    {
+      "id": "structural-select-32-1.0",
+      "backend": "structural",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 32,
+        "easy_weight": 1.0
+      }
+    },
+    {
+      "id": "structural-select-64-0.5",
+      "backend": "structural",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 64,
+        "easy_weight": 0.5
+      }
+    },
+    {
+      "id": "structural-select-64-1.0",
+      "backend": "structural",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 64,
+        "easy_weight": 1.0
+      }
+    },
+    {
+      "id": "trajectory-select-16-0.5",
+      "backend": "trajectory",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 16,
+        "easy_weight": 0.5
+      }
+    },
+    {
+      "id": "trajectory-select-16-1.0",
+      "backend": "trajectory",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 16,
+        "easy_weight": 1.0
+      }
+    },
+    {
+      "id": "trajectory-select-32-0.5",
+      "backend": "trajectory",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 32,
+        "easy_weight": 0.5
+      }
+    },
+    {
+      "id": "trajectory-select-32-1.0",
+      "backend": "trajectory",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 32,
+        "easy_weight": 1.0
+      }
+    },
+    {
+      "id": "trajectory-select-64-0.5",
+      "backend": "trajectory",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 64,
+        "easy_weight": 0.5
+      }
+    },
+    {
+      "id": "trajectory-select-64-1.0",
+      "backend": "trajectory",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 64,
+        "easy_weight": 1.0
+      }
+    }
+  ],
+  "selection": "Mutual information, joint class/easy or easy only, fitted inside each fold",
+  "split_seed": 20261024
+}

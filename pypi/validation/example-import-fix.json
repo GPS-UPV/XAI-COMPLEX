@@ -1,0 +1,12 @@
+{
+  "fix": "Example discovers local pypi/src only if cejsp is unavailable; installed packages remain preferred",
+  "checks": {
+    "igjsp-no-pythonpath": true,
+    "igjsp-source-fallback": true
+  },
+  "artifacts": {
+    "cejsp-0.4.1-py3-none-any.whl": "44a51b98a3622cb19873149f14acd51ddc8f7d8b7e130acd85589d752ec8de34",
+    "cejsp-0.4.1.tar.gz": "b4acf089d3735a755f0fe530af9a272ac9b7761e8e172e7f31db80b33eb8c9f8"
+  },
+  "scope": "Example import fix; rebuilt artifacts pass twine; earlier separate-target installation report refers to pre-fix artifact hashes"
+}

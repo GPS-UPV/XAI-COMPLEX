@@ -1,0 +1,7 @@
+{
+  "public_api_export": true,
+  "max_research_public_probability_difference": 0.0,
+  "persistence": true,
+  "model": "D:\\CODE\\XAI-COMPLEX\\models\\jsplib-proof-bottleneck-v12\\reference.joblib",
+  "nested_accuracy": 0.8308823529411765
+}

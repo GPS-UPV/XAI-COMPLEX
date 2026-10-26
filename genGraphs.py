@@ -6,12 +6,12 @@ from typing import Any, Dict, List, Tuple, Optional
 import itertools
 import numpy as np
 import torch
-from IGJSP.generador import Generator  # mantiene el import que ya usas
+
 from torch_geometric.data import HeteroData
 from tqdm import tqdm
 
 
-# operación: (jobId, opId, macId, procTime, energy)
+
 def extract_operations_strict(data: Dict[str, Any]) -> List[Tuple[int, int, int, float, float]]:
     """
     Extrae operaciones asumiendo estructura estricta:
@@ -24,8 +24,12 @@ def extract_operations_strict(data: Dict[str, Any]) -> List[Tuple[int, int, int,
     EC = np.asarray(data["EnergyConsumption"])
 
     num_jobs = int(data["numJobs"])
+    if (PT.ndim == 3 and PT.shape[2] != 1) or (EC.ndim == 3 and EC.shape[2] != 1):
+        raise ValueError("Seleccione explícitamente una velocidad antes de construir el grafo JSP")
+    if any(k in data for k in ("AllowedMachines", "allowed_machines", "available_machines", "AVJM", "avail_machines", "machine_mask")):
+        raise ValueError("El grafo original de rutas fijas no representa FJSP")
 
-    # PT
+
     if PT.ndim == 3:
         num_ops = PT.shape[1]
         get_pt = lambda j, o: float(PT[j, o, 0])
@@ -35,7 +39,7 @@ def extract_operations_strict(data: Dict[str, Any]) -> List[Tuple[int, int, int,
     else:
         raise ValueError("ProcessingTime tiene una forma inesperada. Esperado (J,O[,1]).")
 
-    # EC
+
     if EC.ndim == 3:
         get_ec = lambda j, o: float(EC[j, o, 0])
     elif EC.ndim == 2:
@@ -70,20 +74,20 @@ def _flatten_generator_features(inst: Dict[str, Any]) -> Dict[str, Any]:
     Mantiene también una copia del dict original 'features' para referencia.
     """
     out: Dict[str, Any] = {}
-    # metadatos básicos
+
     if "numJobs" in inst:  out["n_jobs"] = int(inst["numJobs"])
     if "numMchs" in inst:  out["n_machs"] = int(inst["numMchs"])
-    if "speed"   in inst:  out["speed"]  = int(inst["speed"])  # nº de velocidades
-    if "rddd"    in inst:  out["rddd"]   = int(inst["rddd"])   # flag de R/D/D presente (si aplica)
+    if "speed"   in inst:  out["speed"]  = int(inst["speed"])
+    if "rddd"    in inst:  out["rddd"]   = int(inst["rddd"])
 
-    # makespan (nombres del generador)
+
     if "max_makespan" in inst: out["makespan_max"] = int(inst["max_makespan"])
     if "min_makespan" in inst: out["makespan_min"] = int(inst["min_makespan"])
-    # a veces viene como rango o diferencia max-min
+
     if "max_min_makespan" in inst:
         out["makespan_range"] = int(inst["max_min_makespan"])
 
-    # energía total (sumas)
+
     # el generador usa dos variantes de nombre: max_energy/min_energy y max_sum_energy/min_sum_energy
     if "max_energy" in inst: out["energy_sum_max"] = int(inst["max_energy"])
     if "min_energy" in inst: out["energy_sum_min"] = int(inst["min_energy"])
@@ -98,7 +102,7 @@ def _flatten_generator_features(inst: Dict[str, Any]) -> Dict[str, Any]:
         if "max_sum_energy" in feats: out["energy_sum_max"] = int(feats["max_sum_energy"])
         if "min_sum_energy" in feats: out["energy_sum_min"] = int(feats["min_sum_energy"])
 
-        # valores puntuales (por operación) agregados
+
         if "max_processing_time_value" in feats: out["p_value_max"] = int(feats["max_processing_time_value"])
         if "min_processing_time_value" in feats: out["p_value_min"] = int(feats["min_processing_time_value"])
         if "mean_processing_time_value" in feats: out["p_value_mean"] = float(feats["mean_processing_time_value"])
@@ -107,15 +111,15 @@ def _flatten_generator_features(inst: Dict[str, Any]) -> Dict[str, Any]:
         if "min_energy_value" in feats: out["e_value_min"] = int(feats["min_energy_value"])
         if "mean_energy_value" in feats: out["e_value_mean"] = float(feats["mean_energy_value"])
 
-        # ventanas de tiempo + overlap + tardiness (si el generador los rellena)
+
         if "min_window" in feats: out["window_min"] = float(feats["min_window"])
         if "mean_window" in feats: out["window_mean"] = float(feats["mean_window"])
         if "max_window" in feats: out["window_max"] = float(feats["max_window"]) if feats.get("max_window") is not None else None
         if "overlap" in feats: out["overlap"] = float(feats["overlap"])
         if "max_tardiness" in feats: out["max_tardiness"] = float(feats["max_tardiness"])
 
-        # copia cruda por si quieres depurar/usar directamente
-        out["gen_features"] = feats  # se serializa como dict en el HeteroData
+
+        out["gen_features"] = feats
 
     return out
 
@@ -140,12 +144,12 @@ class GraphBuilderStrict:
         return PT.shape[1] if PT.ndim in (2, 3) else int(round(len(self.operations) / self.num_jobs))
 
     def build_graph(self):
-        # ---------- 1) Nodos ----------
+
         node_id = 0
         include_virtual = True
 
         if include_virtual:
-            self.node_features.append([0.0, -1.0])              # source
+            self.node_features.append([0.0, -1.0])
             self.node_mapping[("source", 0)] = node_id
 
         op_node_index: List[int] = []
@@ -157,10 +161,10 @@ class GraphBuilderStrict:
 
         if include_virtual:
             node_id += 1
-            self.node_features.append([0.0, -1.0])              # sink
+            self.node_features.append([0.0, -1.0])
             self.node_mapping[("sink", 0)] = node_id
 
-        # ---------- 2) Arcos conjuntivos ----------
+
         origen, destino = [], []
         for j in range(self.num_jobs):
             nodes = [self.node_mapping[(j, o)] for o in range(self._ops_per_job())]
@@ -172,7 +176,7 @@ class GraphBuilderStrict:
                 origen.append(nodes[-1]); destino.append(self.node_mapping[("sink", 0)])
         self.carcs = [origen, destino]
 
-        # ---------- 3) Arcos disyuntivos ----------
+
         mach_to_nodes = defaultdict(list)
         for (job_id, op_id, mac_id, proc_time, energy) in self.operations:
             nid = self.node_mapping[(job_id, op_id)]
@@ -186,7 +190,7 @@ class GraphBuilderStrict:
                 origen_d.append(a); destino_d.append(b)
         self.darcs = [origen_d, destino_d]
 
-        # ---------- 4) Crear HeteroData ----------
+
         data = HeteroData()
         data["node"].x = torch.tensor(self.node_features, dtype=torch.float)
 
@@ -199,7 +203,7 @@ class GraphBuilderStrict:
             else torch.empty((2, 0), dtype=torch.long)
         )
 
-        # ---------- 5) Variables de instancia (tesis) ----------
+
         N_ops = len(self.operations)
         job_ids  = np.fromiter((j for (j, o, m, p, e) in self.operations), dtype=np.int64, count=N_ops)
         op_ids   = np.fromiter((o for (j, o, m, p, e) in self.operations), dtype=np.int64, count=N_ops)
@@ -207,20 +211,24 @@ class GraphBuilderStrict:
         P = np.fromiter((p for (j, o, m, p, e) in self.operations), dtype=np.float64, count=N_ops).reshape(N_ops, 1)
         E = np.fromiter((e for (j, o, m, p, e) in self.operations), dtype=np.float64, count=N_ops).reshape(N_ops, 1)
 
-        # Coste por operación si lo trae el generador (J,O) -> (N_ops,)
+
         op_cost = _maybe_get(self.data_dict, ["operationCost", "opCost", "operation_cost"])
         if op_cost is not None:
             op_cost = np.asarray(op_cost, dtype=np.float64).reshape(self.num_jobs, self._ops_per_job())
-            op_cost = op_cost.reshape(-1)  # aplanamos por filas (job-major)
+            op_cost = op_cost.reshape(-1)
 
-        # Ventanas de tiempo (si existen)
+
         R = _maybe_get(self.data_dict, ["ReleaseDate", "Release", "R"])
         D = _maybe_get(self.data_dict, ["DueDate", "Due", "D"])
         if R is not None:
             R = R.reshape(self.num_jobs, -1).astype(np.float64)
+            if R.shape[1] == 1:
+                R = np.repeat(R, self._ops_per_job(), axis=1)
             R = R[:, :self._ops_per_job()].reshape(-1)
         if D is not None:
             D = D.reshape(self.num_jobs, -1).astype(np.float64)
+            if D.shape[1] == 1:
+                D = np.repeat(D, self._ops_per_job(), axis=1)
             D = D[:, :self._ops_per_job()].reshape(-1)
 
         # AVJM (si no existe, derivamos del uso de máquinas en cada job)
@@ -240,43 +248,43 @@ class GraphBuilderStrict:
                         tmp[j] = (avjm[mask].max(axis=0) > 0).astype(np.int64)
                 avjm = tmp
 
-        # Setup (si lo hubiese)
+
         setup_mat = _maybe_get(self.data_dict, ["Setup", "SetupTime", "setup", "mtt", "Changeover", "setup_matrix"])
         if setup_mat is not None:
             setup_mat = setup_mat.astype(np.float64)
 
-        # Guardado top-level (para extractor)
+
         data.n_jobs = int(self.num_jobs)
         data.n_machs = int(self.num_machs)
-        data.P = torch.tensor(P, dtype=torch.float)                 # (N_ops, 1)
-        data.E = torch.tensor(E, dtype=torch.float)                 # (N_ops, 1)
-        data.job = torch.tensor(job_ids, dtype=torch.long)          # (N_ops,)
-        data.machine = torch.tensor(mach_ids, dtype=torch.long)     # (N_ops,)
-        data.op = torch.tensor(op_ids, dtype=torch.long)            # (N_ops,)
+        data.P = torch.tensor(P, dtype=torch.float)
+        data.E = torch.tensor(E, dtype=torch.float)
+        data.job = torch.tensor(job_ids, dtype=torch.long)
+        data.machine = torch.tensor(mach_ids, dtype=torch.long)
+        data.op = torch.tensor(op_ids, dtype=torch.long)
         data.op_node_index = torch.tensor(op_node_index, dtype=torch.long)
 
         if op_cost is not None:
-            data.operation_cost = torch.tensor(op_cost, dtype=torch.float)  # (N_ops,)
+            data.operation_cost = torch.tensor(op_cost, dtype=torch.float)
 
-        if R is not None: data.R = torch.tensor(R, dtype=torch.float)       # (N_ops,)
-        if D is not None: data.D = torch.tensor(D, dtype=torch.float)       # (N_ops,)
-        if setup_mat is not None: data.setup = torch.tensor(setup_mat, dtype=torch.float)  # varias formas
-        if avjm is not None: data.allowed_machines = torch.tensor(avjm, dtype=torch.long)  # (J,M)
+        if R is not None: data.R = torch.tensor(R, dtype=torch.float)
+        if D is not None: data.D = torch.tensor(D, dtype=torch.float)
+        if setup_mat is not None: data.setup = torch.tensor(setup_mat, dtype=torch.float)
+        if avjm is not None: data.allowed_machines = torch.tensor(avjm, dtype=torch.long)
 
-        # Máscaras útiles
+
         N_nodes = len(self.node_features)
         op_mask = torch.zeros(N_nodes, dtype=torch.bool)
         op_mask[data.op_node_index] = True
         data["node"].op_mask = op_mask
 
-        # Índices de source/sink (si existen)
+
         if include_virtual:
             data.source_idx = int(self.node_mapping[("source", 0)])
             data.sink_idx = int(self.node_mapping[("sink", 0)])
 
-        # ---------- 6) Inyectar métricas precomputadas del generador ----------
+
         gf = _flatten_generator_features(self.data_dict)
-        # Copiamos cada par k->v como atributo simple (escalares o dict para gen_features)
+
         for k, v in gf.items():
             setattr(data, k, v if not isinstance(v, np.generic) else v.item())
 
@@ -284,6 +292,7 @@ class GraphBuilderStrict:
 
 
 def main(jobs, machines, seed=1, ReleaseDateDueDate=0, pbar=None):
+    from IGJSP.generador import Generator
     try:
         save_path = "graphs"
         os.makedirs(save_path, exist_ok=True)
@@ -301,7 +310,7 @@ def main(jobs, machines, seed=1, ReleaseDateDueDate=0, pbar=None):
             inst_dict = inst.__dict__ if not isinstance(inst, dict) and hasattr(inst, "__dict__") else inst
             gb = GraphBuilderStrict(inst_dict)
 
-            inst_name = f"{jobs}-{machines}-{s}.pt"
+            inst_name = f"{jobs}-{machines}-{s}" + (f"-rd{ReleaseDateDueDate}" if ReleaseDateDueDate else "") + ".pt"
             save_file = os.path.join(save_path, inst_name)
             torch.save(gb.data, save_file)
 
@@ -313,7 +322,7 @@ def main(jobs, machines, seed=1, ReleaseDateDueDate=0, pbar=None):
                 print(f"Guardado {save_file} (jobs={jobs}, machs={machines}, seed={s})")
 
     except Exception as e:
-        print("Excepción:", repr(e))
+        raise RuntimeError("No se ha completado la generación de grafos") from e
 
 
 if __name__ == "__main__":
@@ -321,5 +330,5 @@ if __name__ == "__main__":
     pbar = tqdm(configs)
     for j, m in pbar:
         pbar.set_description(f"Generating instance for j: {j}, m: {m}")
-        # Activa R/D si quieres que el generador incluya ventanas de tiempo
+
         main(j, m, ReleaseDateDueDate=0, pbar=pbar)

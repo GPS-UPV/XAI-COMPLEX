@@ -1,0 +1,57 @@
+{
+  "same_existing_instance": "ft06",
+  "identical_votes": true,
+  "results": {
+    "igjsp_json": {
+      "category": "toy",
+      "class_probabilities": {
+        "toy": 1.0,
+        "easy": 0.0,
+        "medium": 0.0,
+        "hard": 0.0,
+        "open": 0.0
+      },
+      "probability_calibration": "uncalibrated_forest_votes",
+      "applicability": "within_training_bounds",
+      "missing_feature_count": 0,
+      "model_version": "jsplib-8a6e36ef3126-v1",
+      "label_protocol": "jsplib-8a6e36ef3126",
+      "open_semantics": "predicted_protocol_class_not_verified_open_problem",
+      "instance_id": "34c063788f8a091d1a7576b8b4ea6257c5e2c308c7820e7b39c52d9e46053b31"
+    },
+    "dzn": {
+      "category": "toy",
+      "class_probabilities": {
+        "toy": 1.0,
+        "easy": 0.0,
+        "medium": 0.0,
+        "hard": 0.0,
+        "open": 0.0
+      },
+      "probability_calibration": "uncalibrated_forest_votes",
+      "applicability": "within_training_bounds",
+      "missing_feature_count": 0,
+      "model_version": "jsplib-8a6e36ef3126-v1",
+      "label_protocol": "jsplib-8a6e36ef3126",
+      "open_semantics": "predicted_protocol_class_not_verified_open_problem",
+      "instance_id": "73c4b08fc905436fefc85ad43cb29917e468ad5ba4f75faea299ed1a9b082bbc"
+    },
+    "taillard": {
+      "category": "toy",
+      "class_probabilities": {
+        "toy": 1.0,
+        "easy": 0.0,
+        "medium": 0.0,
+        "hard": 0.0,
+        "open": 0.0
+      },
+      "probability_calibration": "uncalibrated_forest_votes",
+      "applicability": "within_training_bounds",
+      "missing_feature_count": 0,
+      "model_version": "jsplib-8a6e36ef3126-v1",
+      "label_protocol": "jsplib-8a6e36ef3126",
+      "open_semantics": "predicted_protocol_class_not_verified_open_problem",
+      "instance_id": "7a618faf6894999d92b48fc9c4dfe4bc70c964d10bc492c3909bb87bc3eccbdc"
+    }
+  }
+}

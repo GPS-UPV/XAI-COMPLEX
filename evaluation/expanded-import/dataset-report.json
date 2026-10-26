@@ -1,0 +1,392 @@
+{
+  "source_labels": 376,
+  "source_class_counts": {
+    "toy": 215,
+    "easy": 15,
+    "hard": 29,
+    "medium": 26,
+    "open": 91
+  },
+  "training_cohort": 302,
+  "cohort_class_counts": {
+    "toy": 174,
+    "easy": 15,
+    "hard": 21,
+    "medium": 22,
+    "open": 70
+  },
+  "excluded": [
+    {
+      "instance": "bel00",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel01",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel02",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel03",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel04",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel05",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel06",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel07",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel08",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel09",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel10",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel11",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel12",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel13",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel14",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel15",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel16",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel17",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel18",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "bel19",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-long-100-10000-1",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-long-100-10000-2",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-long-100-10000-3",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-long-100-100000-1",
+      "label": "toy",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-long-100-100000-2",
+      "label": "toy",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-long-100-100000-3",
+      "label": "toy",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-long-1000-10000-1",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-long-1000-10000-2",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-long-1000-10000-3",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-long-1000-100000-1",
+      "label": "toy",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-long-1000-100000-2",
+      "label": "toy",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-long-1000-100000-3",
+      "label": "toy",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-short-100-10000-1",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-short-100-10000-2",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-short-100-10000-3",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-short-100-100000-1",
+      "label": "toy",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-short-100-100000-2",
+      "label": "toy",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-short-100-100000-3",
+      "label": "toy",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-short-1000-10000-1",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-short-1000-10000-2",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-short-1000-10000-3",
+      "label": "toy",
+      "reason": "non_permutation_or_reentrant_routing_outside_original_graph_cohort"
+    },
+    {
+      "instance": "dct-short-1000-100000-1",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-short-1000-100000-2",
+      "label": "medium",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "dct-short-1000-100000-3",
+      "label": "medium",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_1",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_10",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_2",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_3",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_4",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_5",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_6",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_7",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_8",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_1000_9",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_1",
+      "label": "medium",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_10",
+      "label": "hard",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_2",
+      "label": "hard",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_3",
+      "label": "hard",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_4",
+      "label": "hard",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_5",
+      "label": "medium",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_6",
+      "label": "hard",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_7",
+      "label": "hard",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_8",
+      "label": "hard",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_1000_100_9",
+      "label": "hard",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_1",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_10",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_2",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_3",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_4",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_5",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_6",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_7",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_8",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    },
+    {
+      "instance": "tai_100_1000_9",
+      "label": "open",
+      "reason": "no_uncompressed_JSON_available_in_downloaded_snapshot"
+    }
+  ],
+  "max_operations": 1000000,
+  "source_commit": "8a6e36ef31263d36975e56fb481e0ba04e188d6f"
+}

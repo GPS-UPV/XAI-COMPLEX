@@ -1,0 +1,38 @@
+{
+  "n": 2401,
+  "base_instances": 2401,
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "folds": 5,
+  "target": "clip(solveTime/maxTime,0,1)",
+  "runtime_fraction_quantiles": [
+    0.00022289093573372412,
+    0.014963480165270599,
+    0.4005634846847752,
+    0.948865492373797,
+    0.9958534843714499
+  ],
+  "runtime_over_limit_count": 0,
+  "statuses": {
+    "OPTIMAL_SOLUTION": 707,
+    "SATISFIED": 1694
+  },
+  "metrics": [
+    {
+      "model": "median",
+      "mae": 0.3922827478241247,
+      "rmse": 0.42180922521135555,
+      "r2": -0.021870399829839515
+    },
+    {
+      "model": "ridge_log_size",
+      "mae": 0.1963676857050253,
+      "rmse": 0.23837991778246093,
+      "r2": 0.6736354321018536
+    }
+  ],
+  "conclusion_scope": "Baselines only; no CEJSP accuracy or speedup claim"
+}

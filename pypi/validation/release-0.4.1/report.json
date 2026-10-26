@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "version": "0.4.1",
+  "artifacts": {
+    "cejsp-0.4.1-py3-none-any.whl": "44a51b98a3622cb19873149f14acd51ddc8f7d8b7e130acd85589d752ec8de34",
+    "cejsp-0.4.1.tar.gz": "b986959c5332fa561a6491cf260993b37149fec1b0a32679b601b8438908a013"
+  },
+  "integration": {
+    "wheel": {
+      "category": "toy",
+      "class_probabilities": {
+        "toy": 0.985,
+        "easy": 0.01,
+        "medium": 0.0,
+        "hard": 0.0,
+        "open": 0.005
+      },
+      "probability_calibration": "uncalibrated_forest_votes",
+      "applicability": "outside_training_bounds",
+      "missing_feature_count": 0,
+      "model_version": "jsplib-easy-v7-accuracy",
+      "label_protocol": "jsplib-8a6e36ef3126",
+      "open_semantics": "predicted_protocol_class_not_verified_open_problem",
+      "instance_id": "ee1a4596a1e1f21bd5eaad15ff48dd9e0bb434676902d7b05770669ae05cd10a"
+    },
+    "sdist": {
+      "category": "toy",
+      "class_probabilities": {
+        "toy": 0.985,
+        "easy": 0.01,
+        "medium": 0.0,
+        "hard": 0.0,
+        "open": 0.005
+      },
+      "probability_calibration": "uncalibrated_forest_votes",
+      "applicability": "outside_training_bounds",
+      "missing_feature_count": 0,
+      "model_version": "jsplib-easy-v7-accuracy",
+      "label_protocol": "jsplib-8a6e36ef3126",
+      "open_semantics": "predicted_protocol_class_not_verified_open_problem",
+      "instance_id": "ee1a4596a1e1f21bd5eaad15ff48dd9e0bb434676902d7b05770669ae05cd10a"
+    }
+  },
+  "scope": "Separate installation targets with -I; dependencies shared from the working venv; not fresh dependency resolution",
+  "model_bundled": false,
+  "superseded_by_example_import_fix": true
+}

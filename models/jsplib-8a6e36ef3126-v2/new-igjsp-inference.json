@@ -1,0 +1,17 @@
+{
+  "category": "toy",
+  "class_probabilities": {
+    "toy": 0.99,
+    "easy": 0.0,
+    "medium": 0.0,
+    "hard": 0.0,
+    "open": 0.01
+  },
+  "probability_calibration": "uncalibrated_forest_votes",
+  "applicability": "outside_training_bounds",
+  "missing_feature_count": 0,
+  "model_version": "jsplib-8a6e36ef3126-v2",
+  "label_protocol": "jsplib-8a6e36ef3126",
+  "open_semantics": "predicted_protocol_class_not_verified_open_problem",
+  "instance_id": "885b124c6f4299a52fbc9cb87191b6dc675e5b07276630692b08099cce5c6cbf"
+}

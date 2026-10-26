@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "generator": "IGJSP",
+  "generator_version": "2.0.1",
+  "seed": 42,
+  "jobs": 6,
+  "machines": 6,
+  "label": "toy",
+  "classification": {
+    "category": "toy",
+    "class_probabilities": {
+      "toy": 0.985,
+      "easy": 0.01,
+      "medium": 0.0,
+      "hard": 0.0,
+      "open": 0.005
+    },
+    "probability_calibration": "uncalibrated_forest_votes",
+    "applicability": "outside_training_bounds",
+    "missing_feature_count": 0,
+    "model_version": "jsplib-easy-v7-accuracy",
+    "label_protocol": "jsplib-8a6e36ef3126",
+    "open_semantics": "predicted_protocol_class_not_verified_open_problem",
+    "instance_id": "ee1a4596a1e1f21bd5eaad15ff48dd9e0bb434676902d7b05770669ae05cd10a"
+  },
+  "ground_truth_available": false,
+  "seconds": 1.0787684000097215
+}

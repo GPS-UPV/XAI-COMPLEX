@@ -1,0 +1,2073 @@
+{
+  "round_e": {
+    "accuracy": 0.7941176470588235,
+    "balanced_accuracy": 0.5785281385281384,
+    "macro_f1": 0.5724640174979734,
+    "class_order": [
+      "toy",
+      "easy",
+      "medium",
+      "hard",
+      "open"
+    ],
+    "confusion_matrix": [
+      [
+        142,
+        7,
+        1,
+        1,
+        3
+      ],
+      [
+        3,
+        7,
+        4,
+        0,
+        1
+      ],
+      [
+        4,
+        9,
+        7,
+        0,
+        2
+      ],
+      [
+        1,
+        7,
+        3,
+        6,
+        4
+      ],
+      [
+        0,
+        3,
+        0,
+        3,
+        54
+      ]
+    ],
+    "per_class": {
+      "toy": {
+        "precision": 0.9466666666666667,
+        "recall": 0.922077922077922,
+        "f1-score": 0.9342105263157895,
+        "support": 154.0
+      },
+      "easy": {
+        "precision": 0.21212121212121213,
+        "recall": 0.4666666666666667,
+        "f1-score": 0.2916666666666667,
+        "support": 15.0
+      },
+      "medium": {
+        "precision": 0.4666666666666667,
+        "recall": 0.3181818181818182,
+        "f1-score": 0.3783783783783784,
+        "support": 22.0
+      },
+      "hard": {
+        "precision": 0.6,
+        "recall": 0.2857142857142857,
+        "f1-score": 0.3870967741935484,
+        "support": 21.0
+      },
+      "open": {
+        "precision": 0.84375,
+        "recall": 0.9,
+        "f1-score": 0.8709677419354839,
+        "support": 60.0
+      },
+      "accuracy": 0.7941176470588235,
+      "macro avg": {
+        "precision": 0.6138409090909092,
+        "recall": 0.5785281385281384,
+        "f1-score": 0.5724640174979734,
+        "support": 272.0
+      },
+      "weighted avg": {
+        "precision": 0.8178682040998217,
+        "recall": 0.7941176470588235,
+        "f1-score": 0.7976280961439318,
+        "support": 272.0
+      }
+    }
+  },
+  "chosen": {
+    "config": {
+      "id": "trajectory-select-32-1.0",
+      "backend": "trajectory",
+      "kind": "selected_easy",
+      "trees": 200,
+      "params": {
+        "k": 32,
+        "easy_weight": 1.0
+      }
+    },
+    "choice": {
+      "weights": [
+        1.0,
+        3.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "objective": 0.732503602402934
+    }
+  },
+  "history": [
+    {
+      "fold": 0,
+      "chosen": {
+        "config": {
+          "id": "baseline",
+          "backend": "structural",
+          "kind": "extra_trees",
+          "trees": 200,
+          "params": {}
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.7151526362489795
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7151526362489795
+          }
+        },
+        {
+          "config": {
+            "id": "all-trajectory",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6496666983387969
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.580082617993434
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6155470751800007
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.5815579613186086
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6554687640382832
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6160310336151682
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6795168407941228
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6683538445993961
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6476676559186725
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6958836308717036
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6808480269232957
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6627111407926877
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6494562986484916
+          }
+        }
+      ]
+    },
+    {
+      "fold": 1,
+      "chosen": {
+        "config": {
+          "id": "trajectory-select-16-0.5",
+          "backend": "trajectory",
+          "kind": "selected_easy",
+          "trees": 200,
+          "params": {
+            "k": 16,
+            "easy_weight": 0.5
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            3.0,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.7313161844010082
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6476733597259168
+          }
+        },
+        {
+          "config": {
+            "id": "all-trajectory",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6846412096481045
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6609608505071939
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6047067039278465
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6340357269958552
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.5921253242296481
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6254169329972786
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.664548820355272
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.7313161844010082
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6260855426407209
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.7087991364612772
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6523731286816787
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6888843957400834
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7003495825198622
+          }
+        }
+      ]
+    },
+    {
+      "fold": 2,
+      "chosen": {
+        "config": {
+          "id": "baseline",
+          "backend": "structural",
+          "kind": "extra_trees",
+          "trees": 200,
+          "params": {}
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            2.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.7125279685075909
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7125279685075909
+          }
+        },
+        {
+          "config": {
+            "id": "all-trajectory",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7104249671736433
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6163862098878486
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6460861560260791
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.662616033349909
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6618920511744605
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6436027150789686
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6774373685819686
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.65863628279298
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6504723651370574
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6426132952626907
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7054595322977592
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6987502167528726
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.702669065231369
+          }
+        }
+      ]
+    },
+    {
+      "fold": 3,
+      "chosen": {
+        "config": {
+          "id": "trajectory-select-16-0.5",
+          "backend": "trajectory",
+          "kind": "selected_easy",
+          "trees": 200,
+          "params": {
+            "k": 16,
+            "easy_weight": 0.5
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            2.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.7173075186872703
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6714170025069814
+          }
+        },
+        {
+          "config": {
+            "id": "all-trajectory",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6665952715497886
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6210738393105365
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.58662773996731
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6195584490016681
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6453071357761719
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6313481266005321
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6587411839481917
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7173075186872703
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6565407374932293
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6999344643488609
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6484187670373516
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6593339814140028
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6852313189306501
+          }
+        }
+      ]
+    },
+    {
+      "fold": 4,
+      "chosen": {
+        "config": {
+          "id": "trajectory-select-16-0.5",
+          "backend": "trajectory",
+          "kind": "selected_easy",
+          "trees": 200,
+          "params": {
+            "k": 16,
+            "easy_weight": 0.5
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            3.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.7325309111045475
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6633846438057645
+          }
+        },
+        {
+          "config": {
+            "id": "all-trajectory",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6905040831455217
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6825441603873093
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-16-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6161759781081172
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6601204977568225
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-32-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6865159223860138
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-0.5",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6885646137220256
+          }
+        },
+        {
+          "config": {
+            "id": "structural-select-64-1.0",
+            "backend": "structural",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6491637166578794
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7325309111045475
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-16-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 16,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6858628778333604
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7305670738016283
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-32-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 32,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.7092166328642815
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-0.5",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 0.5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7096692786889696
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-select-64-1.0",
+            "backend": "trajectory",
+            "kind": "selected_easy",
+            "trees": 200,
+            "params": {
+              "k": 64,
+              "easy_weight": 1.0
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7205350926029866
+          }
+        }
+      ]
+    }
+  ],
+  "final_scores": [
+    {
+      "config": {
+        "id": "baseline",
+        "backend": "structural",
+        "kind": "extra_trees",
+        "trees": 200,
+        "params": {}
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.3,
+          1.3,
+          1.0
+        ],
+        "objective": 0.6837161179656823
+      }
+    },
+    {
+      "config": {
+        "id": "all-trajectory",
+        "backend": "trajectory",
+        "kind": "extra_trees",
+        "trees": 200,
+        "params": {}
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.3,
+          1.3,
+          1.0
+        ],
+        "objective": 0.7063888439188982
+      }
+    },
+    {
+      "config": {
+        "id": "structural-select-16-0.5",
+        "backend": "structural",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 16,
+          "easy_weight": 0.5
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          0.6,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6408128039147295
+      }
+    },
+    {
+      "config": {
+        "id": "structural-select-16-1.0",
+        "backend": "structural",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 16,
+          "easy_weight": 1.0
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.7012636190960133
+      }
+    },
+    {
+      "config": {
+        "id": "structural-select-32-0.5",
+        "backend": "structural",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 32,
+          "easy_weight": 0.5
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.630839778799685
+      }
+    },
+    {
+      "config": {
+        "id": "structural-select-32-1.0",
+        "backend": "structural",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 32,
+          "easy_weight": 1.0
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6860782778999417
+      }
+    },
+    {
+      "config": {
+        "id": "structural-select-64-0.5",
+        "backend": "structural",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 64,
+          "easy_weight": 0.5
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6409381327983064
+      }
+    },
+    {
+      "config": {
+        "id": "structural-select-64-1.0",
+        "backend": "structural",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 64,
+          "easy_weight": 1.0
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6550893730383313
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-select-16-0.5",
+        "backend": "trajectory",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 16,
+          "easy_weight": 0.5
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.7164866125129233
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-select-16-1.0",
+        "backend": "trajectory",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 16,
+          "easy_weight": 1.0
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6919286274627153
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-select-32-0.5",
+        "backend": "trajectory",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 32,
+          "easy_weight": 0.5
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.7085812502393916
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-select-32-1.0",
+        "backend": "trajectory",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 32,
+          "easy_weight": 1.0
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.732503602402934
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-select-64-0.5",
+        "backend": "trajectory",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 64,
+          "easy_weight": 0.5
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.692688039423539
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-select-64-1.0",
+        "backend": "trajectory",
+        "kind": "selected_easy",
+        "trees": 200,
+        "params": {
+          "k": 64,
+          "easy_weight": 1.0
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          1.5,
+          1.3,
+          1.3,
+          1.0
+        ],
+        "objective": 0.6952453620544176
+      }
+    }
+  ],
+  "seconds": 49.07516989996657,
+  "target_achieved": false,
+  "checks": {
+    "persistence": true
+  },
+  "limitations": [
+    "Previously explored data and several model searches; no new independent test",
+    "Variable ranking is fitted only within training folds",
+    "15 easy cases yield unstable estimates"
+  ]
+}

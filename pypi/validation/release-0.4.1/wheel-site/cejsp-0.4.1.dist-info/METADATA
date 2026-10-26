@@ -1,0 +1,134 @@
+Metadata-Version: 2.4
+Name: cejsp
+Version: 0.4.1
+Summary: CEJSP: JSP Complexity Estimator for existing scheduling instances
+Author: Planning and Scheduling Research Group
+License-Expression: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy<3,>=1.26
+Requires-Dist: pandas<3,>=2.1
+Requires-Dist: scikit-learn<2,>=1.4
+Requires-Dist: scipy<2,>=1.11
+Requires-Dist: joblib<2,>=1.3
+Provides-Extra: integration
+Requires-Dist: IGJSP==2.0.1; extra == "integration"
+Requires-Dist: ortools<10,>=9.15; extra == "integration"
+Provides-Extra: graphs
+Requires-Dist: torch>=2.2; extra == "graphs"
+Requires-Dist: torch-geometric>=2.5; extra == "graphs"
+Requires-Dist: networkx>=3; extra == "graphs"
+Requires-Dist: tqdm>=4; extra == "graphs"
+Provides-Extra: research
+Requires-Dist: ortools<10,>=9.15; extra == "research"
+Requires-Dist: catboost<2,>=1.2.10; extra == "research"
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: build>=1.2; extra == "dev"
+Requires-Dist: twine>=6; extra == "dev"
+Dynamic: license-file
+
+# CEJSP: JSP Complexity Estimator
+
+La API 0.2 añade entrada directa JSON/DZN/Taillard y un clasificador supervisado reentrenable de cinco clases: **toy, easy, medium, hard, open**. Consultar [el flujo de cinco clases](docs/FIVE_CLASSES.md) para entrenar, clasificar y versionar referencias. Requiere un protocolo explícito y ejemplos etiquetados; no se incluye todavía una referencia real de cinco clases validada.
+
+Estimación empírica de dificultad de instancias de scheduling ya generadas. Este paquete no genera instancias ni modifica IGJSP.
+
+El código procede del proyecto XAI-COMPLEX. Conserva el extractor de características de grafos y ofrece la metodología por lotes del estimador ponderado, además de una API explícita para ajustar una referencia y predecir nuevas instancias sin recalibrar cada lote.
+
+## Instalación
+
+```powershell
+python -m pip install .
+python -m pip install ".[graphs,dev]"
+```
+
+El extra `graphs` instala las dependencias del extractor original. No se necesita IGJSP para instalar ni utilizar XAI-COMPLEX con instancias guardadas o características extraídas.
+
+## Usar instancias que ya tienes
+
+```python
+import json
+from pathlib import Path
+from cejsp.graphs import extract_instance_features
+from cejsp import ComplexityEstimator
+
+instances = [json.loads(p.read_text(encoding="utf-8"))
+             for p in Path("instancias_existentes").glob("*.json")]
+features = [extract_instance_features(inst) for inst in instances]
+model = ComplexityEstimator().fit(features)
+resultados = model.predict(features[:1])
+model.save("referencia.joblib")
+```
+
+Se necesitan al menos tres instancias de referencia con variación; para una calibración útil se requiere un conjunto representativo y una evaluación independiente. No se distribuye un modelo preentrenado ni se afirma precisión predictiva sin evaluación.
+
+Para evaluar una instancia nueva se carga la referencia ya ajustada:
+
+```python
+model = ComplexityEstimator.load("referencia.joblib", trusted=True)
+resultado = model.predict([extract_instance_features(instancia_nueva)])
+```
+
+Solo se deben cargar modelos de confianza. Se verifican esquema y versiones de dependencias del artefacto.
+
+## Mantener el análisis por lotes del proyecto
+
+```python
+import pandas as pd
+from cejsp import estimate_features
+
+features = pd.read_csv("graphs/features.csv").set_index("file")
+scores = estimate_features(features)
+scores.to_csv("complexity_scores.csv")
+```
+
+Esta ruta conserva Isolation Forest, LOF, MinCovDet, vecinos y prior del estimador ponderado. Sus normalizaciones y categorías son relativas al lote. La API `ComplexityEstimator` congela la referencia; usa los mismos cuatro tipos de señal sin prior y, opcionalmente, mezcla regresión supervisada. Es una variante inductiva explícita, no una reproducción numérica idéntica del análisis por lotes.
+
+La extracción usa el grafo JSP original. Las instancias con varias velocidades requieren `speed_index` explícito. El adaptador de entrada conserva todas las velocidades, fechas y disponibilidad; el extractor original rechaza FJSP porque su grafo de rutas fijas no modela la elección de máquina. No se declara compatibilidad científica con FJSP sin validar esa representación.
+
+`summarize_instance` ofrece estadísticas descriptivas; no sustituye las características de grafos del estimador original.
+
+## Etiquetas y evaluación
+
+`SolverTargetCalibrator` calibra señales de solver en el entrenamiento y mantiene fijos esos parámetros. `evaluate_supervised` ajusta objetivo y preprocesamiento dentro de cada pliegue. Usa `base_instance_id` o grupos equivalentes para que variantes de una misma instancia no aparezcan en entrenamiento y validación. Las etiquetas miden dificultad empírica respecto al solver, hardware y límites de tiempo; no una clase de complejidad computacional.
+
+Las correcciones de etiquetas cambian los resultados anteriores: se rechazan objetivos sin señales, se validan pesos, se renormalizan componentes disponibles y se conserva el significado absoluto del estado del solver.
+
+## Comandos
+
+```powershell
+cejsp fit reference_features.json referencia.joblib
+cejsp predict query_features.json referencia.joblib --trust-model
+python -m unittest discover -s tests -v
+```
+
+Los JSON de la CLI contienen listas de diccionarios de características numéricas, sin identificadores de texto. Los identificadores se mantienen por separado o en el índice del DataFrame para la API por lotes.
+
+Consulta `docs/PUBLICAR_PYPI.md` para construir, verificar y publicar.
+
+## Estado de esta candidata
+
+La ejecución `validacion-20261022-175907` del 22/10/2026 completó la validación: 32 pruebas sin omisiones en el entorno inicial y en instalaciones separadas de wheel y sdist, `pip check` correcto, 162 JSON válidos y flujo completo con 20 benchmarks en los tres entornos. Ambos artefactos superan `twine check --strict`. La invariancia individual/lotes se comprueba con tolerancia absoluta `1e-9` e igualdad de categorías y señales; la persistencia no cambia las puntuaciones. Esto valida funcionamiento y distribución, no precisión científica ni mejoras de rendimiento. No se ha publicado. Consultar `RESULTADOS.md` en la raíz del repositorio para el historial.
+
+Las etiquetas necesitan el mismo identificador completo que las características. No se infieren correspondencias a partir del tamaño, configuración o semilla, ni se promedian registros repetidos automáticamente. Por ejemplo, `10_10-0-1-cp-sat` no se convierte silenciosamente en `10-10-0.pt`: la configuración y el protocolo del solver deben resolverse antes mediante una correspondencia explícita y verificada. Para variantes, incluir `base_instance_id` en todas las etiquetas o pasar `groups` a `evaluate_supervised`; el resultado incluye los índices de cada pliegue para auditar su separación.
+
+`fit_instances(..., speed_index=...)` y `predict_instances(..., speed_index=...)` permiten la proyección explícita de velocidad. La invariancia por lote pertenece a la API inductiva; no se exige al análisis relativo por lotes.
+
+## Nombre e interoperabilidad
+
+La distribución se llama cejsp y el comando principal es cejsp. Los imports xai_complex y el comando anterior se conservan por compatibilidad. Las clases mantienen su identidad y los esquemas de persistencia anteriores para permitir cargar referencias guardadas; no se duplica el estimador. La disponibilidad del nombre en PyPI no está verificada. La validación completa anterior corresponde a la distribución xai-complex; CEJSP requiere repetir la validación tras el cambio de nombre.
+
+
+## Mejora supervisada CEJSP 0.3.0
+
+Referencia recomendada: `models/jsplib-8a6e36ef3126-v2/reference.joblib`, características estructurales y Extra Trees. Se conservan las referencias anteriores. Resultados, limitaciones y experimentos IGJSP: `evaluation/MEJORA_CLASIFICADOR.md`. El aumento con pseudoetiquetas no se incorpora por empeorar el resultado controlado. No hay validación externa de dificultad IGJSP.
+
+
+## Estudio easy y referencias 0.4.0
+
+Se completaron cinco rondas de nuevas variables, parámetros y selección dentro de los pliegues. No se alcanzó el 95% fuera del entrenamiento. El perfil de acierto global obtiene 84,19% exploratorio; el orientado a easy reconoce 7/15 casos con 79,41% global y precisión easy de 21,21%. Son perfiles experimentales con distintos compromisos; los modelos anteriores se conservan. Informe y comandos: `evaluation/RESULTADOS_EASY.md`; perfiles: `models/PROFILES.json`. Las sondas añaden resolución limitada durante inferencia.

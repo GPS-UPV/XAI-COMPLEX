@@ -12,7 +12,7 @@ import torch
 from torch_geometric.data import HeteroData
 from tqdm import tqdm
 
-# ---------------- utilidades ----------------
+
 
 def safe_torch_load(path, map_location='cpu'):
     load = torch.load
@@ -243,7 +243,7 @@ def _maybe_jsonify(d):
         return json.dumps(d, ensure_ascii=False)
     except Exception:
         try:
-            # conversión aproximada si hay np types
+
             def conv(x):
                 if isinstance(x, (np.generic,)):
                     return x.item()
@@ -259,7 +259,7 @@ def _extract_generator_features(hdata):
     """
     out = {}
 
-    # metadatos
+
     n_jobs = _getattr_safe(hdata, 'n_jobs')
     n_machs = _getattr_safe(hdata, 'n_machs')
     speed = _getattr_safe(hdata, 'speed')
@@ -270,7 +270,7 @@ def _extract_generator_features(hdata):
     if _to_scalar(speed) is not None: out['speed'] = int(_to_scalar(speed))
     if _to_scalar(rddd) is not None: out['rddd'] = int(_to_scalar(rddd))
 
-    # makespan / energía agregada
+
     for src, dst in [
         ('makespan_max', 'makespan_max'),
         ('makespan_min', 'makespan_min'),
@@ -284,7 +284,7 @@ def _extract_generator_features(hdata):
         if s is not None:
             out[dst] = s
 
-    # valores por operación (agregados por el generador)
+
     for src, dst in [
         ('p_value_max', 'p_value_max'),
         ('p_value_min', 'p_value_min'),
@@ -303,12 +303,12 @@ def _extract_generator_features(hdata):
         if s is not None:
             out[dst] = float(s) if isinstance(s, float) or isinstance(s, np.floating) else s
 
-    # copia cruda del dict de features del generador (si existe)
+
     gen_feats = _getattr_safe(hdata, 'gen_features')
     if isinstance(gen_feats, dict):
         out['gen_features_raw'] = _maybe_jsonify(gen_feats)
 
-    # campos útiles adicionales
+
     op_cost = _getattr_safe(hdata, 'operation_cost')
     if isinstance(op_cost, torch.Tensor) and op_cost.numel() > 0:
         out['operation_cost_mean'] = float(op_cost.detach().cpu().numpy().mean())
@@ -321,13 +321,13 @@ def _compute_lb_makespan(P, job_ids, mach_ids, n_machs):
     if P is None:
         return res
     p_mean = np.mean(P, axis=1) if P.ndim == 2 else np.asarray(P, dtype=float).ravel()
-    # jobs
+
     if job_ids is not None and job_ids.size:
         nJ = int(job_ids.max()) + 1
         load_jobs = _sum_per_group(p_mean, job_ids, K=nJ)
         if load_jobs.size:
             res['makespan_lb_job_sum'] = float(np.max(load_jobs))
-    # machines
+
     nM = int(n_machs) if n_machs else None
     if nM is None or nM == 0:
         if mach_ids is not None and mach_ids.size and mach_ids.max() >= 0:
@@ -367,7 +367,7 @@ def _compute_windows_ratio(P, R, D):
     res['time_windows_ratio_max']  = float(np.max(ratio))
     return res
 
-# ---------------- extracción principal de features ----------------
+
 
 def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, hdata,
                                      obj=None, use_approx_betweenness=False, betweenness_samples=100):
@@ -379,7 +379,7 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     """
     features = {}
 
-    # --- 0) metadatos preferentemente del HeteroData ---
+
     n_jobs = _getattr_safe(hdata, 'n_jobs')
     n_machs = _getattr_safe(hdata, 'n_machs')
     if _to_scalar(n_jobs) is None: n_jobs = n_jobs_from_name
@@ -390,9 +390,9 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     features['n_jobs'] = int(n_jobs) if n_jobs is not None else None
     features['n_machines'] = int(n_machs) if n_machs is not None else None
     features['seed'] = int(seed) if seed is not None else None
-    
-    #? GRAPH FEATURES
-    # --- 1) node.x stats (como antes) ---
+
+
+
     N = None
     try:
         x = hdata['node'].x
@@ -414,7 +414,7 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     else:
         features['node_x_cols'] = 0
 
-    # --- 2) aristas conj y disj ---
+
     conj_idx = _get_edge_index_from_hdata(hdata, ('node','conjunctive','node'))
     disj_idx = _get_edge_index_from_hdata(hdata, ('node','disjunctive','node'))
 
@@ -431,7 +431,7 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     features['num_nodes_total'] = N
     features['num_edges_total'] = features['num_conjunctive_edges'] + features['num_disjunctive_edges']
 
-    # --- 3) Grafo no dirigido a partir de disyuntivas ---
+
     G_d = nx.Graph()
     G_d.add_nodes_from(range(N))
     if disj_idx is not None:
@@ -458,14 +458,14 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
         for name in ['min','max','mean','median','std','range','q1','q3','gini']:
             features[f'clustering_d_{name}'] = None
 
-    # --- 4) Grafo no dirigido a partir de conjuntivas ---
+
     G_c = nx.Graph()
     G_c.add_nodes_from(range(N))
     if conj_idx is not None:
         u = conj_idx[0].astype(int); v = conj_idx[1].astype(int)
         edges = list(zip(u.tolist(), v.tolist()))
         G_c.add_edges_from(edges)
-        
+
     n_c = G_c.number_of_nodes()
     m_c = G_c.number_of_edges()
     features['conj_graph_density'] = None if n_c <= 1 else 2.0 * m_c / (n_c * (n_c - 1))
@@ -476,7 +476,7 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
 
     try:
         if use_approx_betweenness and G_c.number_of_nodes() > betweenness_samples:
-            btw = nx.betweenness_centrality(G_c, normalized=True, k=betweenness_samples)
+            btw = nx.betweenness_centrality(G_c, normalized=True, k=betweenness_samples, seed=42)
         else:
             btw = nx.betweenness_centrality(G_c, normalized=True)
         if G_c.number_of_nodes() > 3:
@@ -486,28 +486,28 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
             features[f'betweenness_c_{k}'] = v
     except Exception as e:
         features['betweenness_c_error'] = str(e)
-        
-    # --- 5) Grafo no dirigido a partir de disyuntivas y conjuntivas ---
+
+
     G = nx.Graph()
     G.add_nodes_from(range(N))
     if conj_idx is not None:
         u = conj_idx[0].astype(int); v = conj_idx[1].astype(int)
         edges = list(zip(u.tolist(), v.tolist()))
         G.add_edges_from(edges)
-        
+
     if disj_idx is not None:
         u = disj_idx[0].astype(int); v = disj_idx[1].astype(int)
         edges = list(zip(u.tolist(), v.tolist()))
         G.add_edges_from(edges)
-        
+
     n = G.number_of_nodes()
     m = G.number_of_edges()
     features['graph_density'] = None if n <= 1 else 2.0 * m / (n * (n - 1))
-        
+
     degrees = [d for _, d in G.degree()]
     for k, v in _agg_stats(degrees).items():
         features[f'deg_{k}'] = v
-        
+
     if G.number_of_nodes() > 0:
         clustering = nx.clustering(G)
         if N > 3:
@@ -518,10 +518,10 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     else:
         for name in ['min','max','mean','median','std','range','q1','q3','gini']:
             features[f'clustering_{name}'] = None
-        
+
     try:
         if use_approx_betweenness and G.number_of_nodes() > betweenness_samples:
-            btw = nx.betweenness_centrality(G, normalized=True, k=betweenness_samples)
+            btw = nx.betweenness_centrality(G, normalized=True, k=betweenness_samples, seed=42)
         else:
             btw = nx.betweenness_centrality(G, normalized=True)
         if N > 3:
@@ -532,11 +532,11 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     except Exception as e:
         features['betweenness_error'] = str(e)
 
-    # --- 6) tesis christian ---
+
     genf = _extract_generator_features(hdata)
     features.update(genf)
 
-    # --- 7) solución errores datos  ---
+
     P = _ensure_2d(_get_node_attr(hdata, ['P','p','proc_time','processing_time','duration','dur','proc_times','times']))
     E = _ensure_2d(_get_node_attr(hdata, ['E','energy','energy_per_speed','energy_cost','energies']))
     R = _get_node_attr(hdata, ['R','release','r','release_date','release_time'])
@@ -557,7 +557,7 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
     if need_windows:
         features.update(_compute_windows_ratio(P, R, D))
 
-    # Nodos de operación (opcional)
+
     try:
         op_mask = getattr(hdata['node'], 'op_mask', None)
         if isinstance(op_mask, torch.Tensor):
@@ -569,12 +569,12 @@ def extract_features_from_heterodata(n_jobs_from_name, n_machs_from_name, seed, 
 
     return features
 
-# ---------------- main: leer carpeta ./graphs ----------------
+
 
 def main(graphs_folder='./TaillardInstancesGRAPHS', out_csv=None, verbose=False):
-    
+
     start_time = time.time()
-    
+
     if out_csv is None:
         out_csv = os.path.join(graphs_folder, 'features.csv')
     os.makedirs(graphs_folder, exist_ok=True)
@@ -621,7 +621,7 @@ def main(graphs_folder='./TaillardInstancesGRAPHS', out_csv=None, verbose=False)
             if hdata is None:
                 raise ValueError("No se identificó un HeteroData ni una estructura compatible dentro del .pt")
 
-            # n_jobs, n_machs preferentemente del HeteroData; si no, del nombre
+
             try:
                 n_jobs_h = getattr(hdata, 'n_jobs', None)
                 n_machs_h = getattr(hdata, 'n_machs', None)
@@ -634,12 +634,12 @@ def main(graphs_folder='./TaillardInstancesGRAPHS', out_csv=None, verbose=False)
                 try:
                     n_jobs_f, n_machs_f, seed = [int(x) for x in fname.split(".")[0].split("-")]
                 except Exception:
-                    # fallback razonable
+
                     n_jobs_f, n_machs_f, seed = (None, None, 0)
             else:
                 try:
                     _parts = fname.split(".")[0].split("-")
-                    seed = int(_parts[-1]) if len(_parts) >= 3 else 0
+                    seed = int(_parts[2]) if len(_parts) >= 3 else None
                 except Exception:
                     seed = 0
                 n_jobs_f, n_machs_f = n_jobs, n_machs
@@ -661,7 +661,7 @@ def main(graphs_folder='./TaillardInstancesGRAPHS', out_csv=None, verbose=False)
             file_record.update({'error': str(e)})
             rows.append(file_record)
 
-    # DataFrame y guardado
+
     df = pd.DataFrame(rows)
     df.to_csv(out_csv, index=False)
     debug_path = os.path.join(graphs_folder, 'features.json')
@@ -669,12 +669,12 @@ def main(graphs_folder='./TaillardInstancesGRAPHS', out_csv=None, verbose=False)
         json.dump(debug, fh, indent=2, ensure_ascii=False)
 
     print(f"\nTerminado. Guardado {out_csv} (filas: {len(df)}) y debug -> {debug_path}")
-    
+
     execution_time = time.time() - start_time
-    
+
     hours, rest = divmod(execution_time, 3600)
     minutes, seconds = divmod(rest, 60)
-    
+
     report_path = os.path.join(graphs_folder, 'graph_features_report.txt')
     with open(report_path, "w", encoding='utf-8') as fr:
         fr.write(f"GRAPH FEATURES EXTRACTION REPORT\n")
@@ -685,5 +685,5 @@ def main(graphs_folder='./TaillardInstancesGRAPHS', out_csv=None, verbose=False)
         fr.write(f"\nTiempo de ejecución: {int(hours):02}:{int(minutes):02}:{int(seconds):02}")
 
 if __name__ == '__main__':
-    # pon verbose=True si quieres el PROBE
+
     main(verbose=False)

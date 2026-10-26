@@ -1,0 +1,324 @@
+{
+  "folds": [
+    {
+      "fold": 0,
+      "chosen": [
+        "structural",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6326242913897412
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.634739012547589
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6899763410136969
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.5944379155390733
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.5936723603811348
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6556412843432403
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.6828752248471455
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.659345147459825
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6272325914703291
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6176197783395448
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6518819669422646
+        }
+      ]
+    },
+    {
+      "fold": 1,
+      "chosen": [
+        "hybrid",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6589860729933602
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.646103575080701
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.7105757201407613
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6280365984396691
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.6528550027240142
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6750001443482881
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.7063807720057377
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.7212437266303228
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6750462286051371
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6723257881185999
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.7029339025803493
+        }
+      ]
+    },
+    {
+      "fold": 2,
+      "chosen": [
+        "hybrid",
+        "random_forest"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6478943115039496
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.7009136763727946
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6722757294371208
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6269701162614942
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.5421593329164008
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.647829084918126
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.7231598361405438
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6960326750010788
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6562577087470982
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.5880164409053608
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.69096789035624
+        }
+      ]
+    },
+    {
+      "fold": 3,
+      "chosen": [
+        "structural",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6332885986817351
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.6709021320065028
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6938905605988603
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6502437443347578
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.6504126159755681
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6935495948791939
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.6732225965307217
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6928596008179007
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6460820736309433
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6515223930618687
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6815882412408185
+        }
+      ]
+    },
+    {
+      "fold": 4,
+      "chosen": [
+        "hybrid",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6633495364028537
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.6901568444489644
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.69765281916787
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6304774383163673
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.5873302817123677
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6888640206802007
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.7161353731917065
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.7195696559296909
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6683966737757734
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.5999645817733267
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.7046841165818356
+        }
+      ]
+    }
+  ]
+}

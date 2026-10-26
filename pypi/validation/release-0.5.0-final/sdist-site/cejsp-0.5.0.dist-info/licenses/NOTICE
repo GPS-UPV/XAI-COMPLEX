@@ -1,0 +1,11 @@
+CEJSP software: MIT License; see LICENSE.
+
+The bundled jsplib-easy-v7-accuracy reference was trained on instances and
+labels from ScheduleOpt JSPLIB, snapshot 8a6e36ef31263d36975e56fb481e0ba04e188d6f.
+Source: https://github.com/ScheduleOpt/benchmarks
+Benchmark: https://scheduleopt.github.io/benchmarks/jsplib
+Upstream dataset license: Creative Commons Attribution-ShareAlike 4.0 International.
+
+The bundled reference and reference metadata are distributed under
+CC BY-SA 4.0. They are learned artifacts, not the original benchmark dataset.
+The full CC BY-SA 4.0 text is reproduced in MODEL_LICENSE.

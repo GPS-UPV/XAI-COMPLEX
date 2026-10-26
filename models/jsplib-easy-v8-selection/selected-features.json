@@ -1,0 +1,134 @@
+{
+  "count": 32,
+  "fit_scope": "Full final training cohort; not independent feature significance",
+  "features": [
+    {
+      "feature": "route_pair_agreement_q25",
+      "training_selection_score": 0.07530992961861194
+    },
+    {
+      "feature": "late_probe_propagations_log",
+      "training_selection_score": 0.051343836489124106
+    },
+    {
+      "feature": "log_operations",
+      "training_selection_score": 0.050857038402239985
+    },
+    {
+      "feature": "n_jobs",
+      "training_selection_score": 0.05019052238547217
+    },
+    {
+      "feature": "position_spread_cv",
+      "training_selection_score": 0.04750414074657128
+    },
+    {
+      "feature": "n_operations",
+      "training_selection_score": 0.04660664147923921
+    },
+    {
+      "feature": "machine_duration_cv_q10",
+      "training_selection_score": 0.046415408320296336
+    },
+    {
+      "feature": "job_load_relative_max",
+      "training_selection_score": 0.045077541986368264
+    },
+    {
+      "feature": "position_spread_mean",
+      "training_selection_score": 0.04457944550370385
+    },
+    {
+      "feature": "machine_job_bound_ratio",
+      "training_selection_score": 0.04440802908257191
+    },
+    {
+      "feature": "stage_1_load_q25",
+      "training_selection_score": 0.043788244272933596
+    },
+    {
+      "feature": "duration_q25",
+      "training_selection_score": 0.043513872979031865
+    },
+    {
+      "feature": "stage_2_load_q75",
+      "training_selection_score": 0.04170171510424581
+    },
+    {
+      "feature": "late_probe_gap",
+      "training_selection_score": 0.039357458115545585
+    },
+    {
+      "feature": "stage_0_load_median",
+      "training_selection_score": 0.03779473023638835
+    },
+    {
+      "feature": "geometry_transition_coverage",
+      "training_selection_score": 0.03742028294614341
+    },
+    {
+      "feature": "load_lower_bound",
+      "training_selection_score": 0.03614275874566086
+    },
+    {
+      "feature": "route_pair_agreement_cv",
+      "training_selection_score": 0.03553073692263031
+    },
+    {
+      "feature": "job_load_relative_min",
+      "training_selection_score": 0.03483733101210418
+    },
+    {
+      "feature": "machine_load_relative_cv",
+      "training_selection_score": 0.033690649270319284
+    },
+    {
+      "feature": "stage_3_load_cv",
+      "training_selection_score": 0.03367187607787292
+    },
+    {
+      "feature": "geometry_transition_entropy",
+      "training_selection_score": 0.033658231516010106
+    },
+    {
+      "feature": "stage_1_load_min",
+      "training_selection_score": 0.03152047423410598
+    },
+    {
+      "feature": "dispatch_spt_gap",
+      "training_selection_score": 0.03129232220563072
+    },
+    {
+      "feature": "job_load_relative_q90",
+      "training_selection_score": 0.030969436764344938
+    },
+    {
+      "feature": "duration_rank_concentration",
+      "training_selection_score": 0.03057535566730607
+    },
+    {
+      "feature": "job_load_relative_q25",
+      "training_selection_score": 0.029562228778209576
+    },
+    {
+      "feature": "stage_3_load_q25",
+      "training_selection_score": 0.029507254098057656
+    },
+    {
+      "feature": "trajectory_improvement_gain",
+      "training_selection_score": 0.02843066449288978
+    },
+    {
+      "feature": "position_relative_min",
+      "training_selection_score": 0.02836139094460166
+    },
+    {
+      "feature": "geometry_prefix_0.75_std",
+      "training_selection_score": 0.027404208346148096
+    },
+    {
+      "feature": "route_pair_agreement_q10",
+      "training_selection_score": 0.027318953692671233
+    }
+  ]
+}

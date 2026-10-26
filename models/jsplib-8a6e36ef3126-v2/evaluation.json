@@ -1,0 +1,1295 @@
+{
+  "selected": [
+    "structural",
+    "extra_trees"
+  ],
+  "dataset_n": 272,
+  "class_counts": {
+    "toy": 154,
+    "easy": 15,
+    "hard": 21,
+    "medium": 22,
+    "open": 60
+  },
+  "nested_v1": {
+    "accuracy": 0.7610294117647058,
+    "balanced_accuracy": 0.5364069264069264,
+    "macro_f1": 0.5277059320611273,
+    "class_order": [
+      "toy",
+      "easy",
+      "medium",
+      "hard",
+      "open"
+    ],
+    "confusion_matrix": [
+      [
+        137,
+        5,
+        7,
+        5,
+        0
+      ],
+      [
+        2,
+        3,
+        5,
+        3,
+        2
+      ],
+      [
+        2,
+        6,
+        9,
+        5,
+        0
+      ],
+      [
+        1,
+        5,
+        3,
+        7,
+        5
+      ],
+      [
+        0,
+        1,
+        0,
+        8,
+        51
+      ]
+    ],
+    "per_class": {
+      "toy": {
+        "precision": 0.9647887323943662,
+        "recall": 0.8896103896103896,
+        "f1-score": 0.9256756756756757,
+        "support": 154.0
+      },
+      "easy": {
+        "precision": 0.15,
+        "recall": 0.2,
+        "f1-score": 0.17142857142857143,
+        "support": 15.0
+      },
+      "medium": {
+        "precision": 0.375,
+        "recall": 0.4090909090909091,
+        "f1-score": 0.391304347826087,
+        "support": 22.0
+      },
+      "hard": {
+        "precision": 0.25,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.2857142857142857,
+        "support": 21.0
+      },
+      "open": {
+        "precision": 0.8793103448275862,
+        "recall": 0.85,
+        "f1-score": 0.864406779661017,
+        "support": 60.0
+      },
+      "accuracy": 0.7610294117647058,
+      "macro avg": {
+        "precision": 0.5238198154443905,
+        "recall": 0.5364069264069264,
+        "f1-score": 0.5277059320611273,
+        "support": 272.0
+      },
+      "weighted avg": {
+        "precision": 0.798110608376425,
+        "recall": 0.7610294117647058,
+        "f1-score": 0.7779359744754322,
+        "support": 272.0
+      }
+    }
+  },
+  "nested_v2": {
+    "accuracy": 0.7867647058823529,
+    "balanced_accuracy": 0.5165367965367965,
+    "macro_f1": 0.5233773506187299,
+    "class_order": [
+      "toy",
+      "easy",
+      "medium",
+      "hard",
+      "open"
+    ],
+    "confusion_matrix": [
+      [
+        146,
+        2,
+        6,
+        0,
+        0
+      ],
+      [
+        6,
+        1,
+        5,
+        2,
+        1
+      ],
+      [
+        9,
+        6,
+        6,
+        1,
+        0
+      ],
+      [
+        4,
+        1,
+        3,
+        9,
+        4
+      ],
+      [
+        0,
+        1,
+        0,
+        7,
+        52
+      ]
+    ],
+    "per_class": {
+      "toy": {
+        "precision": 0.8848484848484849,
+        "recall": 0.948051948051948,
+        "f1-score": 0.9153605015673981,
+        "support": 154.0
+      },
+      "easy": {
+        "precision": 0.09090909090909091,
+        "recall": 0.06666666666666667,
+        "f1-score": 0.07692307692307693,
+        "support": 15.0
+      },
+      "medium": {
+        "precision": 0.3,
+        "recall": 0.2727272727272727,
+        "f1-score": 0.2857142857142857,
+        "support": 22.0
+      },
+      "hard": {
+        "precision": 0.47368421052631576,
+        "recall": 0.42857142857142855,
+        "f1-score": 0.45,
+        "support": 21.0
+      },
+      "open": {
+        "precision": 0.9122807017543859,
+        "recall": 0.8666666666666667,
+        "f1-score": 0.8888888888888888,
+        "support": 60.0
+      },
+      "accuracy": 0.7867647058823529,
+      "macro avg": {
+        "precision": 0.5323444976076555,
+        "recall": 0.5165367965367965,
+        "f1-score": 0.5233773506187299,
+        "support": 272.0
+      },
+      "weighted avg": {
+        "precision": 0.7680680645463928,
+        "recall": 0.7867647058823529,
+        "f1-score": 0.7764279816701216,
+        "support": 272.0
+      }
+    }
+  },
+  "family_nested_v2": {
+    "accuracy": 0.6764705882352942,
+    "balanced_accuracy": 0.3774025974025974,
+    "macro_f1": 0.38673692789814096,
+    "class_order": [
+      "toy",
+      "easy",
+      "medium",
+      "hard",
+      "open"
+    ],
+    "confusion_matrix": [
+      [
+        149,
+        1,
+        0,
+        0,
+        4
+      ],
+      [
+        10,
+        0,
+        1,
+        2,
+        2
+      ],
+      [
+        12,
+        2,
+        2,
+        3,
+        3
+      ],
+      [
+        5,
+        0,
+        2,
+        9,
+        5
+      ],
+      [
+        28,
+        1,
+        5,
+        2,
+        24
+      ]
+    ],
+    "per_class": {
+      "toy": {
+        "precision": 0.7303921568627451,
+        "recall": 0.9675324675324676,
+        "f1-score": 0.8324022346368715,
+        "support": 154.0
+      },
+      "easy": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 15.0
+      },
+      "medium": {
+        "precision": 0.2,
+        "recall": 0.09090909090909091,
+        "f1-score": 0.125,
+        "support": 22.0
+      },
+      "hard": {
+        "precision": 0.5625,
+        "recall": 0.42857142857142855,
+        "f1-score": 0.4864864864864865,
+        "support": 21.0
+      },
+      "open": {
+        "precision": 0.631578947368421,
+        "recall": 0.4,
+        "f1-score": 0.4897959183673469,
+        "support": 60.0
+      },
+      "accuracy": 0.6764705882352942,
+      "macro avg": {
+        "precision": 0.42489422084623324,
+        "recall": 0.37740259740259746,
+        "f1-score": 0.38673692789814096,
+        "support": 272.0
+      },
+      "weighted avg": {
+        "precision": 0.6124545183785588,
+        "recall": 0.6764705882352942,
+        "f1-score": 0.6269996891629973,
+        "support": 272.0
+      }
+    }
+  },
+  "family_v1": {
+    "accuracy": 0.6617647058823529,
+    "balanced_accuracy": 0.43194805194805197,
+    "macro_f1": 0.42446767531736446,
+    "class_order": [
+      "toy",
+      "easy",
+      "medium",
+      "hard",
+      "open"
+    ],
+    "confusion_matrix": [
+      [
+        137,
+        5,
+        2,
+        8,
+        2
+      ],
+      [
+        3,
+        2,
+        5,
+        5,
+        0
+      ],
+      [
+        4,
+        7,
+        5,
+        4,
+        2
+      ],
+      [
+        1,
+        1,
+        4,
+        10,
+        5
+      ],
+      [
+        15,
+        2,
+        12,
+        5,
+        26
+      ]
+    ],
+    "per_class": {
+      "toy": {
+        "precision": 0.85625,
+        "recall": 0.8896103896103896,
+        "f1-score": 0.8726114649681529,
+        "support": 154.0
+      },
+      "easy": {
+        "precision": 0.11764705882352941,
+        "recall": 0.13333333333333333,
+        "f1-score": 0.125,
+        "support": 15.0
+      },
+      "medium": {
+        "precision": 0.17857142857142858,
+        "recall": 0.22727272727272727,
+        "f1-score": 0.2,
+        "support": 22.0
+      },
+      "hard": {
+        "precision": 0.3125,
+        "recall": 0.47619047619047616,
+        "f1-score": 0.37735849056603776,
+        "support": 21.0
+      },
+      "open": {
+        "precision": 0.7428571428571429,
+        "recall": 0.43333333333333335,
+        "f1-score": 0.5473684210526316,
+        "support": 60.0
+      },
+      "accuracy": 0.6617647058823529,
+      "macro avg": {
+        "precision": 0.4415651260504202,
+        "recall": 0.43194805194805197,
+        "f1-score": 0.42446767531736446,
+        "support": 272.0
+      },
+      "weighted avg": {
+        "precision": 0.6937121539792386,
+        "recall": 0.6617647058823529,
+        "f1-score": 0.6669992616549273,
+        "support": 272.0
+      }
+    }
+  },
+  "choices": [
+    {
+      "fold": 0,
+      "chosen": [
+        "structural",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6326242913897412
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.634739012547589
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6899763410136969
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.5944379155390733
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.5936723603811348
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6556412843432403
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.6828752248471455
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.659345147459825
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6272325914703291
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6176197783395448
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6518819669422646
+        }
+      ]
+    },
+    {
+      "fold": 1,
+      "chosen": [
+        "hybrid",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6589860729933602
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.646103575080701
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.7105757201407613
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6280365984396691
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.6528550027240142
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6750001443482881
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.7063807720057377
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.7212437266303228
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6750462286051371
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6723257881185999
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.7029339025803493
+        }
+      ]
+    },
+    {
+      "fold": 2,
+      "chosen": [
+        "hybrid",
+        "random_forest"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6478943115039496
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.7009136763727946
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6722757294371208
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6269701162614942
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.5421593329164008
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.647829084918126
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.7231598361405438
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6960326750010788
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6562577087470982
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.5880164409053608
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.69096789035624
+        }
+      ]
+    },
+    {
+      "fold": 3,
+      "chosen": [
+        "structural",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6332885986817351
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.6709021320065028
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6938905605988603
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6502437443347578
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.6504126159755681
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6935495948791939
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.6732225965307217
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6928596008179007
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6460820736309433
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6515223930618687
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6815882412408185
+        }
+      ]
+    },
+    {
+      "fold": 4,
+      "chosen": [
+        "hybrid",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6633495364028537
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.6901568444489644
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.69765281916787
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6304774383163673
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.5873302817123677
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6888640206802007
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.7161353731917065
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.7195696559296909
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6683966737757734
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.5999645817733267
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.7046841165818356
+        }
+      ]
+    }
+  ],
+  "final_ranking": [
+    {
+      "backend": "graph_approx",
+      "estimator": "random_forest",
+      "objective": 0.6514665809451993
+    },
+    {
+      "backend": "structural",
+      "estimator": "random_forest",
+      "objective": 0.6488511727112475
+    },
+    {
+      "backend": "structural",
+      "estimator": "extra_trees",
+      "objective": 0.7056563535554786
+    },
+    {
+      "backend": "structural",
+      "estimator": "hist_gradient",
+      "objective": 0.6171051835172167
+    },
+    {
+      "backend": "structural",
+      "estimator": "rbf_svm",
+      "objective": 0.6206570595072326
+    },
+    {
+      "backend": "structural",
+      "estimator": "ensemble",
+      "objective": 0.6677039047609181
+    },
+    {
+      "backend": "hybrid",
+      "estimator": "random_forest",
+      "objective": 0.6764649647642432
+    },
+    {
+      "backend": "hybrid",
+      "estimator": "extra_trees",
+      "objective": 0.6919764242400307
+    },
+    {
+      "backend": "hybrid",
+      "estimator": "hist_gradient",
+      "objective": 0.618802349805501
+    },
+    {
+      "backend": "hybrid",
+      "estimator": "rbf_svm",
+      "objective": 0.6343728818115398
+    },
+    {
+      "backend": "hybrid",
+      "estimator": "ensemble",
+      "objective": 0.6808422898365256
+    }
+  ],
+  "family_choices": [
+    {
+      "family": "abz",
+      "selected": [
+        "hybrid",
+        "ensemble"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6324455950818096
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.6521825156146684
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6580323675655321
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6251665820841675
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.5562775598605915
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6488236431053801
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.6697853244484574
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6814697552403118
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6442737332723968
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.608960100229091
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6871954575194424
+        }
+      ]
+    },
+    {
+      "family": "dmu",
+      "selected": [
+        "hybrid",
+        "ensemble"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.663541921041921
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.6762042811031052
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.664997981782256
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6217991095783649
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.5527959658735779
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6722407688637527
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.703143282972972
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6835679136016714
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6134502449349727
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.5660690926006521
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.70944615606914
+        }
+      ]
+    },
+    {
+      "family": "ft",
+      "selected": [
+        "structural",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6369106125907483
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.672192008466309
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.7070152801412816
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6366922762301181
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.6188661020728471
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6877952613971078
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.6793087909809477
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6917595456280131
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6572910454645003
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6465477655278684
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6795226004219007
+        }
+      ]
+    },
+    {
+      "family": "la",
+      "selected": [
+        "structural",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6393074304916411
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.640923369587529
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6868281972389804
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.617902923634631
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.567874198570154
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.631702258646703
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.6672111826556201
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6620426091478723
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6792067949899275
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6016633065470275
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6600706089122339
+        }
+      ]
+    },
+    {
+      "family": "orb",
+      "selected": [
+        "structural",
+        "extra_trees"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6967618204487676
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.6556962497446254
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.706135389333521
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.607391292055583
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.6168622534096352
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6607794137328175
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.7030579702727925
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6921620955894289
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6246606318689687
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6421479327956088
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6446780053253404
+        }
+      ]
+    },
+    {
+      "family": "swv",
+      "selected": [
+        "structural",
+        "ensemble"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6677405783781137
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.719245119376092
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.7169369689695403
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6624489239139358
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.6550241413202587
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.7277172127253774
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.7042760310083613
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.7057813018596427
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.711006777508862
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6677232165168983
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.7239350507245245
+        }
+      ]
+    },
+    {
+      "family": "tai",
+      "selected": [
+        "structural",
+        "rbf_svm"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6610833487809097
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.6542047073725791
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6380287689116112
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.6071785343787588
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.678453425225752
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6318190788135191
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.6754043274692579
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6100470364889035
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.61704538543619
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.6550711901768502
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6221470329160792
+        }
+      ]
+    },
+    {
+      "family": "yn",
+      "selected": [
+        "hybrid",
+        "random_forest"
+      ],
+      "inner_scores": [
+        {
+          "backend": "graph_approx",
+          "estimator": "random_forest",
+          "objective": 0.6415605022308702
+        },
+        {
+          "backend": "structural",
+          "estimator": "random_forest",
+          "objective": 0.6172712812472297
+        },
+        {
+          "backend": "structural",
+          "estimator": "extra_trees",
+          "objective": 0.6621943616434599
+        },
+        {
+          "backend": "structural",
+          "estimator": "hist_gradient",
+          "objective": 0.5916495882921207
+        },
+        {
+          "backend": "structural",
+          "estimator": "rbf_svm",
+          "objective": 0.5597012674884668
+        },
+        {
+          "backend": "structural",
+          "estimator": "ensemble",
+          "objective": 0.6313761836413269
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "random_forest",
+          "objective": 0.6643166322585874
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "extra_trees",
+          "objective": 0.6199093078998955
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "hist_gradient",
+          "objective": 0.6417963362278907
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "rbf_svm",
+          "objective": 0.5969200576795979
+        },
+        {
+          "backend": "hybrid",
+          "estimator": "ensemble",
+          "objective": 0.6619492521062277
+        }
+      ]
+    }
+  ],
+  "seconds": 411.07016050000675,
+  "checks": {
+    "persistence": true,
+    "batch_invariance": true
+  },
+  "limitations": [
+    "Historical labels and all cohort labels already used in prior exploratory study; no new external test",
+    "Tiny minority classes; uncalibrated votes",
+    "Nested folds estimate selection procedure; final refit model is not externally validated",
+    "Family grouping is a stricter domain-shift diagnostic; inner tuning uses stratified instances",
+    "No claim of a global optimum over all possible classifiers"
+  ]
+}

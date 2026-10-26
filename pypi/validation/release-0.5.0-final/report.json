@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "version": "0.5.0",
+  "fixed_reference_bundled": true,
+  "original_reference_bytes_preserved": true,
+  "archive_members_scanned": 101,
+  "no_credentials_or_experimental_artifacts": true,
+  "public_api_tests_per_installation": 6,
+  "integration": {
+    "wheel": "toy",
+    "sdist": "toy"
+  },
+  "artifacts": {
+    "cejsp-0.5.0-py3-none-any.whl": "fa6e2df78fc626b0be3ef4c33f2fec0e48be3bd52479bdb4f37b6eb6e1b91a97",
+    "cejsp-0.5.0.tar.gz": "588871c9dbdea78c0dae89f167bdbf2a3f536d0d6e1b5749f24cbd33a3478f1a"
+  },
+  "scope": "Two separate installation targets and isolated Python processes; dependency environment shared from the verified working venv, not freshly resolved from PyPI",
+  "published": false
+}

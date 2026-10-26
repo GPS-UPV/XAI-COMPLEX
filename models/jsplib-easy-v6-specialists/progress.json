@@ -1,0 +1,1067 @@
+[
+  {
+    "fold": 0,
+    "chosen": {
+      "config": {
+        "id": "probe-specialist-forest",
+        "backend": "probe",
+        "kind": "easy_specialist",
+        "trees": 300,
+        "params": {
+          "specialist_kind": "forest"
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6582950692434564
+      }
+    },
+    "inner_scores": [
+      {
+        "config": {
+          "id": "baseline",
+          "backend": "structural",
+          "kind": "extra_trees",
+          "trees": 200,
+          "params": {}
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6489266715175034
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-1",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6135417558403855
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-2",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.3,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.5924032678263695
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-forest",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.0,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6433527044111582
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-svm",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6494254020028586
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-1",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6408088806720241
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-2",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6380183937925874
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-forest",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            2.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6582950692434564
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-svm",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.3,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6322769247193211
+        }
+      }
+    ]
+  },
+  {
+    "fold": 1,
+    "chosen": {
+      "config": {
+        "id": "structural-specialist-forest",
+        "backend": "structural",
+        "kind": "easy_specialist",
+        "trees": 300,
+        "params": {
+          "specialist_kind": "forest"
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6099245202990938
+      }
+    },
+    "inner_scores": [
+      {
+        "config": {
+          "id": "baseline",
+          "backend": "structural",
+          "kind": "extra_trees",
+          "trees": 200,
+          "params": {}
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            2.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6036748454086459
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-1",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.5967234148735415
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-2",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.5759841507298261
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-forest",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            2.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6099245202990938
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-svm",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.0,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.5991530822266006
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-1",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.597782868445655
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-2",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.5740260776622318
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-forest",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            2.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6037705994821687
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-svm",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.3,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.5955190757762036
+        }
+      }
+    ]
+  },
+  {
+    "fold": 2,
+    "chosen": {
+      "config": {
+        "id": "structural-specialist-svm",
+        "backend": "structural",
+        "kind": "easy_specialist",
+        "trees": 300,
+        "params": {
+          "specialist_kind": "svm"
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.7369275916220718
+      }
+    },
+    "inner_scores": [
+      {
+        "config": {
+          "id": "baseline",
+          "backend": "structural",
+          "kind": "extra_trees",
+          "trees": 200,
+          "params": {}
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.723591531354961
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-1",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6142068039253548
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-2",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6008471919461574
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-forest",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6897378201261035
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-svm",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.7369275916220718
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-1",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6208319120937167
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-2",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6272739139292652
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-forest",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6750222072921942
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-svm",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.7221738040900099
+        }
+      }
+    ]
+  },
+  {
+    "fold": 3,
+    "chosen": {
+      "config": {
+        "id": "probe-specialist-svm",
+        "backend": "probe",
+        "kind": "easy_specialist",
+        "trees": 300,
+        "params": {
+          "specialist_kind": "svm"
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6414693301207515
+      }
+    },
+    "inner_scores": [
+      {
+        "config": {
+          "id": "baseline",
+          "backend": "structural",
+          "kind": "extra_trees",
+          "trees": 200,
+          "params": {}
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.3,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6348636605628397
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-1",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6060361465458474
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-2",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.5819536056014876
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-forest",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.3,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6348636605628397
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-svm",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.3,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6348636605628397
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-1",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6068785000305461
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-2",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6081551483083555
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-forest",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.3,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6377921753072474
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-svm",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6414693301207515
+        }
+      }
+    ]
+  },
+  {
+    "fold": 4,
+    "chosen": {
+      "config": {
+        "id": "probe-specialist-svm",
+        "backend": "probe",
+        "kind": "easy_specialist",
+        "trees": 300,
+        "params": {
+          "specialist_kind": "svm"
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          1.5,
+          1.3,
+          1.3,
+          1.0
+        ],
+        "objective": 0.6313376225800484
+      }
+    },
+    "inner_scores": [
+      {
+        "config": {
+          "id": "baseline",
+          "backend": "structural",
+          "kind": "extra_trees",
+          "trees": 200,
+          "params": {}
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.5858078174046053
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-1",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.3,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.5690373928578552
+        }
+      },
+      {
+        "config": {
+          "id": "structural-ordinal-2",
+          "backend": "structural",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.5383173732410973
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-forest",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.5739568764473302
+        }
+      },
+      {
+        "config": {
+          "id": "structural-specialist-svm",
+          "backend": "structural",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.5775657583782088
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-1",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.5881521564943002
+        }
+      },
+      {
+        "config": {
+          "id": "probe-ordinal-2",
+          "backend": "probe",
+          "kind": "ordinal_forest",
+          "trees": 300,
+          "params": {
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.6,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.5988541076405925
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-forest",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "forest"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            0.3,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.61566914725447
+        }
+      },
+      {
+        "config": {
+          "id": "probe-specialist-svm",
+          "backend": "probe",
+          "kind": "easy_specialist",
+          "trees": 300,
+          "params": {
+            "specialist_kind": "svm"
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.6313376225800484
+        }
+      }
+    ]
+  }
+]

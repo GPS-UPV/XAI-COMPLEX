@@ -1,0 +1,2108 @@
+{
+  "baseline": {
+    "accuracy": 0.8014705882352942,
+    "balanced_accuracy": 0.5405194805194805,
+    "macro_f1": 0.5402423239970846,
+    "class_order": [
+      "toy",
+      "easy",
+      "medium",
+      "hard",
+      "open"
+    ],
+    "confusion_matrix": [
+      [
+        146,
+        0,
+        4,
+        0,
+        4
+      ],
+      [
+        6,
+        1,
+        4,
+        3,
+        1
+      ],
+      [
+        4,
+        4,
+        10,
+        3,
+        1
+      ],
+      [
+        4,
+        0,
+        5,
+        7,
+        5
+      ],
+      [
+        2,
+        0,
+        1,
+        3,
+        54
+      ]
+    ],
+    "per_class": {
+      "toy": {
+        "precision": 0.9012345679012346,
+        "recall": 0.948051948051948,
+        "f1-score": 0.9240506329113924,
+        "support": 154.0
+      },
+      "easy": {
+        "precision": 0.2,
+        "recall": 0.06666666666666667,
+        "f1-score": 0.1,
+        "support": 15.0
+      },
+      "medium": {
+        "precision": 0.4166666666666667,
+        "recall": 0.45454545454545453,
+        "f1-score": 0.43478260869565216,
+        "support": 22.0
+      },
+      "hard": {
+        "precision": 0.4375,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.3783783783783784,
+        "support": 21.0
+      },
+      "open": {
+        "precision": 0.8307692307692308,
+        "recall": 0.9,
+        "f1-score": 0.864,
+        "support": 60.0
+      },
+      "accuracy": 0.8014705882352942,
+      "macro avg": {
+        "precision": 0.5572340930674264,
+        "recall": 0.5405194805194805,
+        "f1-score": 0.5402423239970846,
+        "support": 272.0
+      },
+      "weighted avg": {
+        "precision": 0.7720236910647449,
+        "recall": 0.8014705882352942,
+        "f1-score": 0.7836579441382527,
+        "support": 272.0
+      }
+    }
+  },
+  "round_d": {
+    "accuracy": 0.8088235294117647,
+    "balanced_accuracy": 0.5598268398268399,
+    "macro_f1": 0.574584447249024,
+    "class_order": [
+      "toy",
+      "easy",
+      "medium",
+      "hard",
+      "open"
+    ],
+    "confusion_matrix": [
+      [
+        147,
+        3,
+        3,
+        0,
+        1
+      ],
+      [
+        6,
+        3,
+        4,
+        1,
+        1
+      ],
+      [
+        6,
+        6,
+        8,
+        2,
+        0
+      ],
+      [
+        4,
+        1,
+        3,
+        8,
+        5
+      ],
+      [
+        2,
+        0,
+        0,
+        4,
+        54
+      ]
+    ],
+    "per_class": {
+      "toy": {
+        "precision": 0.8909090909090909,
+        "recall": 0.9545454545454546,
+        "f1-score": 0.9216300940438872,
+        "support": 154.0
+      },
+      "easy": {
+        "precision": 0.23076923076923078,
+        "recall": 0.2,
+        "f1-score": 0.21428571428571427,
+        "support": 15.0
+      },
+      "medium": {
+        "precision": 0.4444444444444444,
+        "recall": 0.36363636363636365,
+        "f1-score": 0.4,
+        "support": 22.0
+      },
+      "hard": {
+        "precision": 0.5333333333333333,
+        "recall": 0.38095238095238093,
+        "f1-score": 0.4444444444444444,
+        "support": 21.0
+      },
+      "open": {
+        "precision": 0.8852459016393442,
+        "recall": 0.9,
+        "f1-score": 0.8925619834710744,
+        "support": 60.0
+      },
+      "accuracy": 0.8088235294117647,
+      "macro avg": {
+        "precision": 0.5969404002190888,
+        "recall": 0.5598268398268398,
+        "f1-score": 0.574584447249024,
+        "support": 272.0
+      },
+      "weighted avg": {
+        "precision": 0.7895370233002826,
+        "recall": 0.8088235294117647,
+        "f1-score": 0.7971778402155962,
+        "support": 272.0
+      }
+    }
+  },
+  "chosen": {
+    "config": {
+      "id": "trajectory-et-0.5-2",
+      "backend": "trajectory",
+      "kind": "extra_trees",
+      "trees": 400,
+      "params": {
+        "max_features": 0.5,
+        "min_samples_leaf": 2
+      }
+    },
+    "choice": {
+      "weights": [
+        1.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "objective": 0.723180447249341
+    }
+  },
+  "final_scores": [
+    {
+      "config": {
+        "id": "baseline",
+        "backend": "structural",
+        "kind": "extra_trees",
+        "trees": 200,
+        "params": {}
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6926634646068749
+      }
+    },
+    {
+      "config": {
+        "id": "landscape-et-0.5-1",
+        "backend": "landscape",
+        "kind": "extra_trees",
+        "trees": 400,
+        "params": {
+          "max_features": 0.5,
+          "min_samples_leaf": 1
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          1.5,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6721865383975915
+      }
+    },
+    {
+      "config": {
+        "id": "landscape-et-0.5-2",
+        "backend": "landscape",
+        "kind": "extra_trees",
+        "trees": 400,
+        "params": {
+          "max_features": 0.5,
+          "min_samples_leaf": 2
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6935017309154176
+      }
+    },
+    {
+      "config": {
+        "id": "landscape-et-0.8-1",
+        "backend": "landscape",
+        "kind": "extra_trees",
+        "trees": 400,
+        "params": {
+          "max_features": 0.8,
+          "min_samples_leaf": 1
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.716100878090916
+      }
+    },
+    {
+      "config": {
+        "id": "landscape-et-0.8-2",
+        "backend": "landscape",
+        "kind": "extra_trees",
+        "trees": 400,
+        "params": {
+          "max_features": 0.8,
+          "min_samples_leaf": 2
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.3,
+          1.3,
+          1.0
+        ],
+        "objective": 0.6838053672836173
+      }
+    },
+    {
+      "config": {
+        "id": "landscape-catboost",
+        "backend": "landscape",
+        "kind": "catboost",
+        "trees": 160,
+        "params": {
+          "depth": 4,
+          "learning_rate": 0.08,
+          "auto_class_weights": "Balanced",
+          "l2_leaf_reg": 6
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.3,
+          1.3,
+          1.0
+        ],
+        "objective": 0.6506534802161736
+      }
+    },
+    {
+      "config": {
+        "id": "landscape-hist",
+        "backend": "landscape",
+        "kind": "hist_gradient",
+        "trees": 200,
+        "params": {
+          "max_iter": 250,
+          "max_leaf_nodes": 7,
+          "min_samples_leaf": 5,
+          "l2_regularization": 5
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.3,
+          1.3,
+          1.0
+        ],
+        "objective": 0.6546587569397821
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-et-0.5-1",
+        "backend": "trajectory",
+        "kind": "extra_trees",
+        "trees": 400,
+        "params": {
+          "max_features": 0.5,
+          "min_samples_leaf": 1
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.3,
+          1.3,
+          1.0
+        ],
+        "objective": 0.7059830082495439
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-et-0.5-2",
+        "backend": "trajectory",
+        "kind": "extra_trees",
+        "trees": 400,
+        "params": {
+          "max_features": 0.5,
+          "min_samples_leaf": 2
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.723180447249341
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-et-0.8-1",
+        "backend": "trajectory",
+        "kind": "extra_trees",
+        "trees": 400,
+        "params": {
+          "max_features": 0.8,
+          "min_samples_leaf": 1
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.3,
+          1.3,
+          1.0
+        ],
+        "objective": 0.6906670855731175
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-et-0.8-2",
+        "backend": "trajectory",
+        "kind": "extra_trees",
+        "trees": 400,
+        "params": {
+          "max_features": 0.8,
+          "min_samples_leaf": 2
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.718617257295797
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-catboost",
+        "backend": "trajectory",
+        "kind": "catboost",
+        "trees": 160,
+        "params": {
+          "depth": 4,
+          "learning_rate": 0.08,
+          "auto_class_weights": "Balanced",
+          "l2_leaf_reg": 6
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6363770612269457
+      }
+    },
+    {
+      "config": {
+        "id": "trajectory-hist",
+        "backend": "trajectory",
+        "kind": "hist_gradient",
+        "trees": 200,
+        "params": {
+          "max_iter": 250,
+          "max_leaf_nodes": 7,
+          "min_samples_leaf": 5,
+          "l2_regularization": 5
+        }
+      },
+      "choice": {
+        "weights": [
+          1.0,
+          3.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "objective": 0.6353101694131107
+      }
+    }
+  ],
+  "history": [
+    {
+      "fold": 0,
+      "chosen": {
+        "config": {
+          "id": "trajectory-et-0.5-1",
+          "backend": "trajectory",
+          "kind": "extra_trees",
+          "trees": 400,
+          "params": {
+            "max_features": 0.5,
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6782631677488681
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.641890591919513
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6440565481549719
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6421558616342261
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6369879746337486
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6394195271274656
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-catboost",
+            "backend": "landscape",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6029864873712574
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-hist",
+            "backend": "landscape",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6422109554756757
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6782631677488681
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6488758140730274
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6563425823846029
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.659346201095465
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-catboost",
+            "backend": "trajectory",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6115605230611522
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-hist",
+            "backend": "trajectory",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6133090928652118
+          }
+        }
+      ]
+    },
+    {
+      "fold": 1,
+      "chosen": {
+        "config": {
+          "id": "trajectory-et-0.5-1",
+          "backend": "trajectory",
+          "kind": "extra_trees",
+          "trees": 400,
+          "params": {
+            "max_features": 0.5,
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6601926138213984
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.646252623019804
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6326251160057612
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6488983022104365
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6259137564652183
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6355454497275564
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-catboost",
+            "backend": "landscape",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6278429186760118
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-hist",
+            "backend": "landscape",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.5820977981356179
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6601926138213984
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6275908858166923
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6424153373508211
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6189288691438836
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-catboost",
+            "backend": "trajectory",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.5944385151495118
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-hist",
+            "backend": "trajectory",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.607021032810603
+          }
+        }
+      ]
+    },
+    {
+      "fold": 2,
+      "chosen": {
+        "config": {
+          "id": "landscape-et-0.8-2",
+          "backend": "landscape",
+          "kind": "extra_trees",
+          "trees": 400,
+          "params": {
+            "max_features": 0.8,
+            "min_samples_leaf": 2
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            2.0,
+            1.3,
+            1.3,
+            1.0
+          ],
+          "objective": 0.7270899728819186
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6898618875566107
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7118311571298388
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.7073941555048888
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.7099813397510125
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.7270899728819186
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-catboost",
+            "backend": "landscape",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6711224822275561
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-hist",
+            "backend": "landscape",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6935905993402202
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7067313251634427
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7152646899858768
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.7090600298032694
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7079854911836325
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-catboost",
+            "backend": "trajectory",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.7086410332556418
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-hist",
+            "backend": "trajectory",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6834070292864047
+          }
+        }
+      ]
+    },
+    {
+      "fold": 3,
+      "chosen": {
+        "config": {
+          "id": "trajectory-et-0.5-1",
+          "backend": "trajectory",
+          "kind": "extra_trees",
+          "trees": 400,
+          "params": {
+            "max_features": 0.5,
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            2.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6914124336417915
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6599637209672256
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6576237988447163
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6633794523509269
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.672345694959026
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6491791512564719
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-catboost",
+            "backend": "landscape",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6088173877663855
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-hist",
+            "backend": "landscape",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6258825585145084
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6914124336417915
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6683135985350409
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.684343008794999
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.678997191958234
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-catboost",
+            "backend": "trajectory",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6273572559837776
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-hist",
+            "backend": "trajectory",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6058258875331397
+          }
+        }
+      ]
+    },
+    {
+      "fold": 4,
+      "chosen": {
+        "config": {
+          "id": "landscape-et-0.8-1",
+          "backend": "landscape",
+          "kind": "extra_trees",
+          "trees": 400,
+          "params": {
+            "max_features": 0.8,
+            "min_samples_leaf": 1
+          }
+        },
+        "choice": {
+          "weights": [
+            1.0,
+            1.5,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "objective": 0.6997672293727341
+        }
+      },
+      "inner_scores": [
+        {
+          "config": {
+            "id": "baseline",
+            "backend": "structural",
+            "kind": "extra_trees",
+            "trees": 200,
+            "params": {}
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6968226287478577
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6994693657836052
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.5-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.6888905345575782
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-1",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6997672293727341
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-et-0.8-2",
+            "backend": "landscape",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6940328803010417
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-catboost",
+            "backend": "landscape",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              2.0,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.656363495690528
+          }
+        },
+        {
+          "config": {
+            "id": "landscape-hist",
+            "backend": "landscape",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6195875380480885
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6520052651952135
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.5-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.5,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6741827080018367
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-1",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 1
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6730538890768313
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-et-0.8-2",
+            "backend": "trajectory",
+            "kind": "extra_trees",
+            "trees": 400,
+            "params": {
+              "max_features": 0.8,
+              "min_samples_leaf": 2
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "objective": 0.6879011426053145
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-catboost",
+            "backend": "trajectory",
+            "kind": "catboost",
+            "trees": 160,
+            "params": {
+              "depth": 4,
+              "learning_rate": 0.08,
+              "auto_class_weights": "Balanced",
+              "l2_leaf_reg": 6
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              1.5,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.640890178979836
+          }
+        },
+        {
+          "config": {
+            "id": "trajectory-hist",
+            "backend": "trajectory",
+            "kind": "hist_gradient",
+            "trees": 200,
+            "params": {
+              "max_iter": 250,
+              "max_leaf_nodes": 7,
+              "min_samples_leaf": 5,
+              "l2_regularization": 5
+            }
+          },
+          "choice": {
+            "weights": [
+              1.0,
+              0.6,
+              1.3,
+              1.3,
+              1.0
+            ],
+            "objective": 0.5809706456509973
+          }
+        }
+      ]
+    }
+  ],
+  "seconds": 751.3332129999762,
+  "target_achieved": false,
+  "checks": {
+    "persistence": true
+  },
+  "limitations": [
+    "Internal exploratory nested CV, not an independent new test",
+    "Four rounds of model-family exploration create selection uncertainty",
+    "A longer bounded solve is required for trajectory inference",
+    "Historical class open is not certified by a timeout"
+  ]
+}

@@ -1,0 +1,11 @@
+include LICENSE MODEL_LICENSE NOTICE README.md pyproject.toml
+prune docs
+include docs/USER_GUIDE.md docs/MODEL_CARD.md docs/RELEASING.md
+prune examples
+include examples/quickstart.py examples/test_igjsp_classifier.py
+prune tests
+prune validation
+prune build
+prune dist
+global-exclude *.pyc *.pyo *.log .DS_Store
+exclude VALIDAR_WINDOWS.ps1 verify_release.py validate_pipeline.py validate_real_inputs.py validate_instance_formats.py

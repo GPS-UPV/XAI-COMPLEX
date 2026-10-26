@@ -1,0 +1,148 @@
+{
+  "round": 4,
+  "probe_budgets": [
+    0.2,
+    3.0
+  ],
+  "workers": 12,
+  "configs": [
+    {
+      "id": "baseline",
+      "backend": "structural",
+      "kind": "extra_trees",
+      "trees": 200,
+      "params": {}
+    },
+    {
+      "id": "landscape-et-0.5-1",
+      "backend": "landscape",
+      "kind": "extra_trees",
+      "trees": 400,
+      "params": {
+        "max_features": 0.5,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "id": "landscape-et-0.5-2",
+      "backend": "landscape",
+      "kind": "extra_trees",
+      "trees": 400,
+      "params": {
+        "max_features": 0.5,
+        "min_samples_leaf": 2
+      }
+    },
+    {
+      "id": "landscape-et-0.8-1",
+      "backend": "landscape",
+      "kind": "extra_trees",
+      "trees": 400,
+      "params": {
+        "max_features": 0.8,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "id": "landscape-et-0.8-2",
+      "backend": "landscape",
+      "kind": "extra_trees",
+      "trees": 400,
+      "params": {
+        "max_features": 0.8,
+        "min_samples_leaf": 2
+      }
+    },
+    {
+      "id": "landscape-catboost",
+      "backend": "landscape",
+      "kind": "catboost",
+      "trees": 160,
+      "params": {
+        "depth": 4,
+        "learning_rate": 0.08,
+        "auto_class_weights": "Balanced",
+        "l2_leaf_reg": 6
+      }
+    },
+    {
+      "id": "landscape-hist",
+      "backend": "landscape",
+      "kind": "hist_gradient",
+      "trees": 200,
+      "params": {
+        "max_iter": 250,
+        "max_leaf_nodes": 7,
+        "min_samples_leaf": 5,
+        "l2_regularization": 5
+      }
+    },
+    {
+      "id": "trajectory-et-0.5-1",
+      "backend": "trajectory",
+      "kind": "extra_trees",
+      "trees": 400,
+      "params": {
+        "max_features": 0.5,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "id": "trajectory-et-0.5-2",
+      "backend": "trajectory",
+      "kind": "extra_trees",
+      "trees": 400,
+      "params": {
+        "max_features": 0.5,
+        "min_samples_leaf": 2
+      }
+    },
+    {
+      "id": "trajectory-et-0.8-1",
+      "backend": "trajectory",
+      "kind": "extra_trees",
+      "trees": 400,
+      "params": {
+        "max_features": 0.8,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "id": "trajectory-et-0.8-2",
+      "backend": "trajectory",
+      "kind": "extra_trees",
+      "trees": 400,
+      "params": {
+        "max_features": 0.8,
+        "min_samples_leaf": 2
+      }
+    },
+    {
+      "id": "trajectory-catboost",
+      "backend": "trajectory",
+      "kind": "catboost",
+      "trees": 160,
+      "params": {
+        "depth": 4,
+        "learning_rate": 0.08,
+        "auto_class_weights": "Balanced",
+        "l2_leaf_reg": 6
+      }
+    },
+    {
+      "id": "trajectory-hist",
+      "backend": "trajectory",
+      "kind": "hist_gradient",
+      "trees": 200,
+      "params": {
+        "max_iter": 250,
+        "max_leaf_nodes": 7,
+        "min_samples_leaf": 5,
+        "l2_regularization": 5
+      }
+    }
+  ],
+  "objective": ".5 accuracy + .4 macro-F1 + .1 easy recall",
+  "split_seed": 20261024,
+  "feature_count": 189
+}

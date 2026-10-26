@@ -1,0 +1,250 @@
+[
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710723.json",
+    "parent_base_id": "7e8b21fb2f35909e036913a3446e025572dab88c3a4e3a70d59ec5852058d3e8",
+    "weak_label": "toy",
+    "teacher_vote": 0.985,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710740.json",
+    "parent_base_id": "c2eb7b602e608fdd139e365596739f84a9f40b327b3ccaa0d83af011ac476616",
+    "weak_label": "toy",
+    "teacher_vote": 0.975,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710732.json",
+    "parent_base_id": "f1d4bdfdd51b01f63e3f0ee1d9e317af84d1fef6a3f460360e0696d7796692ff",
+    "weak_label": "toy",
+    "teacher_vote": 0.975,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710722.json",
+    "parent_base_id": "4b848becd2ee34d89eef4f596f8d7d976ad3374d6de252fdebf16bdc41deaf28",
+    "weak_label": "toy",
+    "teacher_vote": 0.975,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710737.json",
+    "parent_base_id": "6515bdf5854496ba723aa97c65a0c6e00989003e11fd6b2b36a366f6a7c39224",
+    "weak_label": "toy",
+    "teacher_vote": 0.97,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710733.json",
+    "parent_base_id": "f1d4bdfdd51b01f63e3f0ee1d9e317af84d1fef6a3f460360e0696d7796692ff",
+    "weak_label": "toy",
+    "teacher_vote": 0.97,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710730.json",
+    "parent_base_id": "6541f6da411ca42a53143ac495e8d385eb0e7c74fe93f1a6493e2dd5c0755c68",
+    "weak_label": "toy",
+    "teacher_vote": 0.97,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710725.json",
+    "parent_base_id": "7e8b21fb2f35909e036913a3446e025572dab88c3a4e3a70d59ec5852058d3e8",
+    "weak_label": "toy",
+    "teacher_vote": 0.97,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710741.json",
+    "parent_base_id": "8fed7e325c042ecb9e1400cfe45ab2eda89c50926c691997e7feb7bd39397257",
+    "weak_label": "toy",
+    "teacher_vote": 0.965,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710739.json",
+    "parent_base_id": "c2eb7b602e608fdd139e365596739f84a9f40b327b3ccaa0d83af011ac476616",
+    "weak_label": "toy",
+    "teacher_vote": 0.965,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710719.json",
+    "parent_base_id": "9c31c1b86d85185127cceaaa0481be6c1b9a63ed6e725aaad4f295a3f92d27e7",
+    "weak_label": "toy",
+    "teacher_vote": 0.965,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710468.json",
+    "parent_base_id": "1e0941f06b07c61e3d1b2c2265faa9d4e86a01ed81ce63a44015b45e64c4b99e",
+    "weak_label": "toy",
+    "teacher_vote": 0.965,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710735.json",
+    "parent_base_id": "6515bdf5854496ba723aa97c65a0c6e00989003e11fd6b2b36a366f6a7c39224",
+    "weak_label": "toy",
+    "teacher_vote": 0.96,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710721.json",
+    "parent_base_id": "4b848becd2ee34d89eef4f596f8d7d976ad3374d6de252fdebf16bdc41deaf28",
+    "weak_label": "toy",
+    "teacher_vote": 0.96,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710718.json",
+    "parent_base_id": "9c31c1b86d85185127cceaaa0481be6c1b9a63ed6e725aaad4f295a3f92d27e7",
+    "weak_label": "toy",
+    "teacher_vote": 0.96,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710743.json",
+    "parent_base_id": "8fed7e325c042ecb9e1400cfe45ab2eda89c50926c691997e7feb7bd39397257",
+    "weak_label": "toy",
+    "teacher_vote": 0.955,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710736.json",
+    "parent_base_id": "6515bdf5854496ba723aa97c65a0c6e00989003e11fd6b2b36a366f6a7c39224",
+    "weak_label": "toy",
+    "teacher_vote": 0.955,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710729.json",
+    "parent_base_id": "6541f6da411ca42a53143ac495e8d385eb0e7c74fe93f1a6493e2dd5c0755c68",
+    "weak_label": "toy",
+    "teacher_vote": 0.955,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710724.json",
+    "parent_base_id": "7e8b21fb2f35909e036913a3446e025572dab88c3a4e3a70d59ec5852058d3e8",
+    "weak_label": "toy",
+    "teacher_vote": 0.955,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710717.json",
+    "parent_base_id": "9c31c1b86d85185127cceaaa0481be6c1b9a63ed6e725aaad4f295a3f92d27e7",
+    "weak_label": "toy",
+    "teacher_vote": 0.955,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710446.json",
+    "parent_base_id": "caa9775363de8bc2a1f37d73dba6cb5c1c1db45e71edf4c2b37a6202b903304b",
+    "weak_label": "toy",
+    "teacher_vote": 0.955,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710742.json",
+    "parent_base_id": "8fed7e325c042ecb9e1400cfe45ab2eda89c50926c691997e7feb7bd39397257",
+    "weak_label": "toy",
+    "teacher_vote": 0.95,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710738.json",
+    "parent_base_id": "c2eb7b602e608fdd139e365596739f84a9f40b327b3ccaa0d83af011ac476616",
+    "weak_label": "toy",
+    "teacher_vote": 0.95,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710728.json",
+    "parent_base_id": "073b60ebc48b0aba428e8d2158e5ceaa0f492e566af6c08abd89dcb12bfbf8e5",
+    "weak_label": "toy",
+    "teacher_vote": 0.95,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710709.json",
+    "parent_base_id": "e0516ef2a17f4708bf59b84e99c95eb9c8bbfbba3cb4a5009f49c079b6259774",
+    "weak_label": "toy",
+    "teacher_vote": 0.95,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710687.json",
+    "parent_base_id": "8d703a7d069f8d350385797d0f02826823c5136c06f9328c6049072afb9153cc",
+    "weak_label": "toy",
+    "teacher_vote": 0.95,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710626.json",
+    "parent_base_id": "ae3ce506a59fc209cb3f73c4e3c41337f4b6a90d3c2e3da493875459616e2ba1",
+    "weak_label": "toy",
+    "teacher_vote": 0.95,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710731.json",
+    "parent_base_id": "6541f6da411ca42a53143ac495e8d385eb0e7c74fe93f1a6493e2dd5c0755c68",
+    "weak_label": "toy",
+    "teacher_vote": 0.945,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710727.json",
+    "parent_base_id": "073b60ebc48b0aba428e8d2158e5ceaa0f492e566af6c08abd89dcb12bfbf8e5",
+    "weak_label": "toy",
+    "teacher_vote": 0.945,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710720.json",
+    "parent_base_id": "4b848becd2ee34d89eef4f596f8d7d976ad3374d6de252fdebf16bdc41deaf28",
+    "weak_label": "toy",
+    "teacher_vote": 0.945,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  },
+  {
+    "path": "data\\igjsp-augmentation-v1\\igjsp-710559.json",
+    "parent_base_id": "2a793583fdd93567d66b12107859d9b796707d13757458c66e9c28f92104176e",
+    "weak_label": "hard",
+    "teacher_vote": 0.715,
+    "sample_weight": 0.15,
+    "ground_truth": false
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "passed": 20,
+  "instances": [
+    "ft06",
+    "ft10",
+    "ft20",
+    "orb01",
+    "orb02",
+    "orb03",
+    "orb04",
+    "orb05",
+    "orb06",
+    "orb07",
+    "orb08",
+    "orb09",
+    "orb10",
+    "la01",
+    "la02",
+    "la03",
+    "la04",
+    "la05",
+    "la06",
+    "la07"
+  ],
+  "seconds": 5.021299100015312,
+  "checks": [
+    "real JSON",
+    "original graph features",
+    "batch estimation",
+    "individual/batch invariance",
+    "persistence"
+  ],
+  "performance_comparison": false,
+  "max_individual_batch_difference": 4.631124372878048e-10,
+  "max_persistence_difference": 0.0,
+  "score_tolerance": {
+    "rtol": 0.0,
+    "atol": 1e-09
+  }
+}

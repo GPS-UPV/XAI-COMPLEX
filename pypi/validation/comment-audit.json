@@ -1,0 +1,82 @@
+[
+  {
+    "file": "pypi\\src\\xai_complex\\batch.py",
+    "removed_comments": 0,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\calibration.py",
+    "removed_comments": 0,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\cli.py",
+    "removed_comments": 0,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\estimator.py",
+    "removed_comments": 0,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\graphs.py",
+    "removed_comments": 0,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\instances.py",
+    "removed_comments": 0,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\labels.py",
+    "removed_comments": 0,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\research.py",
+    "removed_comments": 17,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\_graph_builder.py",
+    "removed_comments": 33,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\_graph_features.py",
+    "removed_comments": 18,
+    "ast_unchanged": true
+  },
+  {
+    "file": "pypi\\src\\xai_complex\\__init__.py",
+    "removed_comments": 0,
+    "ast_unchanged": true
+  },
+  {
+    "file": "estimate_complexity.py",
+    "removed_comments": 35,
+    "ast_unchanged": true
+  },
+  {
+    "file": "estimate_complexity_weighted.py",
+    "removed_comments": 17,
+    "ast_unchanged": true
+  },
+  {
+    "file": "estimate_complexity_weighted_metrics.py",
+    "removed_comments": 17,
+    "ast_unchanged": true
+  },
+  {
+    "file": "genGraphs.py",
+    "removed_comments": 34,
+    "ast_unchanged": true
+  },
+  {
+    "file": "extract_graph_features.py",
+    "removed_comments": 22,
+    "ast_unchanged": true
+  }
+]

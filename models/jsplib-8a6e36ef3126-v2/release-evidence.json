@@ -1,0 +1,31 @@
+{
+  "python": "3.12.14",
+  "package_version": "0.3.0",
+  "model_sha256": "10c1d4b840da23842af23ba78643ad1995e9d3b55c124c416e8c07589d205770",
+  "packaged_source_sha256": {
+    "pypi\\src\\xai_complex\\batch.py": "552bfbce13dbb48ccb43cffc5a515ffc6632aba3f571e649fbcb4c0b2d6e107b",
+    "pypi\\src\\xai_complex\\calibration.py": "c061530357f221e4630c6ace01519193dc4da1c9f2c89814f6c9713817e8e548",
+    "pypi\\src\\xai_complex\\categories.py": "9781b437bfd1b3ea7ebbd1fc3984db150ed0f76830b1cb37b48f453bf7cfeb3d",
+    "pypi\\src\\xai_complex\\classifier.py": "16927e1ff34d2b85e3d6379113f4ca6c0601997115aa150b90defee9230bd347",
+    "pypi\\src\\xai_complex\\cli.py": "bf38cc422b873ee13ef632ca0f4ef27e3e3a90d7a898dcb8eb48afc3021ccd86",
+    "pypi\\src\\xai_complex\\estimator.py": "d507c55b5759d3ec0d277ecf6ed90ae13fdde2e354491038a8cdd51bd7f76037",
+    "pypi\\src\\xai_complex\\graphs.py": "6f82c962ecf16fec0132054752f10b5d4f13371ab18e3b64cf04ed18e7cd106f",
+    "pypi\\src\\xai_complex\\instances.py": "a95485eebc55d074d7a6369220b10458ce999b20c4340592443eee92bed6f6af",
+    "pypi\\src\\xai_complex\\io.py": "121677636a8cd316e8dd87e54c935fa57418930d3e914891e4d50ebc729c8108",
+    "pypi\\src\\xai_complex\\labels.py": "7fe428f5d9eec62a644479095493f5453e70f1d9c9736365a5a5dbe12c53eede",
+    "pypi\\src\\xai_complex\\research.py": "2c2fe3d042697c556d435fad5239557016c577cbf0e092ad631a3de946dcec55",
+    "pypi\\src\\xai_complex\\structural.py": "150c91b486d8dd59c75496958033b194a427dd3a277e76542835168e54080d80",
+    "pypi\\src\\xai_complex\\supervised.py": "f930a742b5d325a466af6edd1f0bb5fd154e70a3d056801cc91c5f4841448485",
+    "pypi\\src\\xai_complex\\_graph_builder.py": "19f8af7c9e754f997497f21ebb572947c47e3bfe502ea9a758c2f51139757b01",
+    "pypi\\src\\xai_complex\\_graph_features.py": "252c5e98b94fc032c3918d0c2fe0effbda7e67cd739a1e2acd17e93a2466318a",
+    "pypi\\src\\xai_complex\\__init__.py": "3c47e55802ababdf1ecf87bb853721411eb5fbd13ddffadfc966884dd4f96ae0",
+    "evaluation\\improve_jsplib.py": "7aa09ea5288dd87242e1d6d341ed409ffb374c3159e51438945be5aea6ede103",
+    "evaluation\\augment_igjsp.py": "5e6451cb19304da6aaa5e6c63b55e60b3ba161c6d17f6f73d46ee0b5a4c8011f",
+    "evaluation\\expand_real_jsplib.py": "d4377a01be775afdf77c231a1c4eb443b6a468448c0ea8260baad52db75f485e"
+  },
+  "artifacts": {
+    "pypi\\dist\\cejsp-0.3.0-py3-none-any.whl": "7542c1806513fe1ad12039aa53bc6958a4e6c5da09e26d926a273269967b9d12",
+    "pypi\\dist\\cejsp-0.3.0.tar.gz": "4059806fb8aa67190ef00b3ecc3cb270bb719efd1cd44a60b77e30053a454d75"
+  },
+  "validation": "50 pytest tests, 17 subtests, 49 installed-wheel unittest tests; full scientific feature tests in work environment; structural inference and persistence in two clean environments"
+}

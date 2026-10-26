@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "instances": 272,
+  "scope": "All 145 non-CP variables; CP inputs unchanged on this positive-workload cohort",
+  "maximum_difference": 0.0,
+  "correction": "Zero total workload produces zero gaps instead of an epsilon lower bound",
+  "extraction_source_archived_and_hash_verified": true
+}

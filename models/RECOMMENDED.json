@@ -1,0 +1,28 @@
+{
+  "model": "jsplib-easy-v7-trajectory/reference-accuracy.joblib",
+  "package_version": "0.5.0",
+  "goal_95_achieved": false,
+  "profiles": {
+    "accuracy": {
+      "model": "jsplib-easy-v7-trajectory/reference-accuracy.joblib",
+      "exploratory_accuracy": 0.8419117647058824,
+      "easy_recall": 0.06666666666666667,
+      "evaluation": "Fixed-model exploratory OOF ablation, post-selection"
+    },
+    "easy": {
+      "model": "jsplib-easy-v8-selection/reference.joblib",
+      "nested_accuracy": 0.7941176470588235,
+      "easy_recall": 0.4666666666666667,
+      "easy_precision": 0.21212121212121213
+    },
+    "no_solver_probe": {
+      "model": "jsplib-easy-v5/reference.joblib",
+      "nested_accuracy": 0.8051470588235294,
+      "evaluation_warning": "Nested estimate of the selection procedure; final selected model is search-only"
+    }
+  },
+  "previous_model": "jsplib-8a6e36ef3126-v2/reference.joblib",
+  "report": "../evaluation/RESULTADOS_EASY.md",
+  "warning": "Experimental internal estimates; solver probes add inference effort; no external IGJSP difficulty validation",
+  "bundled_reference": "cejsp/data/reference.joblib"
+}

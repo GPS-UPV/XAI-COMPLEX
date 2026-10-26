@@ -1,0 +1,30 @@
+{
+  "cohort_n": 196,
+  "max_size": 15,
+  "graph_extraction_seconds": 9.719211800023913,
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "trees": 100,
+  "size_extrapolation_ops_threshold": 117.0,
+  "runtime_over_limit_count": 0,
+  "python": "3.11.9",
+  "versions": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.17.1",
+    "torch": "2.14.1"
+  },
+  "controlled_performance_median_speedup": 1.972269855598923,
+  "limitations": [
+    "single saved solver protocol and hardware history",
+    "single speed JSP type 0 only",
+    "size-bounded cohort",
+    "runtime target is capped at budget; censoring is not solved",
+    "weighted target is a constructed proxy, not independent ground truth",
+    "performance is a controlled duplicate-fit ablation, not original end-to-end speedup"
+  ]
+}

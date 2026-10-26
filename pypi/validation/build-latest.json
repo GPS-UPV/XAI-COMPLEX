@@ -1,0 +1,12 @@
+{
+  "version": "0.4.1",
+  "build_passed": true,
+  "twine_strict_passed": true,
+  "pypi_token_pattern_scan_passed": true,
+  "archive_files_scanned": 110,
+  "published": false,
+  "artifacts": {
+    "cejsp-0.4.1-py3-none-any.whl": "d44a47cd60ccdc2960a7384b6406060225a1aaab850e272b2d87abd90d0846e1",
+    "cejsp-0.4.1.tar.gz": "dec820fc9db50666af5f4d1b02b2cf48e52926621e0a8c754be919609e179923"
+  }
+}

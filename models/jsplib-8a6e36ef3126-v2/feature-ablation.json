@@ -1,0 +1,26 @@
+{
+  "scope": "Exploratory feature-group ablation, not causal attribution",
+  "results": [
+    {
+      "group": "dimensions",
+      "features": 5,
+      "accuracy": 0.625,
+      "macro_f1": 0.4496152054204214,
+      "balanced_accuracy": 0.49216450216450214
+    },
+    {
+      "group": "duration_and_load",
+      "features": 62,
+      "accuracy": 0.7205882352941176,
+      "macro_f1": 0.48221863333684417,
+      "balanced_accuracy": 0.479004329004329
+    },
+    {
+      "group": "all_structural",
+      "features": 132,
+      "accuracy": 0.8125,
+      "macro_f1": 0.5846268454557768,
+      "balanced_accuracy": 0.5712987012987012
+    }
+  ]
+}

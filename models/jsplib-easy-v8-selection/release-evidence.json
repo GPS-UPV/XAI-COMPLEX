@@ -1,0 +1,60 @@
+{
+  "package_version": "0.4.0",
+  "goal_95_achieved": false,
+  "checks": [
+    "models\\jsplib-easy-v8-selection\\clean-wheel-check.json",
+    "models\\jsplib-easy-v8-selection\\clean-sdist-check.json",
+    "models\\jsplib-easy-v7-trajectory\\clean-wheel-accuracy-check.json",
+    "models\\jsplib-easy-v7-trajectory\\clean-sdist-accuracy-check.json"
+  ],
+  "models_sha256": {
+    "models\\jsplib-easy-v5\\reference.joblib": "11ad1f1fce6cd4f7c25d8cf5c538aff082ed44dd428667662a944c921b74df36",
+    "models\\jsplib-easy-v6-specialists\\reference.joblib": "1b2b5d864a79ac28c6a4fc565e804d832c97bd48d1bdaa216e29a3e19a16d3fa",
+    "models\\jsplib-easy-v7-trajectory\\reference.joblib": "8bbaa8a7002cda0e8cb59aa3c1fe43dd80fa77f68bffd239a9d741a523519f8f",
+    "models\\jsplib-easy-v7-trajectory\\reference-accuracy.joblib": "b5c7565d3c9d1516894c6aed626436e65eca7244588b0d9ee31789ed2dbe6071",
+    "models\\jsplib-easy-v8-selection\\reference.joblib": "10370c814acd46f5b4ec86fdb664cb36227d758bc02032eda4816abd11df14a8"
+  },
+  "source_sha256": {
+    "pypi\\src\\xai_complex\\batch.py": "552bfbce13dbb48ccb43cffc5a515ffc6632aba3f571e649fbcb4c0b2d6e107b",
+    "pypi\\src\\xai_complex\\calibration.py": "c061530357f221e4630c6ace01519193dc4da1c9f2c89814f6c9713817e8e548",
+    "pypi\\src\\xai_complex\\categories.py": "9781b437bfd1b3ea7ebbd1fc3984db150ed0f76830b1cb37b48f453bf7cfeb3d",
+    "pypi\\src\\xai_complex\\classifier.py": "25d034d9a9a7c3247c931ef0c8cf059862d6586767ec30fd491b48295716babd",
+    "pypi\\src\\xai_complex\\cli.py": "bf38cc422b873ee13ef632ca0f4ef27e3e3a90d7a898dcb8eb48afc3021ccd86",
+    "pypi\\src\\xai_complex\\estimator.py": "d507c55b5759d3ec0d277ecf6ed90ae13fdde2e354491038a8cdd51bd7f76037",
+    "pypi\\src\\xai_complex\\feature_selector.py": "4a318d2c98117575b906c1c53457d717acae0d07c56cbf1c2b20b1a3b50ccc47",
+    "pypi\\src\\xai_complex\\graphs.py": "6f82c962ecf16fec0132054752f10b5d4f13371ab18e3b64cf04ed18e7cd106f",
+    "pypi\\src\\xai_complex\\instances.py": "a95485eebc55d074d7a6369220b10458ce999b20c4340592443eee92bed6f6af",
+    "pypi\\src\\xai_complex\\io.py": "121677636a8cd316e8dd87e54c935fa57418930d3e914891e4d50ebc729c8108",
+    "pypi\\src\\xai_complex\\labels.py": "7fe428f5d9eec62a644479095493f5453e70f1d9c9736365a5a5dbe12c53eede",
+    "pypi\\src\\xai_complex\\landscape.py": "3c0965751bc83cce00f48873c5e6517a32bb6ff765ed9c9213fabba2e0b0c132",
+    "pypi\\src\\xai_complex\\research.py": "2c2fe3d042697c556d435fad5239557016c577cbf0e092ad631a3de946dcec55",
+    "pypi\\src\\xai_complex\\search_features.py": "515f38e6d955b7bf19561b9886208165311ec462f14a38ec38c2a443a95b1512",
+    "pypi\\src\\xai_complex\\specialists.py": "03b7a417366b43bded7a5c26b9dc33ef4f966b943ca9e1b4165f67e55c911ef4",
+    "pypi\\src\\xai_complex\\structural.py": "150c91b486d8dd59c75496958033b194a427dd3a277e76542835168e54080d80",
+    "pypi\\src\\xai_complex\\supervised.py": "dd2c11657576e536dbeb6c92c4f26c84f8dff0e7fe5ecdd779ec8c0a45f28b73",
+    "pypi\\src\\xai_complex\\_graph_builder.py": "19f8af7c9e754f997497f21ebb572947c47e3bfe502ea9a758c2f51139757b01",
+    "pypi\\src\\xai_complex\\_graph_features.py": "252c5e98b94fc032c3918d0c2fe0effbda7e67cd739a1e2acd17e93a2466318a",
+    "pypi\\src\\xai_complex\\__init__.py": "b027545bc051599f71c805d67fdc8a3abf92fcf7bef0ca8b6aac0cf3421b9114"
+  },
+  "release_sha256": {
+    "pypi\\dist\\cejsp-0.4.0-py3-none-any.whl": "3c31f89d5285a0728e4010dd87b23506aa4dc3d561a192cb53195af9a02206e5",
+    "pypi\\dist\\cejsp-0.4.0.tar.gz": "d64b9082121e7c81c70d88f79eed6a7af8dae0f8e4062776f9b5053ce01c4af4"
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.1",
+    "joblib": "1.6.0",
+    "ortools": "9.15.6755",
+    "catboost": "1.2.10"
+  },
+  "test_scope": {
+    "work_environment_pytest": 59,
+    "pytest_subtests": 22,
+    "installed_wheel_unittest": 58,
+    "clean_wheel_new_research_tests": 9,
+    "clean_sdist_new_research_tests": 9,
+    "legacy_real_pipeline": 20,
+    "full_legacy_graph_suite_in_clean_envs": false
+  }
+}

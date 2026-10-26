@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "model_version": "jsplib-8a6e36ef3126-v2",
+  "formats": [
+    "IGJSP JSON",
+    "DZN",
+    "Taillard"
+  ],
+  "same_votes": true,
+  "batch_invariance": true,
+  "category": "toy"
+}

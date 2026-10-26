@@ -1,0 +1,189 @@
+{
+  "features": 154,
+  "easy_cases": 15,
+  "non_easy_cases": 257,
+  "crossfit_folds": 5,
+  "top_associations": [
+    {
+      "feature": "probe_branches_log",
+      "crossfit_easy_auc": 0.7237354085603113,
+      "median_easy": 9.892274925322026,
+      "median_hard": 9.514584532726943,
+      "median_medium": 10.10926612449531,
+      "median_open": 9.168839938869496,
+      "median_toy": 9.050468678292296
+    },
+    {
+      "feature": "route_pair_agreement_cv",
+      "crossfit_easy_auc": 0.6964980544747083,
+      "median_easy": 0.7879767114771695,
+      "median_hard": 0.7277565730583473,
+      "median_medium": 0.7370705514470552,
+      "median_open": 0.7418353695737817,
+      "median_toy": 0.7399727786347733
+    },
+    {
+      "feature": "tail_dispersion_mean",
+      "crossfit_easy_auc": 0.6757457846952011,
+      "median_easy": 0.1858058710855552,
+      "median_hard": 0.19340586547979247,
+      "median_medium": 0.1850269522768203,
+      "median_open": 0.10037131341317765,
+      "median_toy": 0.10849593782792469
+    },
+    {
+      "feature": "dispatch_lwkr_gap",
+      "crossfit_easy_auc": 0.672632944228275,
+      "median_easy": 0.5343915343915344,
+      "median_hard": 0.5925020374898126,
+      "median_medium": 0.5479688370830949,
+      "median_open": 0.5373405345257654,
+      "median_toy": 0.37606671096764127
+    },
+    {
+      "feature": "dispatch_spt_gap",
+      "crossfit_easy_auc": 0.6677042801556421,
+      "median_easy": 0.37881508078994613,
+      "median_hard": 0.4202465446395219,
+      "median_medium": 0.34856890743489655,
+      "median_open": 0.39256910429169234,
+      "median_toy": 0.23578938224247148
+    },
+    {
+      "feature": "route_pair_agreement_q10",
+      "crossfit_easy_auc": 0.6669260700389106,
+      "median_easy": 0.0,
+      "median_hard": 0.0,
+      "median_medium": 0.0,
+      "median_open": 0.04500000000000004,
+      "median_toy": 0.020000000000000018
+    },
+    {
+      "feature": "head_dispersion_mean",
+      "crossfit_easy_auc": 0.6666666666666666,
+      "median_easy": 0.1843389472268103,
+      "median_hard": 0.19157771053785158,
+      "median_medium": 0.183453841240675,
+      "median_open": 0.10020281712079374,
+      "median_toy": 0.10816008929995938
+    },
+    {
+      "feature": "stage_2_load_skew",
+      "crossfit_easy_auc": 0.6666666666666666,
+      "median_easy": 0.14383356795661542,
+      "median_hard": 0.34177396557757145,
+      "median_medium": 0.2709040139389074,
+      "median_open": 0.2085203715736984,
+      "median_toy": 0.35397355535072195
+    },
+    {
+      "feature": "probe_deterministic_time",
+      "crossfit_easy_auc": 0.6588845654993515,
+      "median_easy": 0.2001094249206661,
+      "median_hard": 0.20003100496515897,
+      "median_medium": 0.20004795713025203,
+      "median_open": 0.20005013104785133,
+      "median_toy": 0.20003597899679254
+    },
+    {
+      "feature": "job_load_relative_q75",
+      "crossfit_easy_auc": 0.6573281452658885,
+      "median_easy": 0.6911702127659575,
+      "median_hard": 0.7190812720848057,
+      "median_medium": 0.6987277781955865,
+      "median_open": 0.5911318448771725,
+      "median_toy": 0.42148093224795435
+    },
+    {
+      "feature": "job_load_relative_min",
+      "crossfit_easy_auc": 0.6529182879377432,
+      "median_easy": 0.45984979780473717,
+      "median_hard": 0.5424028268551236,
+      "median_medium": 0.4646467570710955,
+      "median_open": 0.3686390532544379,
+      "median_toy": 0.2616854554268152
+    },
+    {
+      "feature": "job_load_relative_mean",
+      "crossfit_easy_auc": 0.6498054474708171,
+      "median_easy": 0.6333191489361703,
+      "median_hard": 0.6701413427561838,
+      "median_medium": 0.6348465897097828,
+      "median_open": 0.5506956171782311,
+      "median_toy": 0.38954375462810287
+    },
+    {
+      "feature": "job_load_relative_median",
+      "crossfit_easy_auc": 0.6492866407263295,
+      "median_easy": 0.6429787234042553,
+      "median_hard": 0.681095406360424,
+      "median_medium": 0.6389712077251085,
+      "median_open": 0.5479900473890651,
+      "median_toy": 0.37763775579964454
+    },
+    {
+      "feature": "jobs_per_machine",
+      "crossfit_easy_auc": 0.6450064850843061,
+      "median_easy": 1.3333333333333333,
+      "median_hard": 1.3333333333333333,
+      "median_medium": 1.3333333333333333,
+      "median_open": 1.5,
+      "median_toy": 2.0
+    },
+    {
+      "feature": "position_relative_median",
+      "crossfit_easy_auc": 0.6440985732814526,
+      "median_easy": 0.4928571428571429,
+      "median_hard": 0.5033333333333333,
+      "median_medium": 0.5,
+      "median_open": 0.5089912280701754,
+      "median_toy": 0.5
+    },
+    {
+      "feature": "job_load_relative_q25",
+      "crossfit_easy_auc": 0.6438391699092089,
+      "median_easy": 0.5716952129995608,
+      "median_hard": 0.6241166077738516,
+      "median_medium": 0.564098755222074,
+      "median_open": 0.5095193259883654,
+      "median_toy": 0.3335185284965142
+    },
+    {
+      "feature": "job_load_relative_q90",
+      "crossfit_easy_auc": 0.6435797665369649,
+      "median_easy": 0.7410871302957635,
+      "median_hard": 0.7751830756712774,
+      "median_medium": 0.7442610826419686,
+      "median_open": 0.6263534748882541,
+      "median_toy": 0.45815536128826556
+    },
+    {
+      "feature": "machine_job_bound_ratio",
+      "crossfit_easy_auc": 0.6355382619974059,
+      "median_easy": 1.2553418803418803,
+      "median_hard": 1.2618069815195072,
+      "median_medium": 1.2814695925522912,
+      "median_open": 1.485144826462351,
+      "median_toy": 1.891868642534543
+    },
+    {
+      "feature": "job_load_relative_max",
+      "crossfit_easy_auc": 0.6320363164721141,
+      "median_easy": 0.796595744680851,
+      "median_hard": 0.7925142392188771,
+      "median_medium": 0.7803541216020214,
+      "median_open": 0.6733350238630795,
+      "median_toy": 0.528580548863738
+    },
+    {
+      "feature": "probe_propagations_log",
+      "crossfit_easy_auc": 0.6285343709468223,
+      "median_easy": 13.79434412110246,
+      "median_hard": 13.734995488745588,
+      "median_medium": 13.758728199857421,
+      "median_open": 13.562676525093401,
+      "median_toy": 13.549951067977968
+    }
+  ],
+  "interpretation": "Post-hoc exploratory binary associations; correlated features and family effects; not independent causal determinants or new test evidence"
+}
